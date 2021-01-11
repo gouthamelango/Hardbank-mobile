@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Parent for all views-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- CarouselBanner 1-->
+            <ImageView
+                android:id="@+id/homeCarouselBanner1"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_margin="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/dummycomponentimage" />
+            <ImageView
+                android:id="@+id/homeCarouselBanner2"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_margin="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/dummycomponentimage"
+                android:layout_below="@id/homeCarouselBanner1"/>
+            <ImageView
+                android:id="@+id/homeCarouselBanner3"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_margin="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/dummycomponentimage"
+                android:layout_below="@id/homeCarouselBanner2"/>
+            <ImageView
+                android:id="@+id/homeCarouselBanner4"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_margin="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/dummycomponentimage"
+                android:layout_below="@id/homeCarouselBanner3"/>
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

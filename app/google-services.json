@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "448394948531",
+    "firebase_url": "https://hardbank-e46b3-default-rtdb.firebaseio.com",
+    "project_id": "hardbank-e46b3",
+    "storage_bucket": "hardbank-e46b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448394948531:android:07a0005de50a5ba9b765c6",
+        "android_client_info": {
+          "package_name": "com.example.hardbank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448394948531-fkrksn6b47f67hsp29etfbmnnclbft1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hardbank",
+            "certificate_hash": "f2ac26ed56c0c4591739a46518808d28ec6c88f8"
+          }
+        },
+        {
+          "client_id": "448394948531-6e408k634kf4bcp56c0n3b9i2vuksb1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAydC_vCWbc-XuInqlmQT7ORHyK7WVroAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448394948531-6e408k634kf4bcp56c0n3b9i2vuksb1c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

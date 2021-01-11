@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Hardbank</string>
+    <string name="account_holder">Hello, Guest</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="heyText">Hey,</string>
+    <string name="loginNowText">Welcome Back!</string>
+    <string name="ifNewUserText">If you are new /</string>
+    <string name="CreateNewText">Create an account</string>
+    <string name="forgotPasswordText">Forgot Password? /</string>
+    <string name="resetPasswordText">Reset</string>
+    <string name="loginText">Login</string>
+    <string name="continueAsGuest">Continue as Guest</string>
+    <string name="backText">Back</string>
+    <string name="helloText">Hello</string>
+    <string name="continueWithText"> or\ncontinue with</string>
+    <string name="enterInformationText">Enter your information below or login with a social account</string>
+
+</resources>
