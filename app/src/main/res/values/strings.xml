@@ -14,8 +14,9 @@
     <string name="loginText">Login</string>
     <string name="continueAsGuest">Continue as Guest</string>
     <string name="backText">Back</string>
-    <string name="helloText">Hello</string>
+    <string name="helloText">Hello,</string>
     <string name="continueWithText"> or\ncontinue with</string>
-    <string name="enterInformationText">Enter your information below or login with a social account</string>
+    <string name="enterInformationText">Create an Account</string>
+    <string name="termsText">I agree with the Terms and Condition and the Privacy Policy</string>
 
 </resources>

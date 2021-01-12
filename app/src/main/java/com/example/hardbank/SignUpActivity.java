@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +21,11 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    //Declaration
     EditText editTextEmail, editTextPassword;
     Button signUpBtn;
+    RelativeLayout backNav;
+    CheckBox termsCheckBox;
 
     private FirebaseAuth mAuth;
 
@@ -29,23 +34,44 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        //Initialization
         editTextEmail = (EditText) findViewById(R.id.signUpEmailEditText);
         editTextPassword = (EditText) findViewById(R.id.signUpPasswordEditText);
         signUpBtn  = (Button) findViewById(R.id.signUpButton);
+        backNav  =  (RelativeLayout)findViewById(R.id.signUpActivityNavLayout);
+        termsCheckBox =  (CheckBox)findViewById(R.id.termsCheckBox);
+
+        //Firebase Auth initializing instance
         mAuth = FirebaseAuth.getInstance();
 
+        //SignUp Button listener which will invoke register user function
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUser();
+                if(termsCheckBox.isChecked()){
+                    registerUser();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Please accept our Terms and Condition",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Back Button Listener
+        backNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 
     }
     private void registerUser() {
+        //Storing Edit Text values in string variables
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        //Validation
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
