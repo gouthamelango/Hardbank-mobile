@@ -1,6 +1,7 @@
 package com.example.hardbank;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =  findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolBar);
+        mAuth = FirebaseAuth.getInstance();
 
         //Config Custom ToolBar
         setSupportActionBar(toolbar);
@@ -93,13 +95,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_account:
 
                 //if the user is signed in --> Account DashBoard Fragment if not--->> Login Fragment
-                FragmentTransaction loginFragmentTransaction  = getSupportFragmentManager().beginTransaction();
-                LoginFragment loginFragment = new LoginFragment();
-                loginFragmentTransaction.replace(R.id.mainContainer,loginFragment);
-                loginFragmentTransaction.commit();
-                toolBarMenu.findItem(R.id.toolBar_cart).setVisible(false);
-                toolBarMenu.findItem(R.id.toolBar_notification).setVisible(false);
-                getSupportActionBar().setTitle("Login");
+               if(mAuth.getCurrentUser()==null){
+                   FragmentTransaction loginFragmentTransaction  = getSupportFragmentManager().beginTransaction();
+                   LoginFragment loginFragment = new LoginFragment();
+                   loginFragmentTransaction.replace(R.id.mainContainer,loginFragment);
+                   loginFragmentTransaction.commit();
+                   toolBarMenu.findItem(R.id.toolBar_cart).setVisible(false);
+                   toolBarMenu.findItem(R.id.toolBar_notification).setVisible(false);
+                   getSupportActionBar().setTitle("Login");
+               }
+               else {
+                   Intent profileActivityIntent  =  new Intent(getApplicationContext(),ProfileActivity.class);
+                   startActivity(profileActivityIntent);
+                   overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+               }
                 break;
             case R.id.nav_order:
                 break;

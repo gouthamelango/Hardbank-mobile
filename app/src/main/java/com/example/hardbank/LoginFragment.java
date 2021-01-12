@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment {
     FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
     Button loginBtn;
-    TextView signUpBtn;
+    TextView signUpBtn, continueAsGuest;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -84,6 +84,14 @@ public class LoginFragment extends Fragment {
         editTextPassword = (EditText) view.findViewById(R.id.loginPasswordEditText);
         loginBtn = (Button) view.findViewById(R.id.loginButton);
         signUpBtn  = view.findViewById(R.id.createNewText);
+        continueAsGuest = (TextView)view.findViewById(R.id.continueAsGuestText);
+
+        continueAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((HomeActivity)getActivity()).showHomeFragment();
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,10 +131,11 @@ public class LoginFragment extends Fragment {
                         //progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                            // getActivity().finish();
-                            // Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                            // Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                             //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            //startActivity(intent);
-                            Toast.makeText(getActivity().getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                           // startActivity(intent);
+                            ((HomeActivity)getActivity()).showHomeFragment();
+                            Toast.makeText(getActivity().getApplicationContext(),"Signed In",Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -154,7 +163,7 @@ public class LoginFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             //getActivity().finish();
             //startActivity(new Intent(this, ProfileActivity.class));
-            Toast.makeText(getActivity().getApplicationContext(),"Already Signed In",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity().getApplicationContext(),"Already Signed In",Toast.LENGTH_SHORT).show();
         }
     }
 }

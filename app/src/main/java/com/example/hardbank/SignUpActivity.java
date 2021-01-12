@@ -104,8 +104,9 @@ public class SignUpActivity extends AppCompatActivity {
                // progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     //finish();
-                    //startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
-                    Toast.makeText(getApplicationContext(),"Created",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Registered",Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                 } else {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
