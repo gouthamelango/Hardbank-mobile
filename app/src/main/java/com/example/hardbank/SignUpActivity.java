@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,19 +15,27 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
     //Declaration
-    EditText editTextEmail, editTextPassword;
+    EditText editTextEmail, editTextPassword, editTextName;
     Button signUpBtn;
     RelativeLayout backNav;
     CheckBox termsCheckBox;
-
+    FirebaseFirestore db;
+    String userId;
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,12 +46,14 @@ public class SignUpActivity extends AppCompatActivity {
         //Initialization
         editTextEmail = (EditText) findViewById(R.id.signUpEmailEditText);
         editTextPassword = (EditText) findViewById(R.id.signUpPasswordEditText);
+        editTextName = (EditText)findViewById(R.id.signUpNameEditText);
         signUpBtn  = (Button) findViewById(R.id.signUpButton);
         backNav  =  (RelativeLayout)findViewById(R.id.signUpActivityNavLayout);
         termsCheckBox =  (CheckBox)findViewById(R.id.termsCheckBox);
 
         //Firebase Auth initializing instance
         mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
 
         //SignUp Button listener which will invoke register user function
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +79,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private void registerUser() {
         //Storing Edit Text values in string variables
-        String email = editTextEmail.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        final String name  =  editTextName.getText().toString().trim();
 
         //Validation
         if (email.isEmpty()) {
@@ -105,6 +117,23 @@ public class SignUpActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     //finish();
                     Toast.makeText(getApplicationContext(),"Registered",Toast.LENGTH_SHORT).show();
+                    userId  = mAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference = db.collection("users").document(userId);
+                    Map<String,Object> user =  new HashMap<>();
+                    user.put("fullName",name);
+                    user.put("email",email);
+                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("TAG","OnSuccess");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("TAG","OnFailure");
+                        }
+                    });
+
                     finish();
                     startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                 } else {
