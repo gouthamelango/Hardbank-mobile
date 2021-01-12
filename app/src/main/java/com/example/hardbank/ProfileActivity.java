@@ -8,8 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -17,9 +21,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     RelativeLayout backNavBtn;
     Button logoutBtn;
-    TextView accountHolderEmail;
+    TextView accountHolderEmail,accountHolderName;
 
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
+    String userId;
 
 
     @Override
@@ -30,12 +36,23 @@ public class ProfileActivity extends AppCompatActivity {
         //initialization
         backNavBtn = (RelativeLayout)findViewById(R.id.profileActivityNavLayout);
         logoutBtn = (Button)findViewById(R.id.logoutButton);
-        accountHolderEmail = (TextView)findViewById(R.id.accountHolderEmail);
+        accountHolderEmail = (TextView)findViewById(R.id.accountHolderEmailTextProfileActivity);
+        accountHolderName = (TextView)findViewById(R.id.accountHolderNameTextProfileActivity);
+
         mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
 
 
         //Displaying Data
         accountHolderEmail.setText(mAuth.getCurrentUser().getEmail());
+        userId  = mAuth.getCurrentUser().getUid();
+        db.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String user_name = documentSnapshot.getString("fullName");
+                accountHolderName.setText(user_name);
+            }
+        });
 
         //BackBtn Listener
         backNavBtn.setOnClickListener(new View.OnClickListener() {

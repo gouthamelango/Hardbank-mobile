@@ -28,24 +28,78 @@
             android:layout_centerVertical="true"
             android:id="@+id/backTextProfile"/>
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/accountHolderEmail"
         android:layout_below="@id/profileActivityNavLayout"
-        android:layout_marginTop="50dp"
-        android:text="Email"
-        android:layout_centerHorizontal="true"/>
+        android:id="@+id/profileActivityMainContainerLayout">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/profilepicdummy"
+            android:id="@+id/userProfilePic"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/NameDisplayProfileActivityLayout"
+            android:gravity="center"
+            android:padding="20dp"
+            android:layout_below="@+id/userProfilePic">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/NameTextProfileActivity"
+                android:textStyle="bold"
+                android:fontFamily="@font/droid_serif"
+                android:text="@string/nameText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/droid_serif"
+                android:textStyle="bold"
+                android:id="@+id/accountHolderNameTextProfileActivity"
+                android:layout_toRightOf="@+id/NameTextProfileActivity"
+                android:layout_marginLeft="10dp"
+                android:text="Username"/>
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:text="Logout"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_background"
-        android:textColor="#FFF"
-        android:id="@+id/logoutButton"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/accountHolderEmail"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailDisplayProfileActivityLayout"
+            android:gravity="center"
+            android:layout_below="@id/NameDisplayProfileActivityLayout"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailText"
+                android:textStyle="bold"
+                android:fontFamily="@font/droid_serif"
+                android:text="@string/emailText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/accountHolderEmailTextProfileActivity"
+                android:layout_toRightOf="@+id/emailText"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/droid_serif"
+                android:text="example@gmail.com"/>
+
+        </RelativeLayout>
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:text="Logout"
+            android:background="@drawable/button_background"
+            android:textColor="#FFF"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/logoutButton"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/emailDisplayProfileActivityLayout"/>
+    </RelativeLayout>
 
 </RelativeLayout>
