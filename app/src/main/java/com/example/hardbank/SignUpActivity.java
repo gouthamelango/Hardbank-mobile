@@ -120,8 +120,9 @@ public class SignUpActivity extends AppCompatActivity {
                     userId  = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = db.collection("users").document(userId);
                     Map<String,Object> user =  new HashMap<>();
-                    user.put("fullName",name);
+                    user.put("fullname",name);
                     user.put("email",email);
+                    user.put("type","customer");
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

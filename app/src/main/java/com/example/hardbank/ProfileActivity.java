@@ -43,17 +43,18 @@ public class ProfileActivity extends AppCompatActivity {
         db =  FirebaseFirestore.getInstance();
 
 
+
         //Displaying Data
         accountHolderEmail.setText(mAuth.getCurrentUser().getEmail());
         userId  = mAuth.getCurrentUser().getUid();
         db.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String user_name = documentSnapshot.getString("fullName");
+                String user_name = documentSnapshot.getString("fullname");
+                Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
                 accountHolderName.setText(user_name);
             }
         });
-
         //BackBtn Listener
         backNavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
