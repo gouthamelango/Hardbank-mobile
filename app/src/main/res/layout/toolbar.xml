@@ -4,8 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:elevation="4dp"
+    android:background="@color/colorGreyShade"
     app:navigationIcon="@drawable/ic_baseline_menu_24">
-    <!-- android:background="#40A8A4A4"-->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logoContainerLayout"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard"
+            android:id="@+id/idText"
+            android:fontFamily="@font/roboto"
+            android:layout_centerVertical="true"
+            android:textColor="#F0F7F8"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bank"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/idText"
+            android:fontFamily="@font/roboto"
+            android:layout_marginLeft="2dp"
+            android:textColor="#2B4B51"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <!--    android:background="#40A8A4A4"-->
 </androidx.appcompat.widget.Toolbar>

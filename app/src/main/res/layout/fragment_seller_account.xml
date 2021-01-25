@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SellerAccountFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorGreyShade"
+        android:id="@+id/sellerAccountDisplayLayout"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/dummypropic"
+            android:layout_marginRight="15dp"
+            android:id="@+id/userProfilePicSeller"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/userProfilePicSeller"
+            android:id="@+id/userDetailsLayout"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userNameAccountSeller"
+                android:text="Username"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#B2000000"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userEmailAccountSeller"
+                android:layout_below="@id/userNameAccountSeller"
+                android:layout_marginTop="7dp"
+                android:text="usersample@gmail.com"
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"
+                android:textColor="#97000000"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_background"
+                android:text="Logout"
+                android:layout_below="@+id/userEmailAccountSeller"
+                android:layout_marginTop="7dp"
+                android:id="@+id/logoutSellerBtn"
+                android:textColor="#FFF"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

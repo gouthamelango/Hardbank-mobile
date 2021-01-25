@@ -3,17 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBarLayout"
+        layout="@layout/toolbar_and_search" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchBarLayout">
 
         <!-- Parent for all views-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+           <com.synnapps.carouselview.CarouselView
+               android:layout_width="match_parent"
+               android:layout_height="175dp"
+               app:slideInterval="3000"
+               app:radius="6dp"
+               app:fillColor="#FFFFFFFF"
+               app:pageColor="#00000000"
+               app:strokeColor="#FF777777"
+               app:strokeWidth="1dp"
+               android:id="@+id/carousel"/>
 
             <!-- CarouselBanner 1-->
             <ImageView
@@ -22,6 +41,7 @@
                 android:layout_height="175dp"
                 android:layout_margin="20dp"
                 android:scaleType="fitXY"
+                android:layout_below="@id/carousel"
                 android:src="@drawable/dummycomponentimage" />
             <ImageView
                 android:id="@+id/homeCarouselBanner2"

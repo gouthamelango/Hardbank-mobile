@@ -27,13 +27,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUpActivity extends AppCompatActivity {
+public class CustomerSignUpActivity extends AppCompatActivity {
 
-    //Declaration
-    EditText editTextEmail, editTextPassword, editTextName;
-    Button signUpBtn;
     RelativeLayout backNav;
     CheckBox termsCheckBox;
+
+    EditText editTextEmail, editTextPassword, editTextName;
+    Button signUpBtn;
+
     FirebaseFirestore db;
     String userId;
     private FirebaseAuth mAuth;
@@ -41,7 +42,11 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_customer_sign_up);
+
+        //Firebase Auth initializing instance
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
 
         //Initialization
         editTextEmail = (EditText) findViewById(R.id.signUpEmailEditText);
@@ -50,10 +55,6 @@ public class SignUpActivity extends AppCompatActivity {
         signUpBtn  = (Button) findViewById(R.id.signUpButton);
         backNav  =  (RelativeLayout)findViewById(R.id.signUpActivityNavLayout);
         termsCheckBox =  (CheckBox)findViewById(R.id.termsCheckBox);
-
-        //Firebase Auth initializing instance
-        mAuth = FirebaseAuth.getInstance();
-        db =  FirebaseFirestore.getInstance();
 
         //SignUp Button listener which will invoke register user function
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,15 +68,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //Back Button Listener
-        backNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
     }
     private void registerUser() {
         //Storing Edit Text values in string variables
@@ -102,8 +94,8 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        if (password.length() < 6) {
-            editTextPassword.setError("Minimum length of password should be 6");
+        if (password.length() < 8) {
+            editTextPassword.setError("Minimum length of password should be 8");
             editTextPassword.requestFocus();
             return;
         }
@@ -113,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-               // progressBar.setVisibility(View.GONE);
+                // progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     //finish();
                     Toast.makeText(getApplicationContext(),"Registered",Toast.LENGTH_SHORT).show();
@@ -136,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity {
                     });
 
                     finish();
-                    startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -150,12 +142,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.nothing_ani, R.anim.bottom_down);
     }
 }

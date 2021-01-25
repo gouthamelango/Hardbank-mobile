@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hardbank</string>
+    <string name="app_name">HardBank</string>
     <string name="account_holder">Hello, Guest</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,4 +19,7 @@
     <string name="termsText">I agree with the Terms and Condition and the Privacy Policy</string>
     <string name="emailText">Email: </string>
     <string name="nameText">Name: </string>
+    <string name="termsAndConditionText">Terms &amp; Conditions</string>
+    <string name="hintSearchText">Search by Product, Brand &amp; more</string>
+
 </resources>

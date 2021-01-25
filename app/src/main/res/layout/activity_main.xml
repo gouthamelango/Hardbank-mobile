@@ -4,13 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6CBBC7"
     tools:context=".MainActivity">
 
-        <ImageView
-            android:id="@+id/splashLogoImage"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/hardbanklogo" />
+<!--        <ImageView-->
+<!--            android:id="@+id/splashLogoImage"-->
+<!--            android:layout_width="75dp"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:src="@drawable/hardbanklogo" />-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logoContainerLayout"
+            android:layout_centerInParent="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hard"
+                    android:id="@+id/idText"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="#F0F7F8"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank"
+                    android:layout_toRightOf="@+id/idText"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginLeft="2dp"
+                    android:textColor="#2B4B51"
+                    android:textSize="16sp"/>
+        </RelativeLayout>
 
 </RelativeLayout>

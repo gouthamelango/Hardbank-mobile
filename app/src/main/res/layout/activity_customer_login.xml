@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".CustomerLoginActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/loginCustomerActivityBackNav">
 
-    <!-- TODO: Update blank fragment layout -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,19 +36,17 @@
         android:layout_marginRight="20dp"
         android:id="@+id/loginScreenWelcomeTextAndCreateAccountLayout"
         >
-        <TextView
-            android:id="@+id/heyText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/droid_serif"
-            android:text="@string/heyText"
-            android:textSize="22sp"
-            android:textColor="#A4000000"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/hardBankLogoLoginCustomer"
+            android:src="@drawable/hardbanklogo"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            />
+
         <TextView
             android:id="@+id/loginNowText"
-            android:layout_below="@+id/heyText"
+            android:layout_below="@+id/hardBankLogoLoginCustomer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_serif"
@@ -76,35 +96,46 @@
         android:gravity="center"
         android:layout_below="@+id/loginScreenWelcomeTextAndCreateAccountLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="textEmailAddress"
-            android:drawableLeft="@drawable/email_icon"
-            android:drawablePadding="20dp"
-            android:paddingLeft="15dp"
-            android:hint="Email Address"
-            android:background="@drawable/edittext_border"
-            android:id="@+id/loginEmailEditText"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpNameEditTextLayout"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edittext_border"
-            android:drawableLeft="@drawable/ic_baseline_remove_red_eye_24"
-            android:drawablePadding="20dp"
-            android:paddingLeft="15dp"
-            android:inputType="textPassword"
-            android:layout_below="@+id/loginEmailEditText"
-            android:hint="Password"
-            android:id="@+id/loginPasswordEditText"/>
+            android:id="@+id/signUpEmailEditTextLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Email Address"
+                android:background="@drawable/edittext_border"
+                android:id="@+id/loginEmailEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpEmailEditTextLayout"
+            android:id="@+id/loginPasswordEditTextLayout"
+            android:layout_marginTop="20dp"
+            app:passwordToggleEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_border"
+                android:paddingLeft="15dp"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:id="@+id/loginPasswordEditText"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:layout_marginTop="10dp"
             android:id="@+id/forgotPasswordLayout"
-            android:layout_below="@+id/loginPasswordEditText">
+            android:layout_below="@+id/loginPasswordEditTextLayout">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,8 +182,5 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/droid_serif"
             />
-
-
     </RelativeLayout>
-
 </RelativeLayout>

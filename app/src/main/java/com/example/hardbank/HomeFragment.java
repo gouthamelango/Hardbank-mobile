@@ -2,11 +2,18 @@ package com.example.hardbank;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
+import com.synnapps.carouselview.ImageListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,11 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Toolbar toolbar;
+
+    CarouselView carouselView;
+
+    int[] sampleImages = {R.drawable.dummycomponentimage,R.drawable.dummycomponentimage,R.drawable.dummycomponentimage,R.drawable.dummycomponentimage,R.drawable.dummycomponentimage};
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +71,35 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //Home ToolBar
+        toolbar =  view.findViewById(R.id.toolBar);
+        toolbar.inflateMenu(R.menu.toolbar_menu);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity().getApplicationContext(),"Tapped",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //CarouselView
+        carouselView = (CarouselView) view.findViewById(R.id.carousel);
+        carouselView.setPageCount(sampleImages.length);
+        carouselView.setImageListener(imageListener);
+        carouselView.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onClick(int position) {
+                Toast.makeText(getActivity().getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        return view;
     }
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            imageView.setImageResource(sampleImages[position]);
+        }
+    };
 }
