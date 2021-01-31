@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/signUpContentLayout"
         android:layout_below="@+id/signUpActivityNavLayout">
         <TextView
@@ -72,118 +72,144 @@
             android:textSize="18sp"
             android:layout_below="@+id/hiText"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="35dp"
-        android:gravity="center"
-        android:layout_below="@+id/signUpContentLayout">
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/signUpNameEditTextLayout">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="textEmailAddress"
-                android:drawablePadding="20dp"
-                android:paddingLeft="15dp"
-                android:hint="Full Name"
-                android:background="@drawable/edittext_border"
-                android:id="@+id/signUpNameEditText"/>
-        </com.google.android.material.textfield.TextInputLayout>
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/signUpContentLayout">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:padding="35dp"
+           android:gravity="center"
+          >
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/signUpNameEditTextLayout">
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="20dp"
+                   android:paddingLeft="15dp"
+                   android:hint="Full Name"
+                   android:background="@drawable/edittext_border"
+                   android:id="@+id/signUpNameEditText"/>
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/signUpNameEditTextLayout"
+               android:layout_marginTop="20dp"
+               android:id="@+id/signUpShopNameEditTextLayout">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="20dp"
+                   android:paddingLeft="15dp"
+                   android:hint="Shop Name"
+                   android:background="@drawable/edittext_border"
+                   android:id="@+id/signUpShopNameEditText"/>
+           </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/signUpNameEditTextLayout"
-            android:layout_marginTop="20dp"
-            android:id="@+id/signUpEmailEditTextLayout">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="textEmailAddress"
-                android:drawablePadding="20dp"
-                android:paddingLeft="15dp"
-                android:hint="Email Address"
-                android:background="@drawable/edittext_border"
-                android:id="@+id/signUpEmailEditText"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/signUpEmailEditTextLayout"
-            android:id="@+id/signUpPasswordSellerEditTextLayout"
-            android:layout_marginTop="20dp"
-            app:passwordToggleEnabled="true">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edittext_border"
-                android:paddingLeft="15dp"
-                android:inputType="textPassword"
-                android:hint="Password"
-                android:id="@+id/signUpPasswordEditText"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/termsCheckBox"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:buttonTint="@color/colorPrimaryDark"
-            android:text="@string/termsText"
-            android:layout_below="@+id/signUpPasswordSellerEditTextLayout"
-            />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/forgotPasswordLayout"
-            android:layout_below="@+id/termsCheckBox">
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/signUpShopNameEditTextLayout"
+               android:layout_marginTop="20dp"
+               android:id="@+id/signUpEmailEditTextLayout">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="20dp"
+                   android:paddingLeft="15dp"
+                   android:hint="Email Address"
+                   android:background="@drawable/edittext_border"
+                   android:id="@+id/signUpEmailEditText"/>
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/signUpEmailEditTextLayout"
+               android:id="@+id/signUpPasswordSellerEditTextLayout"
+               android:layout_marginTop="20dp"
+               app:passwordToggleEnabled="true">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:background="@drawable/edittext_border"
+                   android:paddingLeft="15dp"
+                   android:inputType="textPassword"
+                   android:hint="Password"
+                   android:id="@+id/signUpPasswordEditText"
+                   />
+           </com.google.android.material.textfield.TextInputLayout>
+           <CheckBox
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/termsCheckBox"
+               android:layout_marginTop="20dp"
+               android:padding="10dp"
+               android:buttonTint="@color/colorPrimaryDark"
+               android:text="@string/termsText"
+               android:layout_below="@+id/signUpPasswordSellerEditTextLayout"
+               />
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:paddingBottom="20dp"
+               android:layout_marginTop="10dp"
+               android:id="@+id/forgotPasswordLayout"
+               android:layout_below="@+id/termsCheckBox">
 
-        </RelativeLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/CreateNewText"
-            android:background="@drawable/button_background"
-            android:textColor="#FFF"
-            android:id="@+id/sellerSignUpButton"
-            android:layout_below="@id/forgotPasswordLayout"/>
+           </RelativeLayout>
+           <Button
+               android:layout_width="match_parent"
+               android:layout_height="60dp"
+               android:text="@string/CreateNewText"
+               android:background="@drawable/button_background"
+               android:textColor="#FFF"
+               android:id="@+id/sellerSignUpButton"
+               android:layout_below="@id/forgotPasswordLayout"/>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/loginActivityBottomLayout"
+               android:layout_marginLeft="15dp"
+               android:layout_marginRight="15dp"
+               android:layout_marginBottom="15dp"
+               android:layout_marginTop="30dp"
+               android:layout_below="@id/sellerSignUpButton">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Already have a seller account ?"
+                   android:textSize="16sp"
+                   android:textStyle="bold"
+                   android:layout_centerHorizontal="true"
+                   android:id="@+id/alreadyHaveSellerAccountText"
+                   android:fontFamily="@font/roboto"/>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Sign In"
+                   android:textColor="@color/colorGreyShade"
+                   android:textSize="18sp"
+                   android:layout_below="@+id/alreadyHaveSellerAccountText"
+                   android:layout_centerHorizontal="true"
+                   android:id="@+id/signInText"
+                   android:layout_centerVertical="true"
+                   android:textStyle="bold"
+                   android:fontFamily="@font/roboto"
+                   android:layout_marginLeft="10dp"/>
+           </RelativeLayout>
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginActivityBottomLayout"
-        android:layout_margin="15dp"
-        android:gravity="center"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have a seller account ?"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/alreadyHaveSellerAccountText"
-            android:fontFamily="@font/roboto"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:textColor="@color/colorGreyShade"
-            android:textSize="18sp"
-            android:layout_toRightOf="@+id/alreadyHaveSellerAccountText"
-            android:id="@+id/signInText"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_marginLeft="10dp"/>
-    </RelativeLayout>
+       </RelativeLayout>
+   </ScrollView>
+
 
 </RelativeLayout>

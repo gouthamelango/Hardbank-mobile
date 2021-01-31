@@ -6,29 +6,28 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SellerHome extends AppCompatActivity {
+public class AdminHome extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seller_home);
+        setContentView(R.layout.activity_admin_home);
 
         //Bottom Navigation
-        bottomNavigationView = findViewById(R.id.seller_bottom_navigation);
+        bottomNavigationView = findViewById(R.id.admin_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-       //OnLoad Home Fragment
+        //OnLoad Home Fragment
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
-                    new SellerDashBoardFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.adminMainContainer,
+                    new AdminDashBoardFragment()).commit();
         }
+
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,20 +35,17 @@ public class SellerHome extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
-                        case R.id.nav_seller_dashboard:
-                            selectedFragment = new SellerDashBoardFragment();
+                        case R.id.nav_admin_dashboard:
+                            selectedFragment = new AdminDashBoardFragment();
                             break;
-                        case R.id.nav_seller_orders:
-                            selectedFragment = new SellerOrdersFragment();
+                        case R.id.nav_admin_account:
+                            selectedFragment = new AdminAccountFragment();
                             break;
-                        case R.id.nav_seller_account:
-                            selectedFragment = new SellerAccountFragment();
-                            break;
-                        case R.id.nav_seller_product:
-                            selectedFragment = new SellerProductFragment();
+                        case R.id.nav_admin_product:
+                            selectedFragment = new AdminProductFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
+                    getSupportFragmentManager().beginTransaction().replace(R.id.adminMainContainer,
                             selectedFragment).commit();
                     return true;
                 }

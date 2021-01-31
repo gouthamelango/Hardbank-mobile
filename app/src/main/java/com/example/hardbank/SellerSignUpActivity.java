@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class SellerSignUpActivity extends AppCompatActivity {
 
-    EditText editTextEmail, editTextPassword, editTextName;
+    EditText editTextEmail, editTextPassword, editTextName, editTextShopName;
     Button signUpBtn;
     CheckBox termsCheckBox;
 
@@ -48,8 +48,10 @@ public class SellerSignUpActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.signUpEmailEditText);
         editTextPassword = (EditText) findViewById(R.id.signUpPasswordEditText);
         editTextName = (EditText)findViewById(R.id.signUpNameEditText);
+        editTextShopName = (EditText)findViewById(R.id.signUpShopNameEditText);
         signUpBtn  = (Button) findViewById(R.id.sellerSignUpButton);
         termsCheckBox =  (CheckBox)findViewById(R.id.termsCheckBox);
+
 
         //Firebase Auth initializing instance
         mAuth = FirebaseAuth.getInstance();
@@ -83,11 +85,17 @@ public class SellerSignUpActivity extends AppCompatActivity {
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         final String name  =  editTextName.getText().toString().trim();
+        final String shopName  =  editTextShopName.getText().toString().trim();
 
         //Validation
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
+            return;
+        }
+        if(shopName.isEmpty()){
+            editTextShopName.setError("ShopName is required");
+            editTextShopName.requestFocus();
             return;
         }
 
@@ -119,9 +127,11 @@ public class SellerSignUpActivity extends AppCompatActivity {
                     userId  = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = db.collection("users").document(userId);
                     Map<String,Object> user =  new HashMap<>();
+                    user.put("id",userId);
                     user.put("fullname",name);
                     user.put("email",email);
                     user.put("type","seller");
+                    user.put("shopname",shopName);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

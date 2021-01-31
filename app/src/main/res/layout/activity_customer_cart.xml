@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".CustomerCartActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/CartActivityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="20dp"
+        android:id="@+id/ifCartIsEmptyLayout"
+        android:background="@drawable/edittext_border"
+        android:layout_margin="25dp"
+        >
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/cartShoppingIfEmptyIcon"
+            android:src="@drawable/shoppingcart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:fontFamily="@font/roboto"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/cartIsEmptyText"
+            android:layout_below="@id/cartShoppingIfEmptyIcon"
+            android:text="Your cart is empty"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/cartIsEmptyText"
+            android:text="Continue Shopping"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:id="@+id/continueShoppingFromCart"
+            android:layout_centerHorizontal="true"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</RelativeLayout>

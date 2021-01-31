@@ -42,14 +42,14 @@
                 android:layout_margin="20dp"
                 android:scaleType="fitXY"
                 android:layout_below="@id/carousel"
-                android:src="@drawable/dummycomponentimage" />
+                android:src="@drawable/dummycomp" />
             <ImageView
                 android:id="@+id/homeCarouselBanner2"
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
                 android:layout_margin="20dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/dummycomponentimage"
+                android:src="@drawable/dummycomp1"
                 android:layout_below="@id/homeCarouselBanner1"/>
             <ImageView
                 android:id="@+id/homeCarouselBanner3"

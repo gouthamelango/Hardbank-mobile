@@ -1,5 +1,6 @@
 package com.example.hardbank;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -58,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                                MainActivity.this.startActivity(mainIntent);
                                MainActivity.this.finish();
                            }
+                           else  if(documentSnapshot.getString("type").equals("admin")){
+                               Intent mainIntent = new Intent(MainActivity.this,AdminHome.class);
+                               MainActivity.this.startActivity(mainIntent);
+                               MainActivity.this.finish();
+                           }
                            else {
                                Intent mainIntent = new Intent(MainActivity.this,HomeActivity.class);
                                MainActivity.this.startActivity(mainIntent);
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                    Intent mainIntent = new Intent(MainActivity.this,HomeActivity.class);
                    MainActivity.this.startActivity(mainIntent);
                    MainActivity.this.finish();
+
                }
             }
         }, SPLASH_DISPLAY_LENGTH);

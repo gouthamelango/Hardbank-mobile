@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,16 +48,22 @@ public class HomeActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
+                                    selectedFragment).commit();
                             break;
                         case R.id.nav_account:
                             selectedFragment = new ChooseAccountFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
+                                    selectedFragment).commit();
                             break;
                         case R.id.nav_cart:
-                            Toast.makeText(getApplicationContext(),"Cart",Toast.LENGTH_LONG).show();
+                           // bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+                            Intent cartActivityIntent  =  new Intent(getApplicationContext(),CustomerCartActivity.class);
+                            startActivity(cartActivityIntent);
+                            overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
-                            selectedFragment).commit();
+
                     return true;
                 }
             };

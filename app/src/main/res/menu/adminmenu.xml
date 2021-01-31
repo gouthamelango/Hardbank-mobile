@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_seller_dashboard"
+        android:id="@+id/nav_admin_dashboard"
         android:icon="@drawable/ic_baseline_dashboard_24"
         android:title="DashBoard" />
-    <item
-        android:id="@+id/nav_seller_orders"
-        android:icon="@drawable/cart_icon"
-        android:title="Orders" />
+<!--    <item-->
+<!--        android:id="@+id/nav_admin_orders"-->
+<!--        android:icon="@drawable/cart_icon"-->
+<!--        android:title="Orders" />-->
 
     <item
-        android:id="@+id/nav_seller_product"
+        android:id="@+id/nav_admin_product"
         android:icon="@drawable/ic_baseline_loyalty_24"
-        android:title="My Products" />
+        android:title="Products" />
 
     <item
-        android:id="@+id/nav_seller_account"
+        android:id="@+id/nav_admin_account"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Account" />
 </menu>

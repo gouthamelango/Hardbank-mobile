@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFF1F3"
-    tools:context=".SellerProductFragment">
+    tools:context=".AdminProductFragment">
+
+    <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,8 +16,8 @@
             android:padding="15dp"
             android:background="@drawable/edittext_border"
             android:layout_height="wrap_content"
-            android:text="My Products"
-            android:id="@+id/myProductsText"
+            android:text="All Products"
+            android:id="@+id/adminProductsText"
             android:textSize="16dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/roboto"
@@ -26,8 +27,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_border"
             android:padding="15dp"
-            android:layout_below="@id/myProductsText"
-            android:id="@+id/myProductsLayout">
+            android:layout_below="@id/adminProductsText"
+            android:id="@+id/adminProductsLayout">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,19 +38,5 @@
 
         </ScrollView>
     </RelativeLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionAddProduct"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="40dp"
-        android:clickable="true"
-        android:src="@drawable/ic_baseline_add_24" />
-
 
 </RelativeLayout>

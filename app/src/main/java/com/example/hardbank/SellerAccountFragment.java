@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,10 +18,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChooseAccountFragment#newInstance} factory method to
+ * Use the {@link SellerAccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChooseAccountFragment extends Fragment {
+public class SellerAccountFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +31,6 @@ public class ChooseAccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    Button logInBtn;
     Button logoutBtn;
 
     FirebaseAuth mAuth;
@@ -43,9 +39,7 @@ public class ChooseAccountFragment extends Fragment {
 
     TextView userName, userEmail;
 
-    RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn;
-
-    public ChooseAccountFragment() {
+    public SellerAccountFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +49,11 @@ public class ChooseAccountFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChooseAccountFragment.
+     * @return A new instance of fragment SellerAccountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChooseAccountFragment newInstance(String param1, String param2) {
-        ChooseAccountFragment fragment = new ChooseAccountFragment();
+    public static SellerAccountFragment newInstance(String param1, String param2) {
+        SellerAccountFragment fragment = new SellerAccountFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,32 +74,18 @@ public class ChooseAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_choose_account, container, false);
+       View view   = inflater.inflate(R.layout.fragment_seller_account, container, false);;
 
         //FireBase initialization
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
 
-        //Customer Feature Btns
-        customerFunctionsChooserLayout = view.findViewById(R.id.customerFunctionsChooserLayout);
-
         //User Details Display Dashboard
-        userDetailsLayout =  view.findViewById(R.id.userDetailsLayout);
-        userEmail = (TextView)view.findViewById(R.id.userEmailAccountChooserFragment);
-        userName = (TextView)view.findViewById(R.id.userNameAccountChooserFragment);
+        userEmail = (TextView)view.findViewById(R.id.userEmailAccountSeller);
+        userName = (TextView)view.findViewById(R.id.userNameAccountSeller);
 
-        //Login Btn Navigation
-        logInBtn = view.findViewById(R.id.loginBtn);
-        logInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent customerLoginActivity = new Intent(getActivity().getApplicationContext(),CustomerLoginActivity.class);
-                startActivity(customerLoginActivity);
-                getActivity().overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
-            }
-        });
 
-        logoutBtn = (Button)view.findViewById(R.id.logoutBtnAccountChooserFragment);
+        logoutBtn = (Button)view.findViewById(R.id.logoutSellerBtn);
         //Logout Listener
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,25 +96,7 @@ public class ChooseAccountFragment extends Fragment {
             }
         });
 
-        //Sell on HardBank
-        sellOnHardBank =  view.findViewById(R.id.sellOnHardBankBtn);
-        sellOnHardBank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sellerSignInActivity =  new Intent(getActivity().getApplicationContext(),SellerSignUpActivity.class);
-                startActivity(sellerSignInActivity);
-            }
-        });
 
-        //Management
-        managementBtn = view.findViewById(R.id.managementBtn);
-        managementBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sellerSignInActivity =  new Intent(getActivity().getApplicationContext(),AdminLoginActivity.class);
-                startActivity(sellerSignInActivity);
-            }
-        });
         return view;
     }
 
@@ -142,16 +104,8 @@ public class ChooseAccountFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() == null) {
-            logInBtn.setVisibility(View.VISIBLE);
-            userDetailsLayout.setVisibility(View.GONE);
-            customerFunctionsChooserLayout.setVisibility(View.GONE);
         }
         else  if(mAuth.getCurrentUser() != null){
-
-            userDetailsLayout.setVisibility(View.VISIBLE);
-            customerFunctionsChooserLayout.setVisibility(View.VISIBLE);
-            logInBtn.setVisibility(View.GONE);
-
             //Displaying Data
             userEmail.setText(mAuth.getCurrentUser().getEmail());
             userId  = mAuth.getCurrentUser().getUid();
