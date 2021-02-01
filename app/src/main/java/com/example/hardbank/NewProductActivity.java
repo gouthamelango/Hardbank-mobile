@@ -49,6 +49,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,9 +78,11 @@ public class NewProductActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ImageView previewImage;
 
-    String sellerName;
+    String shopName;
     // request code
     private final int PICK_IMAGE_REQUEST = 22;
+
+    List<String> group;
 
     Spinner spinner;
     EditText otherCategory;
@@ -114,7 +117,7 @@ public class NewProductActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        db.collection("products").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("category").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 categories.add("Select");
@@ -207,7 +210,7 @@ public class NewProductActivity extends AppCompatActivity {
                     compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                     byte[] thumbData = byteArrayOutputStream.toByteArray();
 
-                    final StorageReference ur_firebase_reference  = storageReference.child("images").child( UUID.randomUUID().toString()+ ".jpg");
+                    final StorageReference ur_firebase_reference  = storageReference.child("images/productimages").child( UUID.randomUUID().toString()+ ".jpg");
                     UploadTask image_path = ur_firebase_reference.putBytes(thumbData);
 
                     Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -257,23 +260,31 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void storeData(String downloadUri, final String  productName, String  productBrand, String productPrice, String productDeliveryPrice, final String productStock, String productDescription) {
 
+
+        // Toast.makeText(getApplicationContext(),downloadUri,Toast.LENGTH_LONG).show();
+        selectedCategory  = spinner.getSelectedItem().toString();
+        if(selectedCategory.equals("Others")){
+            selectedCategory = otherCategory.getText().toString();
+//            Map<String, String> catData = new HashMap<>();
+//            catData.put("count","0");
+//            db.collection("category").document(selectedCategory).set(catData);
+        }
+
+        final String productID = UUID.randomUUID().toString();
         Map<String, String> productData = new HashMap<>();
-        productData.put("id",UUID.randomUUID().toString());
+        productData.put("id",productID);
         productData.put("productname",productName);
         productData.put("productbrand",productBrand);
         productData.put("productprice",productPrice);
         productData.put("productdeliveryprice",productDeliveryPrice);
         productData.put("productdescription",productDescription);
         productData.put("image",downloadUri);
+        productData.put("category",selectedCategory);
         productData.put("verified","false");
 
-       // Toast.makeText(getApplicationContext(),downloadUri,Toast.LENGTH_LONG).show();
-        selectedCategory  = spinner.getSelectedItem().toString();
-        if(selectedCategory.equals("Others")){
-            selectedCategory = otherCategory.getText().toString();
-        }
-        final String productID = UUID.randomUUID().toString();
-        db.collection("products").document(selectedCategory).collection(productID).document(productName).set(productData).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+
+        db.collection("products").document(productID).set(productData).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -292,10 +303,10 @@ public class NewProductActivity extends AppCompatActivity {
                     db.collection("users").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            sellerName = documentSnapshot.getString("shopname");
+                            shopName = documentSnapshot.getString("shopname");
                             Map<String, String> seller = new HashMap<>();
-                            seller.put("shopname",sellerName );
-                            db.collection("products").document(selectedCategory).collection(productID).document(productName).collection("sellers").document(mAuth.getCurrentUser().getUid()).set(seller).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            seller.put("shopname",shopName );
+                            db.collection("products").document(productID).collection("sellers").document(mAuth.getCurrentUser().getUid()).set(seller).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getApplicationContext(), "User Data is Stored Successfully", Toast.LENGTH_LONG).show();
@@ -305,6 +316,7 @@ public class NewProductActivity extends AppCompatActivity {
 
                         }
                     });
+
 
 
                 } else {

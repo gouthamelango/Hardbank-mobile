@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="15dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/dummycomp1" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/productDetailsLayout"
+        android:padding="10dp"
+        android:layout_toRightOf="@+id/productImage">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:fontFamily="@font/roboto"
+            android:id="@+id/productNameTextView"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_margin="3dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rupeeSymbol"
+            android:layout_below="@+id/productNameTextView"
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="3dp"
+            android:text="₹"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/rupeeSymbol"
+            android:layout_below="@+id/productNameTextView"
+            android:text="Price"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto"
+            android:layout_margin="3dp"
+            android:id="@+id/productPriceTextView"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/productAcceptOrRejectBtnLayout">
+
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/rejectbackground"
+            android:id="@+id/rejectProduct"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_close_24"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:background="@drawable/acceptbackground"
+            android:layout_toRightOf="@id/rejectProduct"
+            android:layout_margin="10dp"
+            android:id="@+id/acceptProduct"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_done_24"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
