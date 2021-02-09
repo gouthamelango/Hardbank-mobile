@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".ProductAccpetOrRejectActivity">
+
+<!--    nav layout-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/acceptOrRejectActivityNavBar"
+        >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewProductNameNavBar"
+            android:text="Product Name"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+<!--    page layout-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/acceptOrRejectActivityNavBar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:id="@+id/productImage"
+            android:src="@drawable/dummycomp1" />
+
+<!--        productContainerLayout-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productImage"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/mainContainerAcceptOrReject"
+                android:background="@drawable/edittext_border">
+                <!--            Product Details Layout-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/underline"
+                    android:id="@+id/nameAndBrandLayout"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/productDetailsText"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="14sp"
+                        android:text="Product Details"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product Name"
+                        android:layout_below="@id/productDetailsText"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:id="@+id/productName"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Brand"
+                        android:layout_below="@+id/productName"
+                        android:textSize="18sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/productBrand"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/roboto"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/salesTodayRupeeSymbol"
+                        android:textSize="14sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@id/productPrice"
+                        android:layout_centerVertical="true"
+                        android:text="₹"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:id="@+id/productPrice"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+                <!--           product Description Layout-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:id="@+id/DescriptionLayout"
+                    android:background="@drawable/underline"
+                    android:layout_below="@+id/nameAndBrandLayout"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/DescriptionText"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="14sp"
+                        android:text="Description"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:id="@+id/productDescription"
+                        android:text="Hello this is the description of the text and it will give all the information of the product."
+                        android:layout_below="@+id/DescriptionText"
+                        />
+                </RelativeLayout>
+                <!--            other details of the product-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/DescriptionLayout"
+                    android:id="@+id/otherDetailsLayout"
+                    android:padding="10dp"
+                    android:background="@drawable/underline"
+                    android:layout_marginTop="10dp">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:layout_height="wrap_content">
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            >
+                            <TextView
+                                android:text="Category: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_marginRight="10dp"
+                                android:textStyle="bold"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_column="1" />
+                            <TextView
+                                android:text="Product Category Name"
+                                android:layout_width="wrap_content"
+                                android:id="@+id/productCategoryTextView"
+                                android:layout_height="wrap_content"
+                                android:layout_column="2" />
+                        </TableRow>
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginTop="10dp"
+                            >
+                            <TextView
+                                android:text="Delivery Price(₹): "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+
+                                android:layout_marginRight="10dp"
+                                android:textStyle="bold"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_column="1" />
+                            <TextView
+                                android:text="Product Delivery Price"
+                                android:layout_width="wrap_content"
+                                android:id="@+id/productDeliveryPrice"
+                                android:layout_height="wrap_content"
+                                android:layout_column="2" />
+                        </TableRow>
+                    </TableLayout>
+
+                </RelativeLayout>
+<!--                accept or decline btn-->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Decline"
+                    android:background="@drawable/rejectbackground"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/Widget.AppCompat.Button.Small"
+                    android:layout_below="@+id/otherDetailsLayout"
+                    android:id="@+id/rejectBtn"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#DF3F64"
+                    />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Accept"
+                    android:background="@drawable/acceptbackground"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/Widget.AppCompat.Button.Small"
+                    android:layout_below="@id/rejectBtn"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#2FB65B"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/acceptBtn"/>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

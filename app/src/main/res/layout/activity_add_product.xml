@@ -109,20 +109,10 @@
             android:layout_marginTop="10dp"
             android:layout_below="@+id/categoriesText">
 
-            <ScrollView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-
-
-                </RelativeLayout>
-
-
-            </ScrollView>
+                android:layout_height="match_parent"
+                android:id="@+id/categoryRecyclerView"/>
 
         </RelativeLayout>
 

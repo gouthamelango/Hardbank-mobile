@@ -51,6 +51,11 @@ public class HomeActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
                                     selectedFragment).commit();
                             break;
+                        case R.id.nav_community:
+                            selectedFragment = new CommunityHomeFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
+                                    selectedFragment).commit();
+                            break;
                         case R.id.nav_account:
                             selectedFragment = new ChooseAccountFragment();
                             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,

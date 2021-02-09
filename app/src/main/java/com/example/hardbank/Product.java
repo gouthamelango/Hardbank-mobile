@@ -11,12 +11,18 @@ public class Product {
     private  String productdescription;
     private  String verified;
 
+    public String getReason() {
+        return reason;
+    }
+
+    private  String  reason;
+
     public Product(){
 
     }
 
     public Product(String productname, String productprice,String category, String id, String image, String productbrand,
-                   String productdeliveryprice, String productdescription, String verified){
+                   String productdeliveryprice, String productdescription, String verified, String reason){
         this.productname =  productname;
         this.productprice = productprice;
         this.productdeliveryprice = productdeliveryprice;

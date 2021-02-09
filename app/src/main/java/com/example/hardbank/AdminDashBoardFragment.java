@@ -1,5 +1,7 @@
 package com.example.hardbank;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -17,6 +21,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +47,8 @@ public class AdminDashBoardFragment extends Fragment {
 
     private ProductAdapter adapter;
     RecyclerView recyclerView;
+
+    Dialog reasonDialog;
 
     public AdminDashBoardFragment() {
         // Required empty public constructor
@@ -80,6 +89,9 @@ public class AdminDashBoardFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
+
+        reasonDialog = new Dialog(getActivity());
+
         recyclerView = view.findViewById(R.id.adminNewRequestOfProductsRecyclerView);
         notebookRef = db.collection("products");
         setUpRecyclerView();
@@ -99,15 +111,44 @@ public class AdminDashBoardFragment extends Fragment {
         adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                Product product = documentSnapshot.toObject(Product.class);
+                //Product product = documentSnapshot.toObject(Product.class);
                 String id  = documentSnapshot.getId();
-                Toast.makeText(getActivity().getApplicationContext(),"Position: "+position+ " ID: "+id,Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity().getApplicationContext(),"Position: "+position+ " ID: "+id,Toast.LENGTH_LONG).show();
+                Intent intent =  new Intent(getActivity().getApplicationContext(),ProductAccpetOrRejectActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
         adapter.setOnRejectClickListener(new ProductAdapter.OnRejectClickListener() {
             @Override
             public void onRejectClick(DocumentSnapshot documentSnapshot, int position) {
-                Toast.makeText(getActivity().getApplicationContext(),"Rejected",Toast.LENGTH_LONG).show();
+
+                final String id  = documentSnapshot.getId();
+
+                //Can be cancelable
+                reasonDialog.setCancelable(true);
+
+                //Inflating Dialog view
+                View dia = getActivity().getLayoutInflater().inflate(R.layout.reject_popup,null);
+                //Setting view
+                reasonDialog.setContentView(dia);
+
+                //initialization of dialog Viewa
+                final EditText reason  = dia.findViewById(R.id.reasonEditText);
+                Button rejBtn = dia.findViewById(R.id.rejBtn);
+
+                //Dialog Reject Button
+                rejBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        db.collection("products").document(id).update("reason",reason.getText().toString());
+                        db.collection("products").document(id).update("verified","rejected");
+                        reasonDialog.dismiss();
+                    }
+                });
+
+                //Showing Dialog
+                reasonDialog.show();
             }
         });
         adapter.setOnAcceptClickListener(new ProductAdapter.OnAcceptClickListener() {

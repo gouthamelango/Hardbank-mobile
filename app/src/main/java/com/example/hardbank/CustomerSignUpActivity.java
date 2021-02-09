@@ -39,6 +39,8 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     String userId;
     private FirebaseAuth mAuth;
 
+    //private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,17 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         final String name  =  editTextName.getText().toString().trim();
 
         //Validation
+        if(name.isEmpty()){
+            editTextName.setError("Name is required");
+            editTextName.requestFocus();
+            return;
+        }
+        if(name.length()<2){
+            editTextName.setError("Name should be at least 2 Characters");
+            editTextName.requestFocus();
+            return;
+        }
+
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
@@ -100,6 +113,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
             return;
         }
 
+
         //progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -107,7 +121,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 // progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    //finish();
+                    finish();
                     Toast.makeText(getApplicationContext(),"Registered",Toast.LENGTH_SHORT).show();
                     userId  = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = db.collection("users").document(userId);

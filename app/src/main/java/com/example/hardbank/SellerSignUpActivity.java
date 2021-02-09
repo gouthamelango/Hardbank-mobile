@@ -62,6 +62,7 @@ public class SellerSignUpActivity extends AppCompatActivity {
         signInText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent signInActivityIntent  = new Intent(getApplicationContext(),SellerLoginActivity.class);
                 startActivity(signInActivityIntent);
             }
@@ -88,6 +89,16 @@ public class SellerSignUpActivity extends AppCompatActivity {
         final String shopName  =  editTextShopName.getText().toString().trim();
 
         //Validation
+        if(name.isEmpty()){
+            editTextName.setError("Name is required");
+            editTextName.requestFocus();
+            return;
+        }
+        if(name.length()<2){
+            editTextName.setError("Name should be at least 2 Characters");
+            editTextName.requestFocus();
+            return;
+        }
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
@@ -111,7 +122,7 @@ public class SellerSignUpActivity extends AppCompatActivity {
             return;
         }
 
-        if (password.length() < 6) {
+        if (password.length() < 8) {
             editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
             return;

@@ -24,11 +24,13 @@ public class SellerLoginActivity extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword;
     Button loginBtn;
-    TextView signUpBtn;
+    TextView signUpBtn,resetPasswordTextSeller;
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     String userId;
+
+    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,16 @@ public class SellerLoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent signUpIntent = new Intent(getApplicationContext(),SellerSignUpActivity.class);
                 startActivity(signUpIntent);
+            }
+        });
+
+        //Reset Password
+        resetPasswordTextSeller = findViewById(R.id.resetPasswordTextSeller);
+        resetPasswordTextSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  =  new Intent(getApplicationContext(),PasswordResetActivity.class);
+                startActivity(intent);
             }
         });
 

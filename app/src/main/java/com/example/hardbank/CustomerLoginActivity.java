@@ -25,16 +25,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomerLoginActivity extends AppCompatActivity {
 
     RelativeLayout backNav;
-    TextView signUpBtn, continueAsGuest;
+    TextView signUpBtn, continueAsGuest, resetPasswordText;
 
     EditText editTextEmail, editTextPassword;
     Button loginBtn;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    Pattern pattern;
+    Matcher matcher;
+
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{4,}$";;
 
     int total = 0, x = 0;
     @Override
@@ -65,6 +71,15 @@ public class CustomerLoginActivity extends AppCompatActivity {
             }
         });
 
+        //Reset Password
+        resetPasswordText = findViewById(R.id.resetPasswordText);
+        resetPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  =  new Intent(getApplicationContext(),PasswordResetActivity.class);
+                startActivity(intent);
+            }
+        });
         //Create An Account button
         signUpBtn  = findViewById(R.id.createNewText);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +125,15 @@ public class CustomerLoginActivity extends AppCompatActivity {
                     editTextPassword.requestFocus();
                     return;
                 }
+
+//                pattern = Pattern.compile(PASSWORD_PATTERN);
+//                matcher = pattern.matcher(password);
+//
+//                if(!matcher.matches()){
+//                    editTextPassword.setError("Password Must Contain one digit from 0-9, one lowercase character, one uppercase character, one special symbols [@#$%] ");
+//                    editTextPassword.requestFocus();
+//                    return;
+//                }
 
                 doSignIn(email,password);
             }

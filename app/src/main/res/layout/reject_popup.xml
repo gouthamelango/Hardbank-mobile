@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="30dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/popupborder"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/reasonEditTextLayout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:inputType="textMultiLine"
+            android:drawablePadding="20dp"
+            android:paddingLeft="15dp"
+            android:hint="Reason For Rejecting.."
+            android:background="@drawable/edittext_border"
+            android:id="@+id/reasonEditText"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/rejectbackground"
+        android:layout_below="@id/reasonEditTextLayout"
+        android:layout_centerHorizontal="true"
+        android:text="Reject"
+        android:textAppearance="@style/Widget.AppCompat.Button.Small"
+        android:textSize="14sp"
+        android:id="@+id/rejBtn"
+        android:textColor="#DF3F64"
+        android:layout_marginTop="15dp"/>
+
+</RelativeLayout>

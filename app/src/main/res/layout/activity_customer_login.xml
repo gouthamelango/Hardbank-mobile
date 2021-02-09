@@ -150,7 +150,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ResetPasswordText"
+                android:id="@+id/resetPasswordText"
                 android:text="@string/resetPasswordText"
                 android:textSize="16sp"
                 android:layout_toRightOf="@+id/forgotPasswordText"

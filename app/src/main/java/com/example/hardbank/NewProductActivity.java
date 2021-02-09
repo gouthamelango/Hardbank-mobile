@@ -181,16 +181,53 @@ public class NewProductActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                final String productName = productNameEditText.getText().toString().trim();
+                final String productBrand = productBrandEditText.getText().toString().trim();
+                final String productPrice = productPriceEditText.getText().toString().trim();
+                final String productDeliveryPrice = productDeliveryPriceEditText.getText().toString().trim();
+                final String productDescription =   productDescriptionEditText.getText().toString().trim();
+                final String productStock  = productStockEditText.getText().toString().trim();
+
+                if(productName.isEmpty()){
+                    productNameEditText.setError("Product Name is required");
+                    productNameEditText.requestFocus();
+                    return;
+                }
+                if(productName.length()<2){
+                    productNameEditText.setError("Product Name must be at least 2 characters");
+                    productNameEditText.requestFocus();
+                    return;
+                }
+                if(spinner.getSelectedItem().toString().equals("Select")){
+                    Toast.makeText(getApplicationContext(),"Please Select Category",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(spinner.getSelectedItem().toString().equals("Others")){
+                    if(otherCategory.getText().toString().isEmpty()){
+                        otherCategory.setError("Category is required");
+                        otherCategory.requestFocus();
+                        return;
+                    }
+                }
+                if(productBrand.isEmpty()){
+                    productBrandEditText.setError("Product brand is required");
+                    productBrandEditText.requestFocus();
+                    return;
+                }
+                if(productBrand.length()<2){
+                    productBrandEditText.setError("Product Brand Name must be at least 2 characters");
+                    productBrandEditText.requestFocus();
+                    return;
+                }
+
+
                 //Toast.makeText(getApplicationContext(), "Add Product", Toast.LENGTH_SHORT).show();
                 progressDialog.setMessage("Storing Data...");
                 progressDialog.show();
 
-                final String productName = productNameEditText.getText().toString();
-                final String productBrand = productBrandEditText.getText().toString();
-                final String productPrice = productPriceEditText.getText().toString();
-                final String productDeliveryPrice = productDeliveryPriceEditText.getText().toString();
-                final String productDescription =   productDescriptionEditText.getText().toString();
-                final String productStock  = productStockEditText.getText().toString();
+
 
                 if(!TextUtils.isEmpty(productName)&&!TextUtils.isEmpty(productBrand)&&!TextUtils.isEmpty(productPrice)&&!TextUtils.isEmpty(productDeliveryPrice)&&!TextUtils.isEmpty(productDescription)&&imageUri!=null){
                     File newFile = new File(imageUri.getPath());
@@ -211,7 +248,7 @@ public class NewProductActivity extends AppCompatActivity {
                     byte[] thumbData = byteArrayOutputStream.toByteArray();
 
                     final StorageReference ur_firebase_reference  = storageReference.child("images/productimages").child( UUID.randomUUID().toString()+ ".jpg");
-                    UploadTask image_path = ur_firebase_reference.putBytes(thumbData);
+                    UploadTask image_path = ur_firebase_reference.putFile(imageUri);
 
                     Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -229,7 +266,7 @@ public class NewProductActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Uri downloadUri = task.getResult();
                                 System.out.println("Upload " + downloadUri);
-                                Toast.makeText(getApplicationContext(), "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(), "Successfully uploaded", Toast.LENGTH_SHORT).show();
                                 if (downloadUri != null) {
 
                                     String photoStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
@@ -281,8 +318,7 @@ public class NewProductActivity extends AppCompatActivity {
         productData.put("image",downloadUri);
         productData.put("category",selectedCategory);
         productData.put("verified","false");
-
-
+        productData.put("reason","none");
 
         db.collection("products").document(productID).set(productData).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -306,10 +342,14 @@ public class NewProductActivity extends AppCompatActivity {
                             shopName = documentSnapshot.getString("shopname");
                             Map<String, String> seller = new HashMap<>();
                             seller.put("shopname",shopName );
+                            seller.put("id",mAuth.getCurrentUser().getUid());
                             db.collection("products").document(productID).collection("sellers").document(mAuth.getCurrentUser().getUid()).set(seller).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getApplicationContext(), "User Data is Stored Successfully", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Product Successfully Added and has been sent to Verification", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(), SellerHome.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
                                     progressDialog.dismiss();
                                 }
                             });

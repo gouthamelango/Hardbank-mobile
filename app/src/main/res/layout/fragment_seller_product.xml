@@ -3,40 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EFF1F3"
     tools:context=".SellerProductFragment">
-    <RelativeLayout
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:background="@color/colorGreyShade"
+        app:tabTextColor="#FFF"
+        android:id="@+id/main_tab_menu"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="15dp"
-            android:background="@drawable/edittext_border"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Products"
-            android:id="@+id/myProductsText"
-            android:textSize="16dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/roboto"
-            />
-        <ScrollView
-            android:layout_width="match_parent"
+            android:id="@+id/tabMenuAllProducts"
+            android:text="All Products" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_border"
-            android:padding="15dp"
-            android:layout_below="@id/myProductsText"
-            android:id="@+id/myProductsLayout">
+            android:id="@+id/tabMenuPendingProducts"
+            android:text="Pending" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </RelativeLayout>
-
-        </ScrollView>
-    </RelativeLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabMenuRejectedProducts"
+            android:text="Rejected" />
+    </com.google.android.material.tabs.TabLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionAddProduct"
@@ -50,6 +47,11 @@
         android:layout_marginBottom="40dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_24" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_tab_menu"
+        android:id="@+id/container"/>
 
 
 </RelativeLayout>
