@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".SellerInformationActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/sellerVerifyActivityNavBar"
+        >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/backIcon"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewSellerNameNavBar"
+            android:text="Seller Name"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:layout_below="@+id/sellerVerifyActivityNavBar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/topLayout"
+                android:background="@drawable/edittext_border">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/dummypropic"
+                    android:id="@+id/userIcon"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nameLayout"
+                    android:layout_below="@+id/userIcon"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/accImg"
+                        android:src="@drawable/ic_baseline_account_circle_24"/>
+
+                    <TextView
+                        android:layout_toRightOf="@id/accImg"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sellerNameTextView"
+                        android:text="Username"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#B2000000"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/topLayout"
+                android:id="@+id/sellerInformationLayout"
+                android:background="@drawable/edittext_border">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        >
+                        <TextView
+                            android:text="Email ID "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="exmaple@gmail.com"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/sellerEmailTextView"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Shop Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Shop Name"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/shopNameTextView"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Shop Address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Shop Address"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/shopAddressTextView"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Document"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Close Document"
+                            android:textColor="#2E69FF"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/docTextView"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                </TableLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sellerInformationLayout"
+                android:padding="20dp"
+                android:id="@+id/docLayout"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext_border">
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/docImg"
+                    android:src="@drawable/dummycomp1"
+                    android:scaleType="fitXY"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

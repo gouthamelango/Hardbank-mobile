@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edittext_border"
+    android:padding="10dp"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:id="@+id/sellerImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        android:layout_column="1"
+        android:src="@drawable/dummypropic"
+        android:layout_marginRight="20dp"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:text="Seller Name"
+        android:layout_toRightOf="@id/sellerImage"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/sellerNameTextView"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/shopNameLayout"
+        android:layout_below="@+id/sellerNameTextView"
+        android:layout_toRightOf="@id/sellerImage">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/shopImg"
+            android:src="@drawable/ic_baseline_storefront_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop Name"
+            android:id="@+id/textViewShopName"
+            android:layout_toRightOf="@id/shopImg"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/shopAddressLayout"
+        android:layout_below="@+id/shopNameLayout"
+        android:layout_toRightOf="@id/sellerImage">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/locImg"
+            android:src="@drawable/ic_baseline_location_on_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop Address Shop Address Shop Address Shop Address Shop Address"
+            android:id="@+id/textViewAddress"
+            android:layout_toRightOf="@id/locImg"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/rejectbackground"
+        android:padding="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#DF3F64"
+            android:id="@+id/sellerStatus"
+            android:text="Under Review"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

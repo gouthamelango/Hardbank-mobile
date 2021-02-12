@@ -114,11 +114,27 @@
                    android:background="@drawable/edittext_border"
                    android:id="@+id/signUpShopNameEditText"/>
            </com.google.android.material.textfield.TextInputLayout>
-
            <com.google.android.material.textfield.TextInputLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_below="@+id/signUpShopNameEditTextLayout"
+               android:layout_marginTop="20dp"
+               android:id="@+id/signUpShopAddressEditTextLayout">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:inputType="textMultiLine"
+                   android:drawablePadding="20dp"
+                   android:paddingLeft="15dp"
+                   android:hint="Shop Address"
+                   android:background="@drawable/edittext_border"
+                   android:id="@+id/signUpShopAddressEditText"/>
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/signUpShopAddressEditTextLayout"
                android:layout_marginTop="20dp"
                android:id="@+id/signUpEmailEditTextLayout">
                <com.google.android.material.textfield.TextInputEditText
@@ -148,6 +164,45 @@
                    android:id="@+id/signUpPasswordEditText"
                    />
            </com.google.android.material.textfield.TextInputLayout>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/signUpPasswordSellerEditTextLayout"
+               android:layout_marginTop="20dp"
+               android:padding="10dp"
+               android:id="@+id/supportingDocsLayout">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="16dp"
+                   android:fontFamily="@font/roboto"
+                   android:id="@+id/uploadImageText"
+                   android:layout_marginTop="15dp"
+                   android:text="Supporting Document Image*"/>
+               <ImageView
+                   android:id="@+id/selectedImage"
+                   android:layout_width="60dp"
+                   android:layout_height="40dp"
+                   android:layout_below="@+id/uploadImageText"
+                   android:layout_marginTop="15dp"
+                   android:scaleType="fitXY"
+                   android:src="@drawable/aadhar" />
+               <Button
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/button_background"
+                   android:text="Choose"
+                   android:textColor="#fff"
+
+                   android:id="@+id/chooseDoc"
+                   android:textAppearance="@style/Widget.AppCompat.Button.Small"
+                   android:textSize="12sp"
+                   android:layout_toRightOf="@id/selectedImage"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginLeft="15dp"
+                   android:layout_below="@+id/uploadImageText"/>
+
+           </RelativeLayout>
            <CheckBox
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -156,7 +211,7 @@
                android:padding="10dp"
                android:buttonTint="@color/colorPrimaryDark"
                android:text="@string/termsText"
-               android:layout_below="@+id/signUpPasswordSellerEditTextLayout"
+               android:layout_below="@+id/supportingDocsLayout"
                />
            <RelativeLayout
                android:layout_width="match_parent"

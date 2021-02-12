@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".UpdateDocActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/askQuestionActivityNavBar"
+        >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewProductNameNavBar"
+            android:text="Update Document"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/askQuestionMainContainer"
+        android:layout_below="@+id/askQuestionActivityNavBar"
+        android:layout_margin="20dp"
+
+        android:background="@drawable/edittext_border"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supported Document Image*"
+            android:id="@+id/askAQuestionText"/>
+        <ImageView
+            android:id="@+id/selectedImagePreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/askAQuestionText"
+            android:layout_marginTop="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dummycomp1" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/selectImageBtn"
+            android:layout_below="@+id/uploadProductImageText"
+            android:layout_toRightOf="@id/selectedImagePreview"
+            android:background="@drawable/button_background"
+            android:text="Select Image"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="75dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selectedImagePreview"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
+            android:text="Upload"
+            android:textColor="#fff"
+            android:id="@+id/uploadBtn"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+</RelativeLayout>

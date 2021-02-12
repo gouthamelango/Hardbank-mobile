@@ -221,6 +221,44 @@ public class NewProductActivity extends AppCompatActivity {
                     productBrandEditText.requestFocus();
                     return;
                 }
+                if(productPrice.isEmpty()){
+                    productPriceEditText.setError("Price is required");
+                    productPriceEditText.requestFocus();
+                    return;
+                }
+                if(productPrice.equals("0")){
+                    productPriceEditText.setError("Price Cannot be 0");
+                    productPriceEditText.requestFocus();
+                    return;
+                }
+                if(productDeliveryPrice.isEmpty()){
+                    productDeliveryPriceEditText.setError("Delivery Price is required");
+                    productDeliveryPriceEditText.requestFocus();
+                    return;
+                }
+                if(productStock.isEmpty()){
+                    productStockEditText.setError("Stock cannot be empty");
+                    productStockEditText.requestFocus();
+                    return;
+                }
+                if(productStock.equals("0")){
+                    productStockEditText.setError("Stock cannot be 0");
+                    productStockEditText.requestFocus();
+                    return;
+                }
+                if(productDescription.isEmpty()){
+                    productDescriptionEditText.setError("Description cannot be empty");
+                    productDescriptionEditText.requestFocus();
+                    return;
+                }
+                if(imageUri==null){
+                    Toast.makeText(getApplicationContext(),"Choose Product Image",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
+
 
 
                 //Toast.makeText(getApplicationContext(), "Add Product", Toast.LENGTH_SHORT).show();

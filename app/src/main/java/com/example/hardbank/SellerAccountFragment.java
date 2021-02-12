@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,8 +37,13 @@ public class SellerAccountFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     String userId;
+    RelativeLayout adminVerifyNotifyLayout, adminSentCommentLayout;
 
     TextView userName, userEmail;
+    String verified;
+    String comment;
+
+    Button viewBtn;
 
     public SellerAccountFragment() {
         // Required empty public constructor
@@ -96,6 +102,17 @@ public class SellerAccountFragment extends Fragment {
             }
         });
 
+        adminVerifyNotifyLayout  = view.findViewById(R.id.adminVerifyLayout);
+        adminSentCommentLayout = view.findViewById(R.id.adminSentCommentLayout);
+
+        viewBtn = view.findViewById(R.id.viewBtn);
+        viewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),UpdateDocActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -107,6 +124,7 @@ public class SellerAccountFragment extends Fragment {
         }
         else  if(mAuth.getCurrentUser() != null){
             //Displaying Data
+
             userEmail.setText(mAuth.getCurrentUser().getEmail());
             userId  = mAuth.getCurrentUser().getUid();
             db.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -114,8 +132,27 @@ public class SellerAccountFragment extends Fragment {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     String user_name = documentSnapshot.getString("fullname");
                     userName.setText(user_name);
+                    verified = documentSnapshot.getString("verified");
+                    comment = documentSnapshot.getString("comment");
+                    if(verified.equals("false")&&comment.equals("none")){
+                        adminVerifyNotifyLayout.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        adminVerifyNotifyLayout.setVisibility(View.GONE);
+                    }
+                    if(!comment.equals("none")){
+                        adminSentCommentLayout.setVisibility(View.VISIBLE);
+                    }
+
                 }
             });
+
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

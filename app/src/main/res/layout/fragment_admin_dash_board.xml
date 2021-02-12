@@ -7,114 +7,164 @@
     tools:context=".AdminDashBoardFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <HorizontalScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/adminTopScrollLayout"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="175dp"
-                android:layout_height="125dp"
-                android:id="@+id/salesTodayLayout"
-                android:layout_marginRight="10dp"
-                android:gravity="left"
-                android:paddingTop="30dp"
-                android:paddingLeft="20dp"
-                android:background="@drawable/edittext_border">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/salesTodayRupeeSymbol"
-                    android:textSize="14sp"
-                    android:text="₹"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:layout_toRightOf="@+id/salesTodayRupeeSymbol"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="#AB000000"
-                    android:id="@+id/salesToday"
-                    android:text="0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/salesToday"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Sales Today"/>
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="175dp"
-                android:layout_height="125dp"
-                android:layout_toRightOf="@+id/salesTodayLayout"
-                android:id="@+id/unitsSoldTodayLayout"
-                android:gravity="left"
-                android:paddingTop="30dp"
-                android:paddingLeft="20dp"
-                android:background="@drawable/edittext_border">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:layout_marginLeft="10dp"
-                    android:text="0"
-                    android:id="@+id/unitsSoldToday"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/unitsSoldToday"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Units Today"/>
-
-            </RelativeLayout>
-        </RelativeLayout>
-    </HorizontalScrollView>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/edittext_border"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/adminTopScrollLayout"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/newProductsLabelLayout">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:fontFamily="@font/roboto"
-                android:text="New Products"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:padding="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/newProductsLabelLayout"
-            android:layout_height="300dp">
-            <androidx.recyclerview.widget.RecyclerView
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/adminNewRequestOfProductsRecyclerView"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/adminTopScrollLayout"
+                android:padding="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="175dp"
+                        android:layout_height="125dp"
+                        android:id="@+id/salesTodayLayout"
+                        android:layout_marginRight="10dp"
+                        android:gravity="left"
+                        android:paddingTop="30dp"
+                        android:paddingLeft="20dp"
+                        android:background="@drawable/edittext_border">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/salesTodayRupeeSymbol"
+                            android:textSize="14sp"
+                            android:text="₹"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="22sp"
+                            android:layout_toRightOf="@+id/salesTodayRupeeSymbol"
+                            android:fontFamily="@font/roboto"
+                            android:textColor="#AB000000"
+                            android:id="@+id/salesToday"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/salesToday"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Sales Today"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="175dp"
+                        android:layout_height="125dp"
+                        android:layout_toRightOf="@+id/salesTodayLayout"
+                        android:id="@+id/unitsSoldTodayLayout"
+                        android:gravity="left"
+                        android:paddingTop="30dp"
+                        android:paddingLeft="20dp"
+                        android:background="@drawable/edittext_border">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="22sp"
+                            android:layout_marginLeft="10dp"
+                            android:text="0"
+                            android:id="@+id/unitsSoldToday"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/unitsSoldToday"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Units Today"/>
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/newProducts"
+                android:background="@drawable/edittext_border"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/adminTopScrollLayout"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newProductsLabelLayout">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="New Products"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/newProductsLabelLayout"
+                    android:layout_height="300dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/adminNewRequestOfProductsRecyclerView"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/edittext_border"-->
+<!--                android:layout_marginLeft="22dp"-->
+<!--                android:layout_marginRight="22dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_below="@id/newProducts"-->
+<!--                >-->
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/newSellerLabelLayout">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="16dp"-->
+<!--                        android:fontFamily="@font/roboto"-->
+<!--                        android:text="Seller Verification"/>-->
+<!--                </RelativeLayout>-->
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_below="@+id/newSellerLabelLayout"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:layout_height="300dp">-->
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:id="@+id/adminNewRequestOfSellerRecyclerView"/>-->
+<!--                </RelativeLayout>-->
+
+<!--            </RelativeLayout>-->
+
 
         </RelativeLayout>
-
-    </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -38,6 +38,10 @@ public class AdminHome extends AppCompatActivity {
                         case R.id.nav_admin_dashboard:
                             selectedFragment = new AdminDashBoardFragment();
                             break;
+                        case R.id.nav_admin_verify_seller:
+                            selectedFragment = new StoreAdminFragment();
+                            break;
+
                         case R.id.nav_admin_account:
                             selectedFragment = new AdminAccountFragment();
                             break;

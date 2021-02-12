@@ -64,5 +64,54 @@
         </RelativeLayout>
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:id="@+id/adminVerifyLayout"
+        android:background="@drawable/rejectbackground"
+        android:layout_below="@+id/sellerAccountDisplayLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="#DF3F64"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Thanks For joining Us!\n Be Patient Until we verify you!"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/adminSentCommentLayout"
+        android:visibility="gone"
+        android:background="@drawable/rejectbackground"
+        android:layout_below="@+id/sellerAccountDisplayLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:id="@+id/reSubmitText"
+            android:textColor="#DF3F64"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Hello!\nWe rejected your Document Submitted for verification.\nKindly Resubmit your supporting Document"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reSubmitText"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/acceptbackground"
+            android:text="View"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="12sp"
+            android:id="@+id/viewBtn"
+            android:textColor="#2FB65B"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,6 +48,9 @@ public class SellerProductFragment extends Fragment {
 
     TabLayout tabLayout;
     TabItem allProducts, pendingProducts;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     public SellerProductFragment() {
         // Required empty public constructor
@@ -84,14 +89,28 @@ public class SellerProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_product, container, false);
 
+        //FireBase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
+
         //FAB
         fabAddProduct = view.findViewById(R.id.floatingActionAddProduct);
         fabAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newNoteIntent = new Intent(getActivity().getApplicationContext(), AddProductActivity.class);
-                startActivity(newNoteIntent);
-                getActivity().overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                db.collection("users").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.getString("verified").equals("true")){
+                            Intent newNoteIntent = new Intent(getActivity().getApplicationContext(), AddProductActivity.class);
+                            startActivity(newNoteIntent);
+                            getActivity().overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                        }
+                        else {
+                            Toast.makeText(getActivity().getApplicationContext(),"You're not yet Verified by HardBank!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 

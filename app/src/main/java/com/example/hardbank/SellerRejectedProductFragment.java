@@ -165,6 +165,8 @@ public class SellerRejectedProductFragment extends Fragment {
                                                         db.collection("products").document(id).delete();
                                                         db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").document(id).delete();
                                                         Toast.makeText(getActivity().getApplicationContext(),"Product Deleted",Toast.LENGTH_SHORT).show();
+                                                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                                        ft.detach(SellerRejectedProductFragment.this).attach(SellerRejectedProductFragment.this).commit();
                                                     }
                                                 });
                                             }
