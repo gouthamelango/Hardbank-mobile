@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SellerSignUpActivity extends AppCompatActivity {
 
@@ -39,6 +40,18 @@ public class SellerSignUpActivity extends AppCompatActivity {
     String userId;
 
     TextView signInText;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +140,12 @@ public class SellerSignUpActivity extends AppCompatActivity {
             editTextPassword.requestFocus();
             return;
         }
+        if (!PASSWORD_PATTERN.matcher(password).matches() ){
+            editTextPassword.setError("Password Must Contain one digit from 0-9, one lowercase character, one uppercase character, one special symbols [@#$%] ");
+            editTextPassword.requestFocus();
+            return;
+        }
+
 
         //progressBar.setVisibility(View.VISIBLE);
 

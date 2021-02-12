@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,10 +38,20 @@ public class CustomerLoginActivity extends AppCompatActivity {
     Button loginBtn;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-    Pattern pattern;
-    Matcher matcher;
+    TextInputLayout textInputPassword;
 
-    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{4,}$";;
+    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{4,}$";;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
 
     int total = 0, x = 0;
     @Override
@@ -91,6 +102,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
             }
         });
 
+        textInputPassword = findViewById(R.id.loginPasswordEditTextLayout);
+
         //Login Btn
         loginBtn = (Button) findViewById(R.id.loginButton);
         editTextEmail = (EditText) findViewById(R.id.loginEmailEditText);
@@ -122,6 +135,14 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
                 if (password.length() < 6) {
                     editTextPassword.setError("Minimum length of password should be 6");
+                    editTextPassword.requestFocus();
+                    return;
+                }
+
+                String passwordInput = textInputPassword.getEditText().getText().toString().trim();
+
+                if (!PASSWORD_PATTERN.matcher(password).matches() ){
+                    editTextPassword.setError("Password Must Contain one digit from 0-9, one lowercase character, one uppercase character, one special symbols [@#$%] ");
                     editTextPassword.requestFocus();
                     return;
                 }

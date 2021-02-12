@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.regex.Pattern;
+
 public class SellerLoginActivity extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword;
@@ -30,7 +32,17 @@ public class SellerLoginActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String userId;
 
-    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +100,11 @@ public class SellerLoginActivity extends AppCompatActivity {
 
                 if (password.length() < 6) {
                     editTextPassword.setError("Minimum length of password should be 6");
+                    editTextPassword.requestFocus();
+                    return;
+                }
+                if (!PASSWORD_PATTERN.matcher(password).matches() ){
+                    editTextPassword.setError("Password Must Contain one digit from 0-9, one lowercase character, one uppercase character, one special symbols [@#$%] ");
                     editTextPassword.requestFocus();
                     return;
                 }
