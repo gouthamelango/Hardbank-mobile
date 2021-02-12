@@ -14,10 +14,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class AnswersAdapter extends FirestoreRecyclerAdapter<Answers,AnswersAdapter.MyAnswerHolder> {
 
@@ -31,16 +35,17 @@ public class AnswersAdapter extends FirestoreRecyclerAdapter<Answers,AnswersAdap
     protected void onBindViewHolder(@NonNull final MyAnswerHolder holder, int position, @NonNull Answers model) {
         holder.answerTextView.setText(model.getAnswer());
 
+//
         FirebaseFirestore.getInstance().collection("users").document(model.getCustomerid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-               // name  = document.getString("fullname");
-                //Toast.makeText(holder.customerNameTextView.getContext(),documentSnapshot.getString("email"),Toast.LENGTH_SHORT).show();
-                holder.customerNameTextView.setText(documentSnapshot.getString("email"));
+               // Toast.makeText(holder.customerNameTextView.getContext(),documentSnapshot.getString("type"),Toast.LENGTH_SHORT).show();
+                holder.customerNameTextView.setText(documentSnapshot.getString("fullname"));
             }
         });
 
-        //holder.customerNameTextView.setText(model.customerid);
+        Date date = model.getTime().toDate();
+        holder.time.setText(date.toString());
     }
 
     @NonNull
@@ -54,11 +59,13 @@ public class AnswersAdapter extends FirestoreRecyclerAdapter<Answers,AnswersAdap
 
         TextView answerTextView;
         TextView customerNameTextView;
+        TextView time;
 
         public MyAnswerHolder(View itemView){
             super(itemView);
             answerTextView = itemView.findViewById(R.id.answerTextView);
             customerNameTextView = itemView.findViewById(R.id.customerNameTextView);
+            time  = itemView.findViewById(R.id.time);
         }
     }
 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:padding="5dp"
+    android:background="@drawable/edittext_border"
     android:layout_marginBottom="5dp">
 
     <RelativeLayout
@@ -20,13 +21,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/profilePic"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/roboto"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:id="@+id/customerNameTextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:text="Customer Name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:fontFamily="@font/roboto"
+            android:id="@+id/time"
+            android:textSize="12sp"
+            android:layout_below="@id/customerNameTextView"
+            android:layout_toRightOf="@id/profilePic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

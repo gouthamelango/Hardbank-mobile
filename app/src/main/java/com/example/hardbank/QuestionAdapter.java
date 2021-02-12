@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
 
 public class QuestionAdapter extends FirestoreRecyclerAdapter<Question,QuestionAdapter.MyQuestionHolder> {
 
@@ -23,8 +27,17 @@ public class QuestionAdapter extends FirestoreRecyclerAdapter<Question,QuestionA
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull MyQuestionHolder holder, int position, @NonNull Question model) {
+    protected void onBindViewHolder(@NonNull final MyQuestionHolder holder, int position, @NonNull Question model) {
         holder.textViewQuestion.setText(model.getQuestion());
+        FirebaseFirestore.getInstance().collection("users").document(model.getUserid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // Toast.makeText(holder.customerNameTextView.getContext(),documentSnapshot.getString("type"),Toast.LENGTH_SHORT).show();
+                holder.textViewUserID.setText(documentSnapshot.getString("fullname"));
+            }
+        });
+        Date date = model.getTime().toDate();
+        holder.textViewTime.setText(date.toString());
     }
 
     @NonNull
@@ -36,9 +49,13 @@ public class QuestionAdapter extends FirestoreRecyclerAdapter<Question,QuestionA
 
     class MyQuestionHolder extends RecyclerView.ViewHolder{
         TextView textViewQuestion;
+        TextView textViewUserID;
+        TextView textViewTime;
         public MyQuestionHolder(View itemView){
             super(itemView);
             textViewQuestion = itemView.findViewById(R.id.textViewQuestion);
+            textViewUserID = itemView.findViewById(R.id.userId);
+            textViewTime = itemView.findViewById(R.id.time);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

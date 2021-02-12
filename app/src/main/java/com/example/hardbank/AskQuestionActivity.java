@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -53,10 +54,10 @@ public class AskQuestionActivity extends AppCompatActivity {
 
     }
     public  void postQuestion(String question){
-        Map<String, String> questionData = new HashMap<>();
+        Map<String, Object> questionData = new HashMap<>();
         questionData.put("question",question);
         questionData.put("userid",mAuth.getCurrentUser().getUid());
-
+        questionData.put("time", FieldValue.serverTimestamp());
         db.collection("communitysupport").document(UUID.randomUUID().toString()).set(questionData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

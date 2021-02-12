@@ -329,6 +329,7 @@ public class NewProductActivity extends AppCompatActivity {
                     sellerProduct.put("stock",productStock);
                     sellerProduct.put("productname",productName);
                     sellerProduct.put("category",selectedCategory);
+                    sellerProduct.put("productid",productID);
                     db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").document(productID).set(sellerProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

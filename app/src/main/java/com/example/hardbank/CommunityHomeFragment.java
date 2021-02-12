@@ -126,7 +126,7 @@ public class CommunityHomeFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        Query query = notebookRef.whereNotEqualTo("question","none");
+        Query query = notebookRef.orderBy("time",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Question> options = new FirestoreRecyclerOptions.Builder<Question>()
                 .setQuery(query, Question.class)
                 .build();
@@ -141,10 +141,22 @@ public class CommunityHomeFragment extends Fragment {
                 Intent intent =  new Intent(getActivity().getApplicationContext(),AnswerViewActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
+
             }
         });
 
         adapter.startListening();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.startListening();
+    }
 }

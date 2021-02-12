@@ -2,15 +2,37 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
+    android:gravity="center"
     android:layout_marginBottom="5dp"
+    android:padding="5dp"
+    android:background="@drawable/edittext_border"
     android:layout_marginTop="5dp">
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:id="@+id/arrowImg"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userId"
+        android:layout_toRightOf="@+id/userIcon"
+        android:layout_marginLeft="15dp"
+        android:textSize="10sp"
+        android:id="@+id/time"
+        android:layout_marginTop="10dp"
+        android:text="Date and Time"/>
 
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:id="@+id/userIcon"
-        android:src="@drawable/quesionpic"
+        android:src="@drawable/blub"
         />
 
     <TextView
@@ -24,4 +46,17 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="Question"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/userIcon"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/textViewQuestion"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:id="@+id/userId"
+        android:text="User ID"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>

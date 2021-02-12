@@ -30,14 +30,15 @@
             android:textStyle="bold"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/answersActivityNavBar"
-        android:layout_marginTop="10dp">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/answersActivityNavBar"-->
+<!--        android:layout_marginTop="10dp">-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/answersActivityNavBar"
             android:padding="20dp">
 
             <RelativeLayout
@@ -46,18 +47,40 @@
                 android:id="@+id/questionLayout"
                 android:background="@drawable/edittext_border"
                 android:padding="10dp">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/userIcon"
+                    android:src="@drawable/dummypropic"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
+                    android:layout_toRightOf="@+id/userIcon"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/textViewQuestion"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:id="@+id/userId"
+                    android:text="User ID"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_toRightOf="@+id/userIcon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Question Question Question Question Question Question Question"
+                    android:layout_marginTop="5dp"
+                    android:text="Question"
+                    android:layout_below="@+id/userId"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:fontFamily="@font/roboto"
                     android:id="@+id/questionTextView"
                     android:textSize="18sp"/>
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_below="@id/questionTextView"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="14dp"
                     android:src="@drawable/ic_baseline_edit_24"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
@@ -80,17 +103,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/questionLayout"
-                android:background="@drawable/edittext_border"
                 android:layout_marginTop="20dp"
-                android:padding="20dp">
+                >
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/answersRecyclerView"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/emptyAnswer"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext_border"
+                android:layout_below="@id/questionLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Be the first to help the community"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    />
+
+            </RelativeLayout>
 
 
         </RelativeLayout>
-    </ScrollView>
+
 
 </RelativeLayout>

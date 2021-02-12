@@ -1,10 +1,13 @@
 package com.example.hardbank;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -154,7 +157,31 @@ public class AdminDashBoardFragment extends Fragment {
         adapter.setOnAcceptClickListener(new ProductAdapter.OnAcceptClickListener() {
             @Override
             public void onAcceptClick(DocumentSnapshot documentSnapshot, int position) {
-                Toast.makeText(getActivity().getApplicationContext(),"Accepted",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(),"Accepted",Toast.LENGTH_LONG).show();
+                final String id  = documentSnapshot.getId();
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle("Accept Product");
+                alertDialog.setMessage("Are you sure you want to accept this product?");
+                alertDialog.setCancelable(false);
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Toast.makeText(getActivity().getApplicationContext(),"Requested",Toast.LENGTH_LONG).show();
+                                db.collection("products").document(id).update("verified","true");
+                                //db.collection("products").document(id).update("reason","none");
+                               // FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                //ft.detach(SellerRejectedProductFragment.this).attach(SellerRejectedProductFragment.this).commit();
+                            }
+                        });
+                alertDialog.show();
+
+
             }
         });
 
