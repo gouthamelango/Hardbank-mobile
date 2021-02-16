@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".AboutUsActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/aboutUsActivityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="20sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorGreyShade"
+        android:id="@+id/aboutUsDisplay"
+        android:layout_below="@id/aboutUsActivityBackNav"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/hardbanklogo"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/hardBankLogoPic"/>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customerFunctionsChooserLayout"
+        android:layout_below="@+id/aboutUsDisplay"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/underline"
+            android:id="@+id/aboutUsLayout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:text="HardBank "/>
+
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline"
+            android:id="@+id/AboutUsExplanation"
+            android:layout_below="@+id/aboutUsLayout"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="450dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dp"
+                android:textSize="16sp"
+                android:id="@+id/about_Us_Desc"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="HardBank is an online platform that sells hardware components, project books, and research books. This platform vision is to provide products and all resources to any person from technical to non-technical people, students to beginners. HardBank provides sample projects to the users to get more knowledge in the technical field and bring out the innovation in them. This platform allows you to shop the hardware components and pay across a wide selection of categories.Conveniently order the products for home delivery. Technical and electronics project developers can sell their project guide books and research books. Local hardware stores can expand their online business through this platform. Thus, it makes easy for customers and technical people to get components and make their project work easier and a platform for technical people to sell their projects and guide books."/>
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

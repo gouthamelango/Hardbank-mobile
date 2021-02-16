@@ -43,7 +43,7 @@ public class ChooseAccountFragment extends Fragment {
 
     TextView userName, userEmail;
 
-    RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn;
+    RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn,whoWeAreBtn;
 
     public ChooseAccountFragment() {
         // Required empty public constructor
@@ -113,6 +113,16 @@ public class ChooseAccountFragment extends Fragment {
                 mAuth.signOut();
                 getActivity().finish();
                 startActivity(new Intent(getActivity().getApplicationContext(), HomeActivity.class));
+            }
+        });
+
+        //Who are we
+        whoWeAreBtn =  (RelativeLayout)view.findViewById(R.id.whoWeAreBtn);
+        whoWeAreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getActivity().getApplicationContext(),AboutUsActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -9,16 +9,24 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
+    Menu bottom_nav;
+    MenuItem cart;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -27,6 +35,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
+        //FireBase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
 
         //Bottom Navigation
@@ -40,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -62,8 +74,8 @@ public class HomeActivity extends AppCompatActivity {
                                     selectedFragment).commit();
                             break;
                         case R.id.nav_cart:
-                           // bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
-                            Intent cartActivityIntent  =  new Intent(getApplicationContext(),CustomerCartActivity.class);
+                            // bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+                            Intent cartActivityIntent = new Intent(getApplicationContext(), CustomerCartActivity.class);
                             startActivity(cartActivityIntent);
                             overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
                             break;
@@ -73,4 +85,21 @@ public class HomeActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bottom_nav = bottomNavigationView.getMenu();
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            MenuItem menuItem = bottom_nav.getItem(i);
+           switch (menuItem.getItemId()){
+               case R.id.nav_cart:
+                   cart = menuItem;
+                   break;
+           }
+        }
+        if(mAuth.getCurrentUser()==null){
+            cart.setVisible(false);
+        }
+
+    }
 }

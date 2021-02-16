@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/edittext_border"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        android:layout_column="1"
+        android:src="@drawable/dummycomp1"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:text="Product Name"
+        android:layout_toRightOf="@id/productImage"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/productNameTextView"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/priceLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/productNameTextView"
+        android:layout_toRightOf="@id/productImage">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/priceImg"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/rupeeicon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/textViewPrice"
+            android:layout_toRightOf="@id/priceImg"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

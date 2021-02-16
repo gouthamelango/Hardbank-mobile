@@ -118,7 +118,7 @@
                 android:paddingLeft="20dp"
                 android:id="@+id/productPriceEditText"
                 android:inputType="number"
-                android:hint="Price"/>
+                android:hint="Price (₹) "/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                 android:paddingLeft="20dp"
                 android:id="@+id/productDeliveryPriceEditText"
                 android:inputType="number"
-                android:hint="Delivery Price"/>
+                android:hint="Delivery Price (₹)"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

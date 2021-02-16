@@ -23,21 +23,19 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/roboto"
             />
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_border"
             android:padding="15dp"
             android:layout_below="@id/adminProductsText"
             android:id="@+id/adminProductsLayout">
 
-            <RelativeLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:id="@+id/allProductsRecyclerView"/>
 
-            </RelativeLayout>
-
-        </ScrollView>
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
