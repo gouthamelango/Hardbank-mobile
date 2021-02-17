@@ -88,6 +88,9 @@ public class NewProductActivity extends AppCompatActivity {
     EditText otherCategory;
     String selectedCategory;
 
+    ArrayList<String> keys = new ArrayList<String>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -346,7 +349,19 @@ public class NewProductActivity extends AppCompatActivity {
         }
 
         final String productID = UUID.randomUUID().toString();
-        Map<String, String> productData = new HashMap<>();
+        String lowerCase = productName.toLowerCase();
+        for (int i = 1;i<=productName.length();i++){
+                keys.add(String.valueOf(lowerCase.substring(0,i)));
+        }
+
+//        String[] separated = lowerCase.split(" ");
+//        for (int i=0; i < separated.length; i++)
+//        {
+//            System.out.println(separated[i]);
+//        }
+
+
+        Map<String, Object> productData = new HashMap<>();
         productData.put("id",productID);
         productData.put("productname",productName);
         productData.put("productbrand",productBrand);
@@ -354,6 +369,7 @@ public class NewProductActivity extends AppCompatActivity {
         productData.put("productdeliveryprice",productDeliveryPrice);
         productData.put("productdescription",productDescription);
         productData.put("image",downloadUri);
+        productData.put("keys",keys);
         productData.put("category",selectedCategory);
         productData.put("verified","false");
         productData.put("reason","none");

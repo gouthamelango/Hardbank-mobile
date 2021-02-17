@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".SellerSearchProducts">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBarLayout"
+        layout="@layout/toolbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:id="@+id/topContainerLayout"
+        android:layout_margin="10dp"
+        android:layout_below="@id/searchBarLayout"
+        android:background="@drawable/edittext_border"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:id="@+id/searchResultsText"
+            android:textStyle="bold"
+            android:text="Search results"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:layout_below="@id/searchResultsText"
+            android:layout_marginTop="5dp"
+            android:id="@+id/searchedForTextView"
+            android:text="Searched For Product"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:layout_below="@+id/topContainerLayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/searchResultsSellerRecyclerView"/>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

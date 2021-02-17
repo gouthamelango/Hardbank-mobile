@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/edittext_border"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        android:layout_column="1"
+        android:src="@drawable/dummycomp1"
+        android:layout_marginRight="20dp"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:text="Product Name"
+        android:layout_toRightOf="@id/productImage"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/productNameTextView"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/priceLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/productNameTextView"
+        android:layout_toRightOf="@id/productImage">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/priceImg"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/rupeeicon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/textViewPrice"
+            android:layout_toRightOf="@id/priceImg"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/descriptionLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/priceLayout"
+        android:layout_toRightOf="@id/productImage">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/desImg"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_baseline_description_24"/>
+        <TextView
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:id="@+id/textViewDescription"
+            android:layout_toRightOf="@id/desImg"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/acceptbackground"
+        android:padding="10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/sellImg"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/loyalty_blue"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="#2E69FF"
+            android:layout_toRightOf="@id/sellImg"
+            android:id="@+id/sellerStatus"
+            android:text="Sell"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
