@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class CategoryAdapter extends FirestoreRecyclerAdapter<Category,CategoryAdapter.CategoryHolder> {
 
+    private CategoryAdapter.OnItemClickListener listener;
 
     public CategoryAdapter(@NonNull FirestoreRecyclerOptions<Category> options) {
         super(options);
@@ -39,6 +41,22 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category,CategoryA
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             categoryItemTextView = itemView.findViewById(R.id.categoryItemTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position  = getAdapterPosition();
+                    if(position!= RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
         }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+    public void  setOnItemClickListener(CategoryAdapter.OnItemClickListener listener){
+        this.listener = listener;
     }
 }

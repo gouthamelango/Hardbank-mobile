@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    RelativeLayout createNewProductBtn;
+    RelativeLayout createNewProductBtn,showAllProductsBtn;
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -89,6 +90,16 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
+        showAllProductsBtn = findViewById(R.id.showAllProductsBtn);
+        showAllProductsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getApplicationContext(),SellerSearchProducts.class);
+                intent.putExtra("products","all");
+                startActivity(intent);
+            }
+        });
+
         setUpRecyclerView();
     }
 
@@ -111,6 +122,18 @@ public class AddProductActivity extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                            String cat =  documentSnapshot.getId();
+                            //Toast.makeText(getApplicationContext(),cat,Toast.LENGTH_SHORT).show();
+                            Intent intent =  new Intent(getApplicationContext(),SellerSearchProducts.class);
+                            intent.putExtra("category",cat);
+                            startActivity(intent);
+
+                        }
+                    });
+
                     adapter.startListening();
                 }
             }
