@@ -1,9 +1,11 @@
 package com.example.hardbank;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,12 +51,14 @@ public class SellerAllProductFragment extends Fragment {
     private CollectionReference notebookRef;
     private  CollectionReference productsCollectionReference;
 
-    private StockAdapter adapter;
+    public StockAdapter adapter;
     RecyclerView recyclerView;
 
     String userID;
     List<String> productsID = new ArrayList<>();
     List<String> acceptedID = new ArrayList<>();
+
+    Boolean allowRefresh = true;
 
     public SellerAllProductFragment() {
         // Required empty public constructor
@@ -134,6 +138,16 @@ public class SellerAllProductFragment extends Fragment {
                                         recyclerView.setHasFixedSize(true);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                                         recyclerView.setAdapter(adapter);
+                                        adapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                                                //Toast.makeText(getContext().getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                                                final String id  = documentSnapshot.getId();
+                                                Intent intent =  new Intent(getActivity().getApplicationContext(),UpdateStockActivity.class);
+                                                intent.putExtra("id",id);
+                                                startActivity(intent);
+                                            }
+                                        });
                                         adapter.startListening();
                                     }
                                 }
@@ -157,11 +171,13 @@ public class SellerAllProductFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        //adapter.stopListening();
+        adapter.stopListening();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
     }
 }

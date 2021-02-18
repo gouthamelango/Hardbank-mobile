@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class StockAdapter extends FirestoreRecyclerAdapter<ProductStock,StockAdapter.MyProductStockHolder> {
 
-
+    private StockAdapter.OnItemClickListener listener;
 
     public StockAdapter(@NonNull FirestoreRecyclerOptions<ProductStock> options) {
         super(options);
@@ -60,6 +60,22 @@ public class StockAdapter extends FirestoreRecyclerAdapter<ProductStock,StockAda
             textViewStock = itemView.findViewById(R.id.textViewStock);
             productImage = itemView.findViewById(R.id.productImage);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position  = getAdapterPosition();
+                    if(position!= RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
         }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+    public void  setOnItemClickListener(StockAdapter.OnItemClickListener listener){
+        this.listener = listener;
     }
 }
