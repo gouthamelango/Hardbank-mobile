@@ -178,6 +178,6 @@ public class SellerAllProductFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        setUpRecyclerView();
     }
 }
