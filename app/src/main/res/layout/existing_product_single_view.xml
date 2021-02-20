@@ -66,9 +66,10 @@
             android:src="@drawable/ic_baseline_description_24"/>
         <TextView
             android:layout_width="175dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Description"
             android:id="@+id/textViewDescription"
+            android:breakStrategy="simple"
             android:layout_toRightOf="@id/desImg"
             android:layout_marginLeft="10dp"/>
     </RelativeLayout>
@@ -78,7 +79,7 @@
         android:layout_width="wrap_content"
         android:background="@drawable/acceptbackground"
         android:padding="10dp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
         android:id="@+id/sellBtn"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true">

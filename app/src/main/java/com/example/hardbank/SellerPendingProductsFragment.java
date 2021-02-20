@@ -1,5 +1,6 @@
 package com.example.hardbank;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -53,6 +55,10 @@ public class SellerPendingProductsFragment extends Fragment {
 
     String userID;
     List<String> productsID = new ArrayList<>();
+
+    Context context;
+
+    List<Product> products =new ArrayList<>();
 
     public SellerPendingProductsFragment() {
         // Required empty public constructor
@@ -97,43 +103,89 @@ public class SellerPendingProductsFragment extends Fragment {
 
         //Getting my products RecyclerView
         recyclerView = view.findViewById(R.id.myProductsSellerRecyclerView);
-
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
         //Reference to user collection
         notebookRef = db.collection("products");
 
         //TO get Current seller ID
         userID = mAuth.getCurrentUser().getUid();
-
+        context  = getActivity().getApplicationContext();
         setUpRecyclerView();
 
         return  view;
     }
     private void setUpRecyclerView() {
 
-         //To get all the products sold by that particular seller
-        productsCollectionReference = db.collection("users").document(userID).collection("products");
-        productsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//         //To get all the products sold by that particular seller
+//        productsCollectionReference = db.collection("users").document(userID).collection("products");
+//        productsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()){
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        productsID.add(document.getId());
+//                    }
+//                    if (!productsID.isEmpty()){
+//                        Query query = notebookRef.whereIn("id",productsID).whereEqualTo("verified","false");
+//                        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
+//                                .setQuery(query, Product.class)
+//                                .build();
+//                        adapter = new MyPendingProductsSellerAdapter(options);
+//                        recyclerView.setHasFixedSize(true);
+//                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//                        recyclerView.setAdapter(adapter);
+//                        adapter.startListening();
+//                    }
+//                }
+//
+//            }
+//        });
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        productsID.add(document.getId());
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        DocumentSnapshot doc=list.get(i);
+                        productsID.add(doc.getId());
                     }
-                    if (!productsID.isEmpty()){
-                        Query query = notebookRef.whereIn("id",productsID).whereEqualTo("verified","false");
-                        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
-                                .setQuery(query, Product.class)
-                                .build();
-                        adapter = new MyPendingProductsSellerAdapter(options);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                        recyclerView.setAdapter(adapter);
-                        adapter.startListening();
-                    }
-                }
+                    for (int j=0;j<productsID.size();j++){
+                        db.collection("products").document(productsID.get(j)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if(documentSnapshot.getString("verified").equals("false")){
+                                    DocumentSnapshot doc = documentSnapshot;
+                                    String productname = doc.getString("productname");
+                                    String productprice = doc.getString("productprice");
+                                    //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                    String category = doc.getString("category");
+                                    String id = doc.getString("id");
+                                    String image = doc.getString("image");
+                                    String productbrand = doc.getString("productbrand");
+                                    String productdeliveryprice = doc.getString("productdeliveryprice");
+                                    String productdescription = doc.getString("productdescription");
+                                    String  reason = doc.getString("reason");
+                                    String verified = doc.getString("verified");
+                                    Product product = new Product(productname, productprice,category,id, image,productbrand,
+                                            productdeliveryprice, productdescription, verified, reason);
+                                    products.add(product);
+                                    adapter = new MyPendingProductsSellerAdapter(context,products);
+                                    //Toast.makeText(getActivity().getApplicationContext(),product.getImage(),Toast.LENGTH_SHORT).show();
+                                    recyclerView.setAdapter(adapter);
+                                }
 
+                            }
+                        });
+                    }
+
+
+                }
             }
         });
+
+
     }
     @Override
     public void onStart() {

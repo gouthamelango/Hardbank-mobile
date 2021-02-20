@@ -129,7 +129,7 @@ public class SellExistingProductActivity extends AppCompatActivity {
                        }
                    }
                    if(flag==1){
-                       Toast.makeText(getApplicationContext(),"Sorry!. You're Already Selling this product",Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(),"Sorry!. You're Already Posted this product",Toast.LENGTH_SHORT).show();
                    }
                    else{
                        db.collection("users").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

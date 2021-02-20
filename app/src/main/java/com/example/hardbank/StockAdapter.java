@@ -1,35 +1,49 @@
 package com.example.hardbank;
 
+
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class StockAdapter extends FirestoreRecyclerAdapter<ProductStock,StockAdapter.MyProductStockHolder> {
+import java.util.List;
 
-    private StockAdapter.OnItemClickListener listener;
 
-    public StockAdapter(@NonNull FirestoreRecyclerOptions<ProductStock> options) {
-        super(options);
+public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewHolder> {
+
+    Context context;
+    List<ProductStock> list;
+
+    public StockAdapter(Context context,List<ProductStock> list) {
+        this.context = context;
+        this.list = list;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_product_seller_single_view,parent,false);
+        return new StockAdapter.MyViewHolder(V);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final MyProductStockHolder holder, int position, @NonNull final ProductStock model) {
-        holder.productNameTextView.setText(model.getProductname());
-        holder.textViewStock.setText(model.getStock());
-
-        FirebaseFirestore.getInstance().collection("products").document(model.getProductid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+        holder.productNameTextView.setText(list.get(position).getProductname());
+        holder.textViewStock.setText(list.get(position).getStock());
+        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getProductid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -40,42 +54,38 @@ public class StockAdapter extends FirestoreRecyclerAdapter<ProductStock,StockAda
                 holder.textViewPrice.setText(documentSnapshot.getString("productprice"));
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(view.getContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                final String id  = list.get(position).getProductid();
+                Intent intent =  new Intent(view.getContext(),UpdateStockActivity.class);
+                intent.putExtra("id",id);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
-    @NonNull
     @Override
-    public StockAdapter.MyProductStockHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_product_seller_single_view,parent,false);
-        return new StockAdapter.MyProductStockHolder(V);
+    public int getItemCount() {
+        return list.size();
     }
 
-    class  MyProductStockHolder extends RecyclerView.ViewHolder{
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView productNameTextView;
         TextView textViewStock;
         ImageView productImage;
         TextView textViewPrice;
-        public MyProductStockHolder(View itemView){
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             productNameTextView = itemView.findViewById(R.id.productNameTextView);
             textViewStock = itemView.findViewById(R.id.textViewStock);
             productImage = itemView.findViewById(R.id.productImage);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position  = getAdapterPosition();
-                    if(position!= RecyclerView.NO_POSITION && listener != null){
-                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
-                    }
-                }
-            });
         }
     }
-    public interface OnItemClickListener{
-        void onItemClick(DocumentSnapshot documentSnapshot, int position);
-    }
-    public void  setOnItemClickListener(StockAdapter.OnItemClickListener listener){
-        this.listener = listener;
-    }
 }
+
+

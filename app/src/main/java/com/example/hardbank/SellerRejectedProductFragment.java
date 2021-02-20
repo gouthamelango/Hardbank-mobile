@@ -1,6 +1,7 @@
 package com.example.hardbank;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -61,6 +62,10 @@ public class SellerRejectedProductFragment extends Fragment {
     String userID;
     List<String> productsID = new ArrayList<>();
     List<String>  data = new ArrayList<>();
+    Context context;
+
+    List<Product> products =new ArrayList<>();
+
 
     public SellerRejectedProductFragment() {
         // Required empty public constructor
@@ -104,7 +109,8 @@ public class SellerRejectedProductFragment extends Fragment {
 
         //Getting my products RecyclerView
         recyclerView = view.findViewById(R.id.rejectedProductSellerRecyclerView);
-
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
         //Reference to user collection
         notebookRef = db.collection("products");
 
@@ -117,103 +123,50 @@ public class SellerRejectedProductFragment extends Fragment {
     }
     private void setUpRecyclerView() {
 
-        //To get all the products sold by that particular seller
-        productsCollectionReference = db.collection("users").document(userID).collection("products");
-        productsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        productsID.add(document.getId());
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        DocumentSnapshot doc=list.get(i);
+                        productsID.add(doc.getId());
                     }
-                    if(!productsID.isEmpty()){
-                        Query query = notebookRef.whereIn("id",productsID).whereNotEqualTo("reason","none");
-
-                        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
-                                .setQuery(query, Product.class)
-                                .build();
-                        adapter = new SellerRejectedProductAdapter(options);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                        recyclerView.setAdapter(adapter);
-
-                        adapter.setOnDeleteClickListener(new SellerRejectedProductAdapter.OnDeleteClickListener() {
+                    for (int j=0;j<productsID.size();j++){
+                        db.collection("products").document(productsID.get(j)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
-                            public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
-                                //Toast.makeText(getActivity().getApplicationContext(),"Deleted",Toast.LENGTH_LONG).show();
-                                final String id  = documentSnapshot.getId();
-                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("Delete Product");
-                                alertDialog.setMessage("Are you sure you want to Delete?");
-                                alertDialog.setCancelable(false);
-                                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                //Toast.makeText(getActivity().getApplicationContext(),"Deleted",Toast.LENGTH_LONG).show();
-                                                db.collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        String image = documentSnapshot.getString("image");
-                                                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(image);
-                                                        storageReference.delete();
-                                                        db.collection("products").document(id).delete();
-                                                        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").document(id).delete();
-                                                        Toast.makeText(getActivity().getApplicationContext(),"Product Deleted",Toast.LENGTH_SHORT).show();
-                                                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                                        ft.detach(SellerRejectedProductFragment.this).attach(SellerRejectedProductFragment.this).commit();
-                                                    }
-                                                });
-                                            }
-                                        });
-                                alertDialog.show();
-                            }
-                        });
-
-                        adapter.setOnRequestClickListener(new SellerRejectedProductAdapter.OnRequestClickListener() {
-                            @Override
-                            public void onRequestClick(DocumentSnapshot documentSnapshot, int position) {
-                                // Toast.makeText(getActivity().getApplicationContext(),"Requested",Toast.LENGTH_LONG).show();
-                                final String id  = documentSnapshot.getId();
-                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("Request Again");
-                                alertDialog.setMessage("Are you sure you want to request for verification again?");
-                                alertDialog.setCancelable(false);
-                                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // Toast.makeText(getActivity().getApplicationContext(),"Requested",Toast.LENGTH_LONG).show();
-                                                db.collection("products").document(id).update("verified","false");
-                                                db.collection("products").document(id).update("reason","none");
-                                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                                ft.detach(SellerRejectedProductFragment.this).attach(SellerRejectedProductFragment.this).commit();
-                                            }
-                                        });
-                                alertDialog.show();
-
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if(!documentSnapshot.getString("reason").equals("none")){
+                                    DocumentSnapshot doc = documentSnapshot;
+                                    String productname = doc.getString("productname");
+                                    String productprice = doc.getString("productprice");
+                                    //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                    String category = doc.getString("category");
+                                    String id = doc.getString("id");
+                                    String image = doc.getString("image");
+                                    String productbrand = doc.getString("productbrand");
+                                    String productdeliveryprice = doc.getString("productdeliveryprice");
+                                    String productdescription = doc.getString("productdescription");
+                                    String  reason = doc.getString("reason");
+                                    String verified = doc.getString("verified");
+                                    Product product = new Product(productname, productprice,category,id, image,productbrand,
+                                            productdeliveryprice, productdescription, verified, reason);
+                                    products.add(product);
+                                    adapter = new SellerRejectedProductAdapter(context,products);
+                                    //Toast.makeText(getActivity().getApplicationContext(),product.getImage(),Toast.LENGTH_SHORT).show();
+                                    recyclerView.setAdapter(adapter);
+                                }
 
                             }
                         });
-
-                        adapter.startListening();
                     }
-                    else {
 
-                    }
+
                 }
             }
         });
+
     }
 
 

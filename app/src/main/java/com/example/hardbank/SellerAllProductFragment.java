@@ -1,5 +1,6 @@
 package com.example.hardbank;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,16 +50,16 @@ public class SellerAllProductFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     private CollectionReference notebookRef;
-    private  CollectionReference productsCollectionReference;
 
-    public StockAdapter adapter;
+    StockAdapter adapter;
     RecyclerView recyclerView;
 
     String userID;
     List<String> productsID = new ArrayList<>();
     List<String> acceptedID = new ArrayList<>();
+    Context context;
 
-    Boolean allowRefresh = true;
+    List<ProductStock> products =new ArrayList<>();
 
     public SellerAllProductFragment() {
         // Required empty public constructor
@@ -89,6 +90,7 @@ public class SellerAllProductFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+       // adapter = new StockAdapter(context,products);
     }
 
     @Override
@@ -102,82 +104,67 @@ public class SellerAllProductFragment extends Fragment {
 
         //Getting my products RecyclerView
         recyclerView = view.findViewById(R.id.allProductsSellerRecyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
         //TO get Current seller ID
         userID = mAuth.getCurrentUser().getUid();
 
+        context=getActivity().getApplicationContext();
         //Reference to user collection
         notebookRef = db.collection("users").document(userID).collection("products");
 
 
-        setUpRecyclerView();
+
         return view;
     }
     private void setUpRecyclerView() {
-        productsCollectionReference = db.collection("users").document(userID).collection("products");
-        productsCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").orderBy("productname").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        productsID.add(document.getId());
+                if(task.isSuccessful()) {
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        DocumentSnapshot doc=list.get(i);
+                        productsID.add(doc.getId());
                     }
-                    if (!productsID.isEmpty()){
-                        db.collection("products").whereIn("id",productsID).whereEqualTo("verified","true").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    for (int j=0;j<productsID.size();j++){
+                        db.collection("products").document(productsID.get(j)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        acceptedID.add(document.getId());
-                                    }
-                                    if(!acceptedID.isEmpty()){
-                                        Query query = notebookRef.whereIn("productid",acceptedID).orderBy("productname");
-                                        FirestoreRecyclerOptions<ProductStock> options = new FirestoreRecyclerOptions.Builder<ProductStock>()
-                                                .setQuery(query, ProductStock.class)
-                                                .build();
-                                        adapter = new StockAdapter(options);
-                                        recyclerView.setHasFixedSize(true);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                                        recyclerView.setAdapter(adapter);
-                                        adapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                                                //Toast.makeText(getContext().getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
-                                                final String id  = documentSnapshot.getId();
-                                                Intent intent =  new Intent(getActivity().getApplicationContext(),UpdateStockActivity.class);
-                                                intent.putExtra("id",id);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                        adapter.startListening();
-                                    }
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if(documentSnapshot.getString("verified").equals("true")){
+                                    DocumentSnapshot doc = documentSnapshot;
+                                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            DocumentSnapshot document = documentSnapshot;
+                                            String productname = document.getString("productname");
+                                            String stock = document.getString("stock");
+                                            String productid = document.getString("productid");
+                                            String category = document.getString("category");
+                                            //Toast.makeText(getActivity().getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                            ProductStock productStock = new ProductStock(category, productname, stock ,productid);
+                                            products.add(productStock);
+                                            adapter = new StockAdapter(context,products);
+                                            recyclerView.setAdapter(adapter);
+                                            //Toast.makeText(getActivity().getApplicationContext(),String.valueOf(products.size()),Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             }
                         });
-
                     }
-                }
 
+                }
             }
         });
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        products.clear();
+        productsID.clear();
         setUpRecyclerView();
     }
 }

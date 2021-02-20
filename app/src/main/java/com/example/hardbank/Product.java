@@ -26,6 +26,13 @@ public class Product {
         this.productname =  productname;
         this.productprice = productprice;
         this.productdeliveryprice = productdeliveryprice;
+        this.category = category;
+        this.id = id;
+        this.image = image;
+        this.productbrand = productbrand;
+        this.productdescription = productdescription;
+        this.reason = reason;
+        this.verified = verified;
 
     }
 

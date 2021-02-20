@@ -22,7 +22,8 @@
             android:textSize="14sp"
             />
     </RelativeLayout>
-    <RelativeLayout
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
@@ -31,13 +32,10 @@
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/allProductsTextLayout"
-        android:background="@drawable/edittext_border">
+        android:id="@+id/allProductsSellerRecyclerView"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/allProductsSellerRecyclerView"/>
-    </RelativeLayout>
+
+
 
 
 </RelativeLayout>
