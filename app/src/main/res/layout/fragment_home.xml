@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFF1F3"
     tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -34,41 +35,204 @@
                app:strokeWidth="1dp"
                android:id="@+id/carousel"/>
 
-            <!-- CarouselBanner 1-->
-            <ImageView
-                android:id="@+id/homeCarouselBanner1"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:layout_below="@id/carousel"
-                android:src="@drawable/dummycomp" />
-            <ImageView
-                android:id="@+id/homeCarouselBanner2"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/dummycomp1"
-                android:layout_below="@id/homeCarouselBanner1"/>
-            <ImageView
-                android:id="@+id/homeCarouselBanner3"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/dummycomponentimage"
-                android:layout_below="@id/homeCarouselBanner2"/>
-            <ImageView
-                android:id="@+id/homeCarouselBanner4"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/dummycomponentimage"
-                android:layout_below="@id/homeCarouselBanner3"/>
+            <!-- Category Division-->
+           <HorizontalScrollView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/carousel"
+               android:id="@+id/catOptions">
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:padding="10dp"
+                   android:background="@drawable/edittext_border"
+                   android:layout_margin="10dp"
+                   >
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:padding="10dp"
+                       android:layout_marginRight="20dp"
+                       android:id="@+id/motorBtn">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:id="@+id/motorIcon"
+                           android:layout_centerHorizontal="true"
+                           android:layout_height="40dp"
+                           android:src="@drawable/motoricon"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Motors"
+                           android:fontFamily="@font/roboto"
+                           android:layout_below="@id/motorIcon"
+                           />
+                   </RelativeLayout>
 
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_toRightOf="@id/motorBtn"
+                       android:layout_marginRight="20dp"
+                       android:padding="10dp"
+                       android:id="@+id/displayBtn">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:id="@+id/displayIcon"
+                           android:layout_centerHorizontal="true"
+                           android:src="@drawable/displayicon"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Display"
+                           android:fontFamily="@font/roboto"
+                           android:layout_below="@id/displayIcon"
+                           />
+                   </RelativeLayout>
 
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_toRightOf="@id/displayBtn"
+                       android:layout_marginRight="20dp"
+                       android:padding="10dp"
+                       android:id="@+id/batteryBtn">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:id="@+id/batteryIcon"
+                           android:layout_centerHorizontal="true"
+                           android:src="@drawable/batteryicon"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Battery"
+                           android:fontFamily="@font/roboto"
+                           android:layout_below="@id/batteryIcon"
+                           />
+                   </RelativeLayout>
+
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_toRightOf="@id/batteryBtn"
+                       android:layout_marginRight="20dp"
+                       android:padding="10dp"
+                       android:id="@+id/toolsBtn">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:id="@+id/toolsIcon"
+                           android:layout_centerHorizontal="true"
+                           android:src="@drawable/toolsicon"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Tools"
+                           android:fontFamily="@font/roboto"
+                           android:layout_below="@id/toolsIcon"
+                           />
+                   </RelativeLayout>
+
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_toRightOf="@id/toolsBtn"
+                       android:layout_marginRight="20dp"
+                       android:padding="10dp"
+                       android:id="@+id/connectorBtn">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:id="@+id/connectorIcon"
+                           android:layout_centerHorizontal="true"
+                           android:src="@drawable/connectoricon"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Connector"
+                           android:fontFamily="@font/roboto"
+                           android:layout_below="@id/connectorIcon"
+                           />
+                   </RelativeLayout>
+
+               </RelativeLayout>
+
+           </HorizontalScrollView>
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/catOptions"
+               android:layout_margin="10dp"
+               android:padding="10dp"
+               android:id="@+id/sensorsLayout"
+               android:background="@drawable/edittext_border">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/roboto"
+                   android:text="Sensors"
+                   android:id="@+id/sensorText"
+                   />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/roboto"
+                   android:text="More"
+                   android:layout_marginRight="2dp"
+                   android:layout_alignParentRight="true"
+                   android:id="@+id/sensorMoreText"
+                   />
+               <androidx.recyclerview.widget.RecyclerView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:id="@+id/sensorRecyclerView"
+                   android:layout_below="@id/sensorText"
+                   />
+           </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sensorsLayout"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:id="@+id/toolsLayout"
+                android:background="@drawable/edittext_border">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="Tools"
+                    android:id="@+id/toolsText"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="More"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/toolsMoreText"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/toolsRecyclerView"
+                    android:layout_below="@id/toolsText"
+                    />
+            </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
