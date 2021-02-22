@@ -51,7 +51,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewHolder
                         .load(documentSnapshot.getString("image"))
                         .into(holder.productImage);
 
-                holder.textViewPrice.setText(documentSnapshot.getString("productprice"));
+                holder.textViewPrice.setText(String.valueOf(documentSnapshot.getLong("productprice").intValue()));
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {

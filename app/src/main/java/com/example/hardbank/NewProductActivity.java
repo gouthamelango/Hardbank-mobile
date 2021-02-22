@@ -365,7 +365,7 @@ public class NewProductActivity extends AppCompatActivity {
         productData.put("id",productID);
         productData.put("productname",productName);
         productData.put("productbrand",productBrand);
-        productData.put("productprice",productPrice);
+        productData.put("productprice",Integer.parseInt(productPrice));
         productData.put("productdeliveryprice",productDeliveryPrice);
         productData.put("productdescription",productDescription);
         productData.put("image",downloadUri);

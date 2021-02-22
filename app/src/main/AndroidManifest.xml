@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateStockActivity"></activity>
+        <activity android:name=".ProductDetailsActivity"></activity>
+        <activity android:name=".ProductListingActivity" />
+        <activity android:name=".UpdateStockActivity" />
         <activity android:name=".SellExistingProductActivity" />
         <activity android:name=".SellerSearchProducts" />
         <activity android:name=".AboutUsActivity" />

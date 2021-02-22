@@ -140,7 +140,7 @@ public class SellerRejectedProductFragment extends Fragment {
                                 if(!documentSnapshot.getString("reason").equals("none")){
                                     DocumentSnapshot doc = documentSnapshot;
                                     String productname = doc.getString("productname");
-                                    String productprice = doc.getString("productprice");
+                                    int productprice = doc.getLong("productprice").intValue();
                                     //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
                                     String category = doc.getString("category");
                                     String id = doc.getString("id");

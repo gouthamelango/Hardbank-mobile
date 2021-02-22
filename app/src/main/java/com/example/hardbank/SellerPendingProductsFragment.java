@@ -158,7 +158,7 @@ public class SellerPendingProductsFragment extends Fragment {
                                 if(documentSnapshot.getString("verified").equals("false")){
                                     DocumentSnapshot doc = documentSnapshot;
                                     String productname = doc.getString("productname");
-                                    String productprice = doc.getString("productprice");
+                                    int productprice = doc.getLong("productprice").intValue();
                                     //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
                                     String category = doc.getString("category");
                                     String id = doc.getString("id");

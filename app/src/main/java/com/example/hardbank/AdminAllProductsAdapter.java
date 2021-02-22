@@ -34,7 +34,7 @@ public class AdminAllProductsAdapter extends FirestoreRecyclerAdapter<Product,Ad
                         .load(documentSnapshot.getString("image"))
                         .into(holder.productImage);
 
-                holder.textViewPrice.setText(documentSnapshot.getString("productprice"));
+                holder.textViewPrice.setText(String.valueOf(documentSnapshot.getLong("productprice").intValue()));
             }
         });
     }

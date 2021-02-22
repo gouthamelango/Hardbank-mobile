@@ -1,6 +1,7 @@
 package com.example.hardbank;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +62,9 @@ public class HomeFragment extends Fragment {
     private HomeProductAdapter adapter;
     RecyclerView recyclerView;
     RecyclerView recyclerViewTools;
+    RecyclerView recyclerViewCables;
+
+    TextView sensorMoreBtn, toolsMoreBtn, cablesMoreBtn;
 
     List<String> productsID = new ArrayList<>();
 
@@ -66,6 +72,9 @@ public class HomeFragment extends Fragment {
 
     List<Product> products =new ArrayList<>();
     List<Product> productsTools =new ArrayList<>();
+    List<Product> productsCables =new ArrayList<>();
+
+    RelativeLayout motorBtn, displayBtn, batteryBtn, toolsBtn, connectorBtn;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -144,11 +153,94 @@ public class HomeFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManagerTools = new LinearLayoutManager(this.getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerViewTools.setLayoutManager(mLayoutManagerTools);
 
+        //Getting my products RecyclerView for cables
+        recyclerViewCables = view.findViewById(R.id.cablesRecyclerView);
+        RecyclerView.LayoutManager mLayoutManagerCables = new LinearLayoutManager(this.getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        recyclerViewCables.setLayoutManager(mLayoutManagerCables);
+
+
+        //Category Listeners
+        motorBtn  = view.findViewById(R.id.motorBtn);
+        motorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCategory("Motors");
+            }
+        });
+
+        displayBtn = view.findViewById(R.id.displayBtn);
+        displayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCategory("Display");
+            }
+        });
+
+        batteryBtn = view.findViewById(R.id.batteryBtn);
+        batteryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCategory("Battery");
+            }
+        });
+
+        toolsBtn = view.findViewById(R.id.toolsBtn);
+        toolsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCategory("Tools");
+            }
+        });
+
+        connectorBtn = view.findViewById(R.id.connectorBtn);
+        connectorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCategory("Connectors");
+            }
+        });
+
+        //More Button's
+
+        //Sensor More btn
+        sensorMoreBtn =  view.findViewById(R.id.sensorMoreBtn);
+        sensorMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Toast.makeText(getActivity().getApplicationContext(),"Sensors",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity().getApplicationContext(),ProductListingActivity.class);
+                intent.putExtra("type","Sensors");
+                startActivity(intent);
+            }
+        });
+        //Tools More Btn
+        toolsMoreBtn = view.findViewById(R.id.toolsMoreBtn);
+        toolsMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getActivity().getApplicationContext(),"Tools",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity().getApplicationContext(),ProductListingActivity.class);
+                intent.putExtra("type","Tools");
+                startActivity(intent);
+            }
+        });
+        //Cables More Btn
+        cablesMoreBtn = view.findViewById(R.id.cablesMoreBtn);
+        cablesMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Toast.makeText(getActivity().getApplicationContext(),"Cables",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity().getApplicationContext(),ProductListingActivity.class);
+                intent.putExtra("type","Cables");
+                startActivity(intent);
+            }
+        });
+
         context  = getActivity().getApplicationContext();
 
         setUpRecyclerView();
         setUpRecyclerViewForTools();
-
+        setUpRecyclerViewForCables();
         return view;
     }
 
@@ -165,7 +257,7 @@ public class HomeFragment extends Fragment {
                             if(doc.getString("category").equals("Sensors")){
                                 //Toast.makeText(getActivity().getApplicationContext(),doc.getString("productname"),Toast.LENGTH_SHORT).show();
                                 String productname = doc.getString("productname");
-                                String productprice = doc.getString("productprice");
+                                int productprice = doc.getLong("productprice").intValue();
                                 //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
                                 String category = doc.getString("category");
                                 String id = doc.getString("id");
@@ -203,7 +295,7 @@ public class HomeFragment extends Fragment {
                             if(doc.getString("category").equals("Tools")){
                                 //Toast.makeText(getActivity().getApplicationContext(),doc.getString("productname"),Toast.LENGTH_SHORT).show();
                                 String productname = doc.getString("productname");
-                                String productprice = doc.getString("productprice");
+                                int productprice = doc.getLong("productprice").intValue();
                                 //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
                                 String category = doc.getString("category");
                                 String id = doc.getString("id");
@@ -228,6 +320,44 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    private void setUpRecyclerViewForCables(){
+        db.collection("products").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        DocumentSnapshot doc=list.get(i);
+                        if(doc.getString("verified").equals("true")){
+                            if(doc.getString("category").equals("Cables")){
+                                //Toast.makeText(getActivity().getApplicationContext(),doc.getString("productname"),Toast.LENGTH_SHORT).show();
+                                String productname = doc.getString("productname");
+                                int productprice = doc.getLong("productprice").intValue();
+                                //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                String category = doc.getString("category");
+                                String id = doc.getString("id");
+                                String image = doc.getString("image");
+                                String productbrand = doc.getString("productbrand");
+                                String productdeliveryprice = doc.getString("productdeliveryprice");
+                                String productdescription = doc.getString("productdescription");
+                                String  reason = doc.getString("reason");
+                                String verified = doc.getString("verified");
+                                Product product = new Product(productname, productprice,category,id, image,productbrand,
+                                        productdeliveryprice, productdescription, verified, reason);
+                                productsCables.add(product);
+                                adapter = new HomeProductAdapter(context,productsCables);
+                                //Toast.makeText(getActivity().getApplicationContext(),product.getImage(),Toast.LENGTH_SHORT).show();
+                                recyclerViewCables.setAdapter(adapter);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        });
+    }
 
     ImageListener imageListener = new ImageListener() {
         @Override
@@ -240,4 +370,10 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
+    public  void viewCategory(String type){
+        Intent intent = new Intent(getActivity().getApplicationContext(),ProductListingActivity.class);
+        intent.putExtra("type",type);
+        startActivity(intent);
+    }
 }

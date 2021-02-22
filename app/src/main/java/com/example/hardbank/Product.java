@@ -2,7 +2,7 @@ package com.example.hardbank;
 
 public class Product {
     private  String productname;
-    private  String productprice;
+    private  int productprice;
     private  String category;
     private  String id;
     private  String image;
@@ -21,7 +21,7 @@ public class Product {
 
     }
 
-    public Product(String productname, String productprice,String category, String id, String image, String productbrand,
+    public Product(String productname, int productprice,String category, String id, String image, String productbrand,
                    String productdeliveryprice, String productdescription, String verified, String reason){
         this.productname =  productname;
         this.productprice = productprice;
@@ -41,7 +41,7 @@ public class Product {
     }
 
     public String getProductprice() {
-        return productprice;
+        return String.valueOf(productprice);
     }
 
     public String getCategory() {

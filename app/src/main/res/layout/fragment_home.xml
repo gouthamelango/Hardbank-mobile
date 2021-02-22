@@ -48,6 +48,7 @@
                    android:background="@drawable/edittext_border"
                    android:layout_margin="10dp"
                    >
+<!--                   motorBtn-->
                    <RelativeLayout
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
                            />
                    </RelativeLayout>
 
+<!--                   displayBtn-->
                    <RelativeLayout
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -93,6 +95,7 @@
                            />
                    </RelativeLayout>
 
+<!--                   batteryBtn-->
                    <RelativeLayout
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -115,7 +118,7 @@
                            android:layout_below="@id/batteryIcon"
                            />
                    </RelativeLayout>
-
+<!--                   toolsBtn-->
                    <RelativeLayout
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -139,6 +142,7 @@
                            />
                    </RelativeLayout>
 
+<!--                   connectorBtn-->
                    <RelativeLayout
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -166,6 +170,7 @@
 
            </HorizontalScrollView>
 
+<!--            Sensors-->
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -188,8 +193,9 @@
                    android:fontFamily="@font/roboto"
                    android:text="More"
                    android:layout_marginRight="2dp"
+                   android:textColor="#2E69FF"
                    android:layout_alignParentRight="true"
-                   android:id="@+id/sensorMoreText"
+                   android:id="@+id/sensorMoreBtn"
                    />
                <androidx.recyclerview.widget.RecyclerView
                    android:layout_width="match_parent"
@@ -200,6 +206,7 @@
                    />
            </RelativeLayout>
 
+<!--            Tools-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -221,9 +228,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:text="More"
+                    android:textColor="#2E69FF"
                     android:layout_marginRight="2dp"
                     android:layout_alignParentRight="true"
-                    android:id="@+id/toolsMoreText"
+                    android:id="@+id/toolsMoreBtn"
                     />
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
@@ -231,6 +239,42 @@
                     android:layout_marginTop="10dp"
                     android:id="@+id/toolsRecyclerView"
                     android:layout_below="@id/toolsText"
+                    />
+            </RelativeLayout>
+
+<!--            Cables-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolsLayout"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:id="@+id/cablesLayout"
+                android:background="@drawable/edittext_border">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="Cables"
+                    android:id="@+id/cablesText"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="More"
+                    android:textColor="#2E69FF"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/cablesMoreBtn"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/cablesRecyclerView"
+                    android:layout_below="@id/cablesText"
                     />
             </RelativeLayout>
 

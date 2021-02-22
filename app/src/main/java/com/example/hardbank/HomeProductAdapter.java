@@ -1,6 +1,7 @@
 package com.example.hardbank;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.textViewProductName.setText(list.get(position).getProductname());
         holder.textViewProductBrand.setText(list.get(position).getProductbrand());
         Glide.with(holder.imageViewProductImg.getContext())
@@ -44,7 +45,10 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Clicked",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(view.getContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(),ProductDetailsActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                view.getContext().startActivity(intent);
             }
         });
         holder.textViewProductPrice.setText(list.get(position).getProductprice());
