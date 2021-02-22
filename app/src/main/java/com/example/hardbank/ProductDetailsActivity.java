@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ImageView productImage;
 
     RelativeLayout addToCart, addToFavorite;
+
+    RelativeLayout reviewsBtn, reviewsLayout;
+    ImageView arrowReviewBtn;
+    Boolean visibility = false;
 
     String id;
 
@@ -49,6 +54,27 @@ public class ProductDetailsActivity extends AppCompatActivity {
             id = getIntent().getExtras().getString("id");
             setUpRecyclerView(id);
         }
+
+        //Review Btn
+        reviewsBtn  = findViewById(R.id.reviewsBtn);
+        reviewsLayout =  findViewById(R.id.reviewsLayout);
+        arrowReviewBtn = findViewById(R.id.arrowReviewBtn);
+
+        reviewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!visibility){
+                    visibility = true;
+                    reviewsLayout.setVisibility(View.VISIBLE);
+                    arrowReviewBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                }
+                else {
+                    visibility = false;
+                    reviewsLayout.setVisibility(View.GONE);
+                    arrowReviewBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }
+            }
+        });
 
     }
     public void setUpRecyclerView(String productId){
