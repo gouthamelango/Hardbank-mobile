@@ -13,7 +13,7 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchBarLayout"
+        android:id="@+id/productlistingtoolbarLayout"
         layout="@layout/toolbar_product_details" />
 
 <ScrollView
@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:id="@+id/scroll"
     android:layout_above="@id/actionsMenuLayout"
-    android:layout_below="@+id/searchBarLayout">
+    android:layout_below="@+id/productlistingtoolbarLayout">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -228,6 +228,7 @@
                android:layout_width="25dp"
                android:layout_height="25dp"
                android:layout_centerInParent="true"
+               android:id="@+id/heartIcon"
                android:src="@drawable/ic_baseline_favorite_border_black"
                />
        </RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="10dp"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:id="@+id/productImage"
+        android:src="@drawable/dummycomp1"
+        android:elevation="2dp"
+        android:scaleType="fitXY"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product name"
+        android:fontFamily="@font/roboto"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2dp"
+        android:id="@+id/productName"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:layout_below="@+id/productImage"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:layout_margin="2dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/rupeeText"
+        android:layout_below="@+id/productName"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:layout_margin="2dp"
+        android:layout_toRightOf="@+id/rupeeText"
+        android:id="@+id/productPrice"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_below="@+id/productName"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productPrice"
+        android:layout_marginTop="3dp"
+       >
+
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/delBtn"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/borderblack"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:id="@+id/heartIcon"
+                android:src="@drawable/ic_baseline_delete_outline_24"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/cartBtn"
+            android:layout_marginLeft="2dp"
+            android:gravity="center"
+            android:background="@drawable/button_background"
+            android:layout_toRightOf="@id/delBtn"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/cartIcon"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_shopping_cart_grey"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="#FFF"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/cartIcon"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:id="@+id/addToCartText"
+                android:text="Add"
+                />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

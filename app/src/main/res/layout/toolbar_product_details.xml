@@ -5,7 +5,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/colorGreyShade"
         app:navigationIcon="@drawable/arrow_back"
-        app:menu="@menu/productlistingmenu"
         >
     </androidx.appcompat.widget.Toolbar>
 

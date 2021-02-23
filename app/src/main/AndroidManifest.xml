@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProductDetailsActivity"></activity>
+        <activity android:name=".WishListActivity"></activity>
+        <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".ProductListingActivity" />
         <activity android:name=".UpdateStockActivity" />
         <activity android:name=".SellExistingProductActivity" />
