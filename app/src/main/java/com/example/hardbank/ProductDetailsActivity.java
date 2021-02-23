@@ -74,14 +74,28 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_wish_list:
                         //Toast.makeText(getApplicationContext(),"Fav",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(),WishListActivity.class);
-                        startActivity(intent);
+                       if(mAuth.getCurrentUser()!=null){
+                           Intent intent = new Intent(getApplicationContext(),WishListActivity.class);
+                           startActivity(intent);
+                       }
+                       else {
+                           Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                           startActivity(customerLoginActivity);
+                           overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                       }
                         break;
                     case R.id.nav_cart:
                         //Toast.makeText(getApplicationContext(),"Cart",Toast.LENGTH_LONG).show();
-                        Intent cartActivityIntent = new Intent(getApplicationContext(), CustomerCartActivity.class);
-                        startActivity(cartActivityIntent);
-                        overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                       if(mAuth.getCurrentUser()!= null){
+                           Intent cartActivityIntent = new Intent(getApplicationContext(), CustomerCartActivity.class);
+                           startActivity(cartActivityIntent);
+                           overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                       }
+                       else {
+                           Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                           startActivity(customerLoginActivity);
+                           overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                       }
                         break;
 
                 }
