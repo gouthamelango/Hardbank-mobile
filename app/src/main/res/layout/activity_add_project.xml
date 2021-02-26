@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".AddProjectActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        android:id="@+id/newProductTextLayout"
+        android:background="@drawable/edittext_border"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/newProductActivityBackNav">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/arrowBackSignUpImg"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow_back"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#A9A9A9"
+                android:text="@string/backText"
+                android:layout_toRightOf="@id/arrowBackSignUpImg"
+                android:layout_centerVertical="true"
+                android:id="@+id/backTextSignUp"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/roboto"
+            android:id="@+id/newProductText"
+            android:text="New Project"/>
+
+    </RelativeLayout>
+
+<!--        Scroll View-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        android:id="@+id/scroll"
+        android:background="@drawable/edittext_border">
+        <!--        Children of Scroll-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Project Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginRight="25dp"
+                android:textStyle="bold"
+                android:id="@+id/imageView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_column="1" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/imageView"
+                android:layout_marginTop="15dp"
+                android:foreground="@drawable/borderblack"
+                android:scaleType="centerInside"
+                android:id="@+id/uploadImageBtn"
+                android:src="@drawable/uploadpic" />
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_below="@+id/uploadImageBtn"
+                android:layout_marginTop="10dp"
+                android:id="@+id/titleTableLayout"
+                android:stretchColumns="1"
+                android:layout_height="wrap_content">
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    >
+                    <TextView
+                        android:text="Project Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_marginRight="25dp"
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_column="1" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Title"
+                        android:id="@+id/editTextTitle"
+                        android:padding="10dp"
+                        android:background="@drawable/border"
+                        android:layout_column="1" />
+
+                </TableRow>
+            </TableLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleTableLayout"
+            android:id="@+id/contentLayout"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:text="Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginRight="25dp"
+                android:textStyle="bold"
+                android:id="@+id/contentText"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_column="1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/contentText"
+                android:layout_marginTop="10dp"
+                android:id="@+id/contentRecyclerView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Add"
+                android:layout_marginRight="2dp"
+                android:textColor="#2E69FF"
+                android:layout_marginTop="3dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/contentRecyclerView"
+                android:id="@+id/addBtn"
+                />
+        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/componentsLayout"
+                android:layout_below="@id/contentLayout"
+                android:padding="10dp"
+                android:foreground="@drawable/borderblack"
+                android:layout_margin="10dp"
+                >
+                <TextView
+                    android:text="Components"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:id="@+id/componentsText"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/componentsText"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/componentsRecyclerView"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="Add Component"
+                    android:layout_marginRight="2dp"
+                    android:textColor="#2E69FF"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/componentsRecyclerView"
+                    android:id="@+id/addComponentBtn"
+                    />
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Project"
+                android:background="@drawable/button_background"
+                android:textColor="#FFF"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/createBtn"
+                android:layout_below="@id/componentsLayout"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

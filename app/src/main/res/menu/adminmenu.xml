@@ -14,6 +14,10 @@
         android:id="@+id/nav_admin_verify_seller"
         android:icon="@drawable/ic_baseline_storefront_24"
         android:title="Sellers" />
+    <item
+        android:id="@+id/nav_admin_projects"
+        android:icon="@drawable/ic_baseline_developer_board_24"
+        android:title="Projects" />
 
     <item
         android:id="@+id/nav_admin_product"
