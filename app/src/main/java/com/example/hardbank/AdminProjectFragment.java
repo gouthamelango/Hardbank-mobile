@@ -4,15 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +38,10 @@ public class AdminProjectFragment extends Fragment {
     private String mParam2;
 
     FloatingActionButton fabAdd;
+    RecyclerView allProjectsRecyclerView;
+    AdminProjectAdapter adapter;
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     public AdminProjectFragment() {
         // Required empty public constructor
@@ -69,7 +80,15 @@ public class AdminProjectFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_admin_project, container, false);
+        //Firebase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
 
+        allProjectsRecyclerView = view.findViewById(R.id.allProjectsRecyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
+        allProjectsRecyclerView.setLayoutManager(mLayoutManager);
+
+        setUpRecyclerView();
 
         //FAB
         fabAdd = view.findViewById(R.id.floatingActionAddProject);
@@ -84,5 +103,15 @@ public class AdminProjectFragment extends Fragment {
 
         return view;
 
+    }
+    public  void setUpRecyclerView(){
+        Query query = db.collection("sampleprojects").whereNotEqualTo("title","empty");
+        FirestoreRecyclerOptions<SampleProject> options = new FirestoreRecyclerOptions.Builder<SampleProject>()
+                .setQuery(query, SampleProject.class)
+                .build();
+        adapter = new AdminProjectAdapter(options);
+
+        allProjectsRecyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 }
