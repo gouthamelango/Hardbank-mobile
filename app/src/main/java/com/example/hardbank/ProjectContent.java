@@ -14,6 +14,9 @@ public class ProjectContent {
         this.projectid = projectid;
     }
 
+    public  ProjectContent(){
+
+    }
     public void setContentid(String contentid) {
         this.contentid = contentid;
     }

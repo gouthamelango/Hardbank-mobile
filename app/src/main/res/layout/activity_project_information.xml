@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".ProjectInformationActivity">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wishListToolbarLayout"
+        layout="@layout/toolbar_product_details" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scroll"
+        android:layout_below="@+id/wishListToolbarLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--    product Image-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:id="@+id/projectImage"
+                android:src="@drawable/dummycomp1"
+                android:scaleType="fitXY"
+                />
+
+            <!--        Product Main Information Top Layout-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/topContainerLayout"
+                android:layout_below="@id/projectImage"
+                android:layout_margin="10dp"
+                android:background="@drawable/edittext_border"
+                android:padding="15dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Project Title"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textStyle="bold"
+                    android:id="@+id/projectTitle"
+                    />
+            </RelativeLayout>
+
+            <!--    Product Details -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topContainerLayout"
+                android:id="@+id/contentLayout"
+                android:layout_margin="10dp"
+                >
+                <TextView
+                    android:text="Implementation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/edittext_border"
+                    android:padding="10dp"
+                    android:id="@+id/contentText"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/contentText"
+                    android:id="@+id/contentRecyclerView"/>
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
