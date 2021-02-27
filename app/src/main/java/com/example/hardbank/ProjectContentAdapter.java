@@ -50,7 +50,7 @@ public class ProjectContentAdapter  extends RecyclerView.Adapter<ProjectContentA
                     holder.editTextHeader.setText(documentSnapshot.getString("header"));
                 }
                 if(!documentSnapshot.getString("content").equals("empty")) {
-                    holder.editTextDescription.setText(documentSnapshot.getString("header"));
+                    holder.editTextDescription.setText(documentSnapshot.getString("content"));
                 }
 
             }

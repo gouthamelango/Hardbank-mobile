@@ -29,6 +29,9 @@ public class ProjectInformationActivity extends AppCompatActivity {
     RecyclerView contentRecyclerView;
     private DisplayProjectContentAdapter displayProjectContentAdapter;
 
+    RecyclerView componentRecyclerView;
+    private  DisplaySelectedComponentsAdapter displaySelectedComponentsAdapter;
+
     String projectID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class ProjectInformationActivity extends AppCompatActivity {
         contentRecyclerView = findViewById(R.id.contentRecyclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         contentRecyclerView.setLayoutManager(mLayoutManager);
+
+        componentRecyclerView =  findViewById(R.id.componentRecyclerView);
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(getApplicationContext());
+        componentRecyclerView.setLayoutManager(mLayoutManager1);
 
 
         Intent intent = getIntent();
@@ -61,15 +68,25 @@ public class ProjectInformationActivity extends AppCompatActivity {
         }
 
         setUpRecyclerView();
-
+        setUpRecyclerView1();
     }
     private void setUpRecyclerView() {
-        Query query = db.collection("sampleprojects").document(projectID).collection("contents");
+        Query query = db.collection("sampleprojects").document(projectID).collection("contents").whereNotEqualTo("header","empty");
         FirestoreRecyclerOptions<ProjectContent> options = new FirestoreRecyclerOptions.Builder<ProjectContent>()
                 .setQuery(query,ProjectContent.class)
                 .build();
         displayProjectContentAdapter = new DisplayProjectContentAdapter(options);
         contentRecyclerView.setAdapter(displayProjectContentAdapter);
         displayProjectContentAdapter.startListening();
+    }
+
+    private void setUpRecyclerView1() {
+        Query query = db.collection("sampleprojects").document(projectID).collection("components");
+        FirestoreRecyclerOptions<SelectedComponent> options = new FirestoreRecyclerOptions.Builder<SelectedComponent>()
+                .setQuery(query,SelectedComponent.class)
+                .build();
+        displaySelectedComponentsAdapter = new DisplaySelectedComponentsAdapter(options);
+        componentRecyclerView.setAdapter(displaySelectedComponentsAdapter);
+        displaySelectedComponentsAdapter.startListening();
     }
 }

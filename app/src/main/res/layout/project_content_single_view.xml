@@ -69,7 +69,7 @@
                 android:id="@+id/editTextDescription"
                 android:padding="10dp"
                 android:gravity="start"
-                android:inputType="textCapWords"
+                android:inputType="textMultiLine"
                 android:background="@drawable/border"
                 android:layout_column="1" />
 
