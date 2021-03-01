@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/edittext_border"
+    android:padding="10dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline"
+        android:id="@+id/border"
+        android:layout_below="@id/layout"
+        android:layout_marginTop="3dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout">
+
+        <ImageView
+            android:id="@+id/projectImage"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_alignParentLeft="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/dummycomp1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@id/projectImage">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product name"
+                android:fontFamily="@font/roboto"
+                android:id="@+id/projectTitle"
+                android:textStyle="bold"
+                android:textSize="12sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/componentsRecyclerView"
+                android:layout_below="@id/projectTitle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:id="@+id/rupeeText"
+                android:layout_below="@+id/componentsRecyclerView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/rupeeText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:id="@+id/projectPrice"
+                android:layout_below="@+id/componentsRecyclerView"/>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/border"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="Remove"
+            android:textSize="12sp"
+            android:layout_marginRight="2dp"
+            android:layout_centerVertical="true"
+            android:textColor="#2E69FF"
+            android:layout_alignParentRight="true"
+            android:id="@+id/removeBtn"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

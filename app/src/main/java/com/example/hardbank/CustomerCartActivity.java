@@ -28,11 +28,18 @@ public class CustomerCartActivity extends AppCompatActivity {
 
     RelativeLayout backNav;
     Button continueShopping;
-    RelativeLayout ifCartIsEmptyLayout,notEmptyLayout;
+    RelativeLayout ifCartIsEmptyLayout,notEmptyLayout,actionsLayout;
     Context context;
+
+
     List<Product> products =new ArrayList<>();
     private CartAdapter adapter;
     RecyclerView recyclerView;
+
+    List<SampleProject> projects =new ArrayList<>();
+    private CartProjectAdapter adapterProject;
+    RecyclerView recyclerViewProject;
+
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -65,12 +72,17 @@ public class CustomerCartActivity extends AppCompatActivity {
         });
 
         recyclerView =  findViewById(R.id.productsRecyclerView);
-//        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-//        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+        recyclerViewProject =  findViewById(R.id.projectsRecyclerView);
+        recyclerViewProject.setHasFixedSize(true);
+        recyclerViewProject.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         //If Empty
         ifCartIsEmptyLayout =  findViewById(R.id.ifCartIsEmptyLayout);
+        actionsLayout =  findViewById(R.id.actionsLayout);
         notEmptyLayout =  findViewById(R.id.notEmptyLayout);
        if(mAuth.getCurrentUser().getUid()!=null){
            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -80,9 +92,24 @@ public class CustomerCartActivity extends AppCompatActivity {
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         if(list.isEmpty()){
-                            ifCartIsEmptyLayout.setVisibility(View.VISIBLE);
-                            notEmptyLayout.setVisibility(View.GONE);
+                            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                        if(list.isEmpty()){
+                                            ifCartIsEmptyLayout.setVisibility(View.VISIBLE);
+                                            notEmptyLayout.setVisibility(View.GONE);
+                                            actionsLayout.setVisibility(View.GONE);
+                                        }
+
+
+                                    }
+                                }
+                            });
                         }
+
                         else {
                             for (int i = 0; i < list.size(); i++) {
                                 DocumentSnapshot doc=list.get(i);
@@ -111,6 +138,33 @@ public class CustomerCartActivity extends AppCompatActivity {
                             }
                         }
                     }
+               }
+           });
+
+           db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                   if(task.isSuccessful()){
+                       QuerySnapshot queryDocumentSnapshots = task.getResult();
+                       List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                       for (int i = 0; i < list.size(); i++) {
+                           DocumentSnapshot doc=list.get(i);
+                           db.collection("sampleprojects").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                               @Override
+                               public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                   String projectid = documentSnapshot.getString("projectid");
+                                   String image = documentSnapshot.getString("image");
+                                   String title = documentSnapshot.getString("title");
+                                   SampleProject sampleProject =  new SampleProject(image,projectid,title);
+                                   projects.add(sampleProject);
+                                   //Toast.makeText(getApplicationContext(),String.valueOf(projects.size()),Toast.LENGTH_SHORT).show();
+                                   adapterProject = new CartProjectAdapter(context,projects);
+                                   recyclerViewProject.setAdapter(adapterProject);
+                               }
+                           });
+                       }
+
+                   }
                }
            });
        }

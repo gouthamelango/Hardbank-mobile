@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:layout_marginBottom="5dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:id="@+id/productImage"
+        android:src="@drawable/dummycomp1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:id="@+id/productName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Product Name"
+        android:layout_toRightOf="@+id/productImage"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/productPrice"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/rupeeText"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:id="@+id/productPrice"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Price"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        />
+</RelativeLayout>

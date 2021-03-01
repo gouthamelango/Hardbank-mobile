@@ -1,22 +1,32 @@
 package com.example.hardbank;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ProjectInformationActivity extends AppCompatActivity {
 
@@ -31,6 +41,8 @@ public class ProjectInformationActivity extends AppCompatActivity {
 
     RecyclerView componentRecyclerView;
     private  DisplaySelectedComponentsAdapter displaySelectedComponentsAdapter;
+
+    Button addToCartBtn;
 
     String projectID;
     @Override
@@ -68,6 +80,59 @@ public class ProjectInformationActivity extends AppCompatActivity {
         }
 
         setUpRecyclerView();
+
+        addToCartBtn = findViewById(R.id.addToCartBtn);
+        addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mAuth.getCurrentUser()!=null){
+                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                int flag = 0;
+                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                for (int i = 0; i < list.size(); i++) {
+                                    DocumentSnapshot doc=list.get(i);
+                                    if(doc.getId().equals(projectID)){
+                                        //Toast.makeText(getApplicationContext(),"Already",Toast.LENGTH_SHORT).show();
+                                        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").document(doc.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(),"Removed from Cart",Toast.LENGTH_SHORT).show();
+                                                //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_border_black);
+                                                addToCartBtn.setText("Add All to cart");
+                                            }
+                                        });
+                                        flag=1;
+                                        break;
+                                    }
+                                }
+                                if(flag ==0){
+                                    Map<String, Object> productData = new HashMap<>();
+                                    productData.put("id",projectID);
+                                    productData.put("quantity","1");
+                                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").document(projectID).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
+                                            //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                           addToCartBtn.setText("Remove from cart");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+                else {
+                    Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                    startActivity(customerLoginActivity);
+                    overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                }
+            }
+        });
         setUpRecyclerView1();
     }
     private void setUpRecyclerView() {
@@ -88,5 +153,23 @@ public class ProjectInformationActivity extends AppCompatActivity {
         displaySelectedComponentsAdapter = new DisplaySelectedComponentsAdapter(options);
         componentRecyclerView.setAdapter(displaySelectedComponentsAdapter);
         displaySelectedComponentsAdapter.startListening();
+
+        if(mAuth.getCurrentUser().getUid()!=null){
+            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        for (int i = 0; i < list.size(); i++) {
+                            DocumentSnapshot doc=list.get(i);
+                            if(doc.getId().equals(projectID)){
+                               addToCartBtn.setText("Remove from cart");
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 }

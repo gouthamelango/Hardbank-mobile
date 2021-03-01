@@ -83,34 +83,205 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/scroll"
+       android:layout_above="@+id/actionsLayout"
+       android:layout_marginBottom="10dp"
+       android:layout_below="@id/CartActivityBackNav">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:padding="10dp"
+           android:id="@+id/notEmptyLayout"
+          >
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Cart"
+               android:padding="10dp"
+               android:background="@drawable/edittext_border"
+               android:textSize="18sp"
+               android:fontFamily="@font/roboto"
+               android:textAppearance="@style/TextAppearance.AppCompat.Large"
+               android:id="@+id/requestedProductTypeText"/>
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="15dp"
+               android:id="@+id/productsRecyclerView"
+               android:layout_below="@id/requestedProductTypeText"
+               />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="15dp"
+               android:id="@+id/projectsRecyclerView"
+               android:layout_below="@id/productsRecyclerView"
+               />
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/orderDetailsLayout"
+               android:layout_below="@+id/projectsRecyclerView"
+               android:background="@drawable/edittext_border"
+               android:padding="10dp"
+               android:layout_marginTop="15dp">
+
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Order Details"
+                   android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                   android:fontFamily="@font/roboto"
+                   android:id="@+id/orderDetailsText"
+                   android:textSize="16sp"/>
+
+               <TableLayout
+                   android:layout_width="match_parent"
+                   android:padding="10dp"
+                   android:layout_below="@+id/orderDetailsText"
+                   android:layout_height="wrap_content">
+                   <TableRow
+                       android:layout_width="fill_parent"
+                       android:layout_height="fill_parent"
+                       android:layout_marginLeft="20dp"
+                       >
+                       <TextView
+                           android:text="Cart total (₹)"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:textSize="14sp"
+                           android:layout_gravity="left"
+                           android:layout_marginRight="25dp"
+                           android:textStyle="bold"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                           android:layout_column="1" />
+                       <TextView
+                           android:text="0"
+                           android:layout_width="wrap_content"
+                           android:id="@+id/sellerEmailTextView"
+                           android:layout_gravity="right"
+                           android:layout_height="wrap_content"
+                           android:layout_column="2" />
+                   </TableRow>
+                   <TableRow
+                       android:layout_width="fill_parent"
+                       android:layout_height="fill_parent"
+                       android:layout_marginTop="15dp"
+                       android:layout_marginLeft="20dp"
+                       >
+                       <TextView
+                           android:text="Delivery (₹)"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:textSize="14sp"
+                           android:layout_gravity="left"
+                           android:layout_marginRight="25dp"
+                           android:textStyle="bold"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                           android:layout_column="1" />
+                       <TextView
+                           android:text="0"
+                           android:layout_width="wrap_content"
+                           android:id="@+id/shopNameTextView"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:layout_column="2" />
+                   </TableRow>
+                   <TableRow
+                       android:layout_width="fill_parent"
+                       android:layout_height="fill_parent"
+                       android:layout_marginTop="15dp"
+                       android:layout_marginLeft="20dp"
+                       >
+                       <TextView
+                           android:text="Total Amount (₹)"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:textSize="14sp"
+                           android:layout_marginRight="25dp"
+                           android:textStyle="bold"
+                           android:layout_gravity="left"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                           android:layout_column="1" />
+                       <TextView
+                           android:text="0"
+                           android:layout_width="wrap_content"
+                           android:id="@+id/shopAddressTextView"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="end"
+                           android:textSize="14sp"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                           android:layout_column="2" />
+                   </TableRow>
+
+               </TableLayout>
+
+           </RelativeLayout>
+
+       </RelativeLayout>
+   </ScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="70dp"
+        android:background="#FFF"
         android:padding="10dp"
-        android:id="@+id/notEmptyLayout"
-        android:layout_below="@id/CartActivityBackNav">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/actionsLayout">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cart"
-            android:padding="10dp"
-            android:background="@drawable/edittext_border"
-            android:textSize="18sp"
-            android:fontFamily="@font/roboto"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/requestedProductTypeText"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/productsRecyclerView"
-            android:layout_below="@id/requestedProductTypeText"
-            />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹"
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:id="@+id/rupeeText"
+                android:layout_below="@+id/selectQuantityBtn"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"
+                android:layout_toRightOf="@+id/rupeeText"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:id="@+id/productPrice"
+                android:layout_below="@+id/selectQuantityBtn"/>
+
+        </RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Order"
+            android:textColor="#FFF"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:background="@drawable/button_background"/>
+
 
     </RelativeLayout>
+
+
 
 
 </RelativeLayout>
