@@ -10,14 +10,14 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wishListToolbarLayout"
+        android:id="@+id/projectToolbarLayout"
         layout="@layout/toolbar_product_details" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scroll"
-        android:layout_below="@+id/wishListToolbarLayout">
+        android:layout_below="@+id/projectToolbarLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"

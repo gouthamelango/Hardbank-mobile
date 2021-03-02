@@ -2,11 +2,14 @@ package com.example.hardbank;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,6 +47,8 @@ public class ProjectInformationActivity extends AppCompatActivity {
 
     Button addToCartBtn;
 
+    Toolbar toolbar;
+    Menu menu;
     String projectID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,52 @@ public class ProjectInformationActivity extends AppCompatActivity {
         //FireBase initialization
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        //Toolbar
+        toolbar =  findViewById(R.id.projectToolbarLayout);
+        toolbar.inflateMenu(R.menu.project_information_menu);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Tapped",Toast.LENGTH_LONG).show();
+            }
+        });
+        menu = toolbar.getMenu();
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_wish_list:
+                        //Toast.makeText(getApplicationContext(),"Fav",Toast.LENGTH_LONG).show();
+                        if(mAuth.getCurrentUser()!=null){
+                            Intent intent = new Intent(getApplicationContext(),WishListActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                            startActivity(customerLoginActivity);
+                            overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                        }
+                        break;
+                    case R.id.nav_cart:
+                        //Toast.makeText(getApplicationContext(),"Cart",Toast.LENGTH_LONG).show();
+                        if(mAuth.getCurrentUser()!= null){
+                            Intent cartActivityIntent = new Intent(getApplicationContext(), CustomerCartActivity.class);
+                            startActivity(cartActivityIntent);
+                            overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                        }
+                        else {
+                            Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                            startActivity(customerLoginActivity);
+                            overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                        }
+                        break;
+
+                }
+                return false;
+            }
+        });
 
         contentRecyclerView = findViewById(R.id.contentRecyclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -154,7 +205,7 @@ public class ProjectInformationActivity extends AppCompatActivity {
         componentRecyclerView.setAdapter(displaySelectedComponentsAdapter);
         displaySelectedComponentsAdapter.startListening();
 
-        if(mAuth.getCurrentUser().getUid()!=null){
+        if(mAuth.getCurrentUser()!=null){
             db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
