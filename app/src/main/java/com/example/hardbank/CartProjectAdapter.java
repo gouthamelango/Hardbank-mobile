@@ -74,16 +74,16 @@ public class CartProjectAdapter extends RecyclerView.Adapter<CartProjectAdapter.
                         holder.recyclerView.setAdapter(adapter);
                     }
 
-//                    for (int i = 0 ; i<components.size();i++){
-//                        FirebaseFirestore.getInstance().collection("products").document(components.get(i).productid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                                int total = 0;
-//                                 total = total + Integer.parseInt(documentSnapshot.get("productprice").toString());
-//                                    holder.projectPrice.setText(String.valueOf(total));
-//                            }
-//                        });
-//                    }
+                    for (int i = 0 ; i<components.size();i++){
+                        FirebaseFirestore.getInstance().collection("products").document(components.get(i).productid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                holder.total = holder.total + Integer.parseInt(documentSnapshot.get("productprice").toString());
+                                    holder.projectPrice.setText(String.valueOf(holder.total));
+                            }
+                        });
+                    }
 
 
                 }
@@ -103,6 +103,7 @@ public class CartProjectAdapter extends RecyclerView.Adapter<CartProjectAdapter.
         ImageView projectImage;
         TextView projectPrice;
         RecyclerView recyclerView;
+        int total = 0;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             projectName = itemView.findViewById(R.id.projectTitle);

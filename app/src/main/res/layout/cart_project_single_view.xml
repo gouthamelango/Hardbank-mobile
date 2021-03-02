@@ -60,6 +60,7 @@
                 android:layout_marginTop="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:id="@+id/rupeeText"
+                android:textStyle="bold"
                 android:layout_below="@+id/componentsRecyclerView"/>
 
             <TextView
@@ -71,6 +72,7 @@
                 android:layout_toRightOf="@+id/rupeeText"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
+                android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:id="@+id/projectPrice"
                 android:layout_below="@+id/componentsRecyclerView"/>

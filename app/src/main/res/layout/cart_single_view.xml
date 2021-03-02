@@ -99,6 +99,7 @@
             android:fontFamily="@font/roboto"
             android:textSize="12sp"
             android:layout_marginTop="5dp"
+            android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/rupeeText"
             android:layout_below="@+id/selectQuantityBtn"/>
@@ -111,6 +112,7 @@
             android:textSize="12sp"
             android:layout_toRightOf="@+id/rupeeText"
             android:layout_marginTop="5dp"
+            android:textStyle="bold"
             android:layout_marginLeft="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/productPrice"
