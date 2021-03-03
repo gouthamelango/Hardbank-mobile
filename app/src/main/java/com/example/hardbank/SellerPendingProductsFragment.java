@@ -2,6 +2,7 @@ package com.example.hardbank;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -141,6 +142,8 @@ public class SellerPendingProductsFragment extends Fragment {
 //
 //            }
 //        });
+
+
         db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("products").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

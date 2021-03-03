@@ -43,7 +43,7 @@ public class ChooseAccountFragment extends Fragment {
 
     TextView userName, userEmail;
 
-    RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn,whoWeAreBtn;
+    RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn,whoWeAreBtn, joinOurTeamBtn;
 
     public ChooseAccountFragment() {
         // Required empty public constructor
@@ -145,6 +145,17 @@ public class ChooseAccountFragment extends Fragment {
                 startActivity(sellerSignInActivity);
             }
         });
+
+        //Join Us
+        joinOurTeamBtn =  view.findViewById(R.id.joinOurTeamBtn);
+        joinOurTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent consultantLoginIntent  =  new Intent(getActivity().getApplicationContext(),ConsultantLoginActivity.class);
+                startActivity(consultantLoginIntent);
+            }
+        });
+
         return view;
     }
 

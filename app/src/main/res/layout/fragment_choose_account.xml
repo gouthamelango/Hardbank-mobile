@@ -246,7 +246,7 @@
                 android:layout_marginLeft="15dp"
                 android:textSize="14sp"
                 android:fontFamily="@font/roboto"
-                android:text="Join Our Team"/>
+                android:text="Executives Login"/>
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"

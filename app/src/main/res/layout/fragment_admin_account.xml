@@ -86,5 +86,27 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/underline"
+        android:id="@+id/addCustomerServiceExecutiveBtn"
+        android:layout_below="@+id/addProjectBtn">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto"
+            android:text="Add Executive"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
+    </RelativeLayout>
 
 </RelativeLayout>

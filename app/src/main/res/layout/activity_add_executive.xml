@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".AddExecutiveActivity">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/ActivityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ActivityBackNav"
+        android:padding="10dp"
+        android:id="@+id/addExecutiveLayout"
+        android:background="@drawable/edittext_border"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Executive"
+            android:fontFamily="@font/roboto"
+            android:layout_marginBottom="5dp"
+            android:textSize="16sp"
+            android:id="@+id/addExecutiveText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addExecutiveText"
+            android:id="@+id/nameEditTextLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Full Name"
+                android:background="@drawable/edittext_border"
+                android:id="@+id/nameEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameEditTextLayout"
+            android:layout_marginTop="10dp"
+            android:id="@+id/emailEditTextLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Email Address"
+                android:background="@drawable/edittext_border"
+                android:id="@+id/emailEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailEditTextLayout"
+            android:id="@+id/passwordEditTextLayout"
+            android:layout_marginTop="20dp"
+            app:passwordToggleEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_border"
+                android:paddingLeft="15dp"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:id="@+id/passwordEditText"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Add Email"
+            android:background="@drawable/button_background"
+            android:textColor="#FFF"
+            android:id="@+id/addEmailBtn"
+            android:padding="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/passwordEditTextLayout"
+            android:textAppearance="@style/Widget.AppCompat.Button.Small"
+            android:textSize="16sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addExecutiveLayout"
+        android:background="@drawable/edittext_border"
+        android:padding="15dp"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Service Executives"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:id="@+id/executiveText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/executiveRecyclerView"
+            android:layout_below="@id/executiveText"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

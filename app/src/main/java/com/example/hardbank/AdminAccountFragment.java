@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ public class AdminAccountFragment extends Fragment {
     FirebaseFirestore db;
     String userId;
 
+    RelativeLayout addCustomerServiceExecutiveBtn;
     TextView userName, userEmail;
 
     public AdminAccountFragment() {
@@ -83,6 +85,17 @@ public class AdminAccountFragment extends Fragment {
         //User Details Display Dashboard
         userEmail = (TextView)view.findViewById(R.id.userEmailAccountAdmin);
         userName = (TextView)view.findViewById(R.id.userNameAccountAdmin);
+
+
+        addCustomerServiceExecutiveBtn = view.findViewById(R.id.addCustomerServiceExecutiveBtn);
+        addCustomerServiceExecutiveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getActivity().getApplicationContext(),AddExecutiveActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         logoutBtn = (Button)view.findViewById(R.id.logoutAdminBtn);
         //Logout Listener

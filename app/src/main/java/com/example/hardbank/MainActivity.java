@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                                MainActivity.this.startActivity(mainIntent);
                                MainActivity.this.finish();
                            }
+                           else  if(documentSnapshot.getString("type").equals("consultant")){
+                               Intent mainIntent = new Intent(MainActivity.this,ConsultantHomeActivity.class);
+                               MainActivity.this.startActivity(mainIntent);
+                               MainActivity.this.finish();
+                           }
                            else {
                                Intent mainIntent = new Intent(MainActivity.this,HomeActivity.class);
                                MainActivity.this.startActivity(mainIntent);
