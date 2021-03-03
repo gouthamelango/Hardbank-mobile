@@ -6,5 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".ConsultantHomeActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <!-- Including of toolbar with the whole screen-->
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchBarLayout"
+            layout="@layout/toolbar"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/searchBarLayout"
+            android:layout_above="@id/bottom_navigation_consultant"
+            android:id="@+id/mainContainer"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottom_navigation_consultant"
+            android:elevation="10dp"
+            app:menu="@menu/bottom_navigation_consultant"
+            android:background="#FFF"/>
+    </RelativeLayout>
 
 </RelativeLayout>
