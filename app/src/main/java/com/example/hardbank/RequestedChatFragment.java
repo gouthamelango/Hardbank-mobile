@@ -3,10 +3,17 @@ package com.example.hardbank;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,13 @@ public class RequestedChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    RecyclerView recyclerView;
+    ChatProfileAdapter adapter;
+
 
     public RequestedChatFragment() {
         // Required empty public constructor
@@ -61,7 +75,30 @@ public class RequestedChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View  view = inflater.inflate(R.layout.fragment_requested_chat, container, false);
 
+        //FireBase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
+
+        recyclerView =  view.findViewById(R.id.requestedChatRecyclerView);
+
+
+
+        setUpRecyclerView();
+
 
         return  view;
+    }
+    private void setUpRecyclerView(){
+        Query query = db.collection("chats").whereEqualTo("status","requested");
+        FirestoreRecyclerOptions<ChatsModel> options = new FirestoreRecyclerOptions.Builder<ChatsModel>()
+                .setQuery(query, ChatsModel.class)
+                .build();
+        adapter = new ChatProfileAdapter(options);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
     }
 }

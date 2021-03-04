@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/edittext_border"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        android:layout_column="1"
+        android:src="@drawable/dummypropic"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:breakStrategy="simple"
+        android:textStyle="bold"
+        android:id="@+id/textViewCustomerName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Customer Name"
+        android:layout_toRightOf="@+id/profileIcon"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="14sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="2dp"
+        android:background="@drawable/acceptbackground"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:id="@+id/acceptChat"
+        android:layout_centerVertical="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_done_24"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
