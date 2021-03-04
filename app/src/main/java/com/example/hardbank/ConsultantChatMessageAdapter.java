@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ChatMessageAdapter extends FirestoreRecyclerAdapter<ChatMessage,ChatMessageAdapter.MyViewHolder> {
+public class ConsultantChatMessageAdapter  extends FirestoreRecyclerAdapter<ChatMessage,ConsultantChatMessageAdapter.MyViewHolder> {
 
-    public ChatMessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options) {
+
+
+    public ConsultantChatMessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options) {
         super(options);
     }
 
@@ -37,7 +38,7 @@ public class ChatMessageAdapter extends FirestoreRecyclerAdapter<ChatMessage,Cha
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_message_single_view,parent,false);
-        return new ChatMessageAdapter.MyViewHolder(V);
+        return new ConsultantChatMessageAdapter.MyViewHolder(V);
     }
 
     class  MyViewHolder extends RecyclerView.ViewHolder{

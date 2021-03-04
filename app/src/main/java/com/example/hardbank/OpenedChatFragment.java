@@ -3,10 +3,17 @@ package com.example.hardbank;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,12 @@ public class OpenedChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    RecyclerView recyclerView;
+    ViewChatAdapter adapter;
 
     public OpenedChatFragment() {
         // Required empty public constructor
@@ -59,6 +72,30 @@ public class OpenedChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_opened_chat, container, false);
+        View view =  inflater.inflate(R.layout.fragment_opened_chat, container, false);;
+
+        //FireBase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
+
+        recyclerView  = view.findViewById(R.id.openedChatRecyclerView);
+
+        setUpRecyclerView();
+
+        return view;
+    }
+
+    private void setUpRecyclerView(){
+        Query query = db.collection("chats").whereEqualTo("consultantid",mAuth.getCurrentUser().getUid());
+        FirestoreRecyclerOptions<ChatsModel> options = new FirestoreRecyclerOptions.Builder<ChatsModel>()
+                .setQuery(query, ChatsModel.class)
+                .build();
+        adapter = new ViewChatAdapter(options);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
     }
 }
