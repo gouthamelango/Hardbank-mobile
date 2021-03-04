@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultantHomeActivity"></activity>
+        <activity android:name=".CustomerChatActivity"></activity>
+        <activity android:name=".ChatWithUsActivity" />
+        <activity android:name=".ConsultantHomeActivity" />
         <activity android:name=".AddExecutiveActivity" />
         <activity android:name=".ConsultantSignUpActivity" />
         <activity android:name=".ConsultantLoginActivity" />

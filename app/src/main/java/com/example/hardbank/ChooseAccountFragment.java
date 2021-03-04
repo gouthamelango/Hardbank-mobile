@@ -45,6 +45,8 @@ public class ChooseAccountFragment extends Fragment {
 
     RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn,whoWeAreBtn, joinOurTeamBtn;
 
+    RelativeLayout helpAndSupport;
+
     public ChooseAccountFragment() {
         // Required empty public constructor
     }
@@ -113,6 +115,16 @@ public class ChooseAccountFragment extends Fragment {
                 mAuth.signOut();
                 getActivity().finish();
                 startActivity(new Intent(getActivity().getApplicationContext(), HomeActivity.class));
+            }
+        });
+
+        //helpAndSupport
+        helpAndSupport =  view.findViewById(R.id.helpAndSupport);
+        helpAndSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getActivity().getApplicationContext(),ChatWithUsActivity.class);
+                startActivity(intent);
             }
         });
 

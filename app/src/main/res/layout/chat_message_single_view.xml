@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="@font/roboto"
+        android:background="@drawable/received_message_bg"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:text="Hii This is goutham"
+        android:id="@+id/textViewReceivedMessage"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/sent_message_bg"
+        android:layout_alignParentRight="true"
+        android:fontFamily="@font/roboto"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:text="Hii This is goutham"
+        android:id="@+id/textViewSentMessage"
+        />
+
+</RelativeLayout>
