@@ -15,14 +15,15 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ConsultantChatMessageAdapter  extends FirestoreRecyclerAdapter<ChatMessage,ConsultantChatMessageAdapter.MyViewHolder> {
 
 
-
-    public ConsultantChatMessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options) {
+    String customerID;
+    public ConsultantChatMessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options,String customerID) {
         super(options);
+        this.customerID =  customerID;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull ChatMessage model) {
-        if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(model.senderid)){
+        if(!customerID.equals(model.senderid)){
             holder.textViewReceivedMessage.setVisibility(View.GONE);
             holder.textViewSentMessage.setVisibility(View.VISIBLE);
             holder.textViewSentMessage.setText(model.message);

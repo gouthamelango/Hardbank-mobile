@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +45,8 @@ public class ConsultantChatActivity extends AppCompatActivity {
 
     TextView profileName;
 
+    ImageView closeChat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,37 @@ public class ConsultantChatActivity extends AppCompatActivity {
 
             }
         });
+
+        closeChat =  findViewById(R.id.closeChat);
+        closeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(view.getRootView().getContext()).create();
+                alertDialog.setTitle("Close Chat");
+                alertDialog.setMessage("Are you sure you want to Close this chat?");
+                alertDialog.setCancelable(false);
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseFirestore.getInstance().collection("chats")
+                                        .document(customerID)
+                                        .update("consultantid", "");
+                                FirebaseFirestore.getInstance().collection("chats")
+                                        .document(customerID)
+                                        .update("status","closed");
+                                onBackPressed();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+
 
         recyclerView =  findViewById(R.id.chatRecyclerView);
         profileName =   findViewById(R.id.profileName);
@@ -95,7 +132,7 @@ public class ConsultantChatActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<ChatMessage> options = new FirestoreRecyclerOptions.Builder<ChatMessage>()
                 .setQuery(query, ChatMessage.class)
                 .build();
-        adapter = new ConsultantChatMessageAdapter(options);
+        adapter = new ConsultantChatMessageAdapter(options,customerID);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);

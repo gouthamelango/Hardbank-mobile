@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -33,7 +35,7 @@ public class CustomerChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ChatMessageAdapter adapter;
 
-
+    TextView infoText;
     String message;
 
     @Override
@@ -44,6 +46,17 @@ public class CustomerChatActivity extends AppCompatActivity {
         //FireBase initialization
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
+
+        infoText =  findViewById(R.id.infoText);
+        db.collection("chats").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.getString("status").equals("closed")){
+                    infoText.setVisibility(View.VISIBLE);
+                    infoText.setText("Your Conversation is closed!\nSend a message to start conversation again");
+                }
+            }
+        });
 
         recyclerView =  findViewById(R.id.chatRecyclerView);
 //        LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -57,6 +70,8 @@ public class CustomerChatActivity extends AppCompatActivity {
 
         editTextMessage =  findViewById(R.id.editTextMessage);
         sendMessageBtn  = findViewById(R.id.sendMessageBtn);
+
+
 
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +127,9 @@ public class CustomerChatActivity extends AppCompatActivity {
         db.collection("chats").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.getString("status").equals("created")){
+                if(documentSnapshot.getString("status").equals("created") || documentSnapshot.getString("status").equals("closed")){
                     db.collection("chats").document(mAuth.getCurrentUser().getUid()).update("status","requested");
+                    infoText.setVisibility(View.GONE);
                 }
             }
         });

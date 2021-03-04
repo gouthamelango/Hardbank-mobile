@@ -50,8 +50,21 @@
         android:layout_height="match_parent"
         android:layout_below="@id/chatNavLayout"
         android:padding="10dp"
-        android:layout_above="@id/chatMessageActionsLayout"
+        android:layout_above="@+id/infoText"
         android:id="@+id/chatRecyclerView"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Info"
+            android:layout_above="@id/chatMessageActionsLayout"
+            android:id="@+id/infoText"
+            android:gravity="center"
+            android:fontFamily="@font/roboto"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:textSize="14sp"
+            />
 
     <RelativeLayout
         android:layout_width="match_parent"
