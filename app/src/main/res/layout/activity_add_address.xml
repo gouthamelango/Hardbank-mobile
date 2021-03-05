@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".AddAddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/activityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activityBackNav"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/addressesTitleText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/edittext_border"
+        android:text="Add Address"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/contactInfoLayout"
+        android:padding="10dp"
+        android:background="@drawable/edittext_border"
+        android:layout_below="@+id/addressesTitleText">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:id="@+id/contactText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:background="@drawable/edittext_border"
+            android:text="Contact Info"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/contactText"
+            android:id="@+id/NameEditTextLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textCapWords"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Name"
+                android:background="@drawable/grey_border"
+                android:id="@+id/nameEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/NameEditTextLayout"
+            android:id="@+id/phoneNumberLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="phone"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Phone Number (+91)"
+                android:background="@drawable/grey_border"
+                android:id="@+id/phoneEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_border"
+        android:layout_below="@id/contactInfoLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:id="@+id/addressInfoText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:background="@drawable/edittext_border"
+            android:text="Address Info"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/addressInfoText"
+            android:id="@+id/addressEditTextLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:drawablePadding="20dp"
+                android:paddingLeft="15dp"
+                android:hint="Address"
+                android:background="@drawable/grey_border"
+                android:id="@+id/addressEditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="Save Address"
+        android:background="@drawable/button_background"
+        android:textColor="#FFF"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:id="@+id/saveAddressBtn"
+        android:textAppearance="@style/Widget.AppCompat.Button.Small"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>

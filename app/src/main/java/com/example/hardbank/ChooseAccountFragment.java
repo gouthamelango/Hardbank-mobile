@@ -45,7 +45,7 @@ public class ChooseAccountFragment extends Fragment {
 
     RelativeLayout userDetailsLayout, customerFunctionsChooserLayout, sellOnHardBank, managementBtn,whoWeAreBtn, joinOurTeamBtn;
 
-    RelativeLayout helpAndSupport;
+    RelativeLayout helpAndSupport,myAccountBtn,ordersBtnChooserFragment,AddressBookBtn;
 
     public ChooseAccountFragment() {
         // Required empty public constructor
@@ -95,6 +95,34 @@ public class ChooseAccountFragment extends Fragment {
         userDetailsLayout =  view.findViewById(R.id.userDetailsLayout);
         userEmail = (TextView)view.findViewById(R.id.userEmailAccountChooserFragment);
         userName = (TextView)view.findViewById(R.id.userNameAccountChooserFragment);
+
+        //My Account btn
+        myAccountBtn =  view.findViewById(R.id.myAccountBtn);
+        myAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        //My Orders
+        ordersBtnChooserFragment =  view.findViewById(R.id.ordersBtnChooserFragment);
+        ordersBtnChooserFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // My Saved Address
+        AddressBookBtn =  view.findViewById(R.id.AddressBookBtn);
+        AddressBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getActivity().getApplicationContext(),AddressBookActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //Login Btn Navigation
         logInBtn = view.findViewById(R.id.loginBtn);

@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultantChatActivity"></activity>
+        <activity android:name=".AddAddressActivity"></activity>
+        <activity android:name=".AddressBookActivity" />
+        <activity android:name=".ConsultantChatActivity" />
         <activity android:name=".CustomerChatActivity" />
         <activity android:name=".ChatWithUsActivity" />
         <activity android:name=".ConsultantHomeActivity" />

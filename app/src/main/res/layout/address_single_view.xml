@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:background="@drawable/edittext_border"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:fontFamily="@font/roboto"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:id="@+id/textViewName"/>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewAddress"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto"
+        android:layout_below="@id/textViewName"
+        android:text="No: 0, Sample Street"
+        android:layout_marginTop="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/phoneLayout"
+        android:layout_below="@+id/textViewAddress">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPhoneText"
+            android:textSize="14sp"
+            android:layout_marginRight="15dp"
+            android:fontFamily="@font/roboto"
+            android:text="Phone :" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8745691236"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/textViewPhoneText"
+            android:id="@+id/textViewPhone"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline"
+        android:id="@+id/border"
+        android:layout_below="@id/phoneLayout"
+        android:layout_marginTop="3dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/border"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:id="@+id/deleteBtn"
+            android:textColor="#DE3C3C"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:layout_toRightOf="@id/deleteBtn"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/editBtn"
+            android:textColor="#2E69FF"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>
