@@ -118,7 +118,10 @@ public class HomeFragment extends Fragment {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(),"Tapped",Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity().getApplicationContext(),"Tapped",Toast.LENGTH_LONG).show();
+
+                Intent intent =  new Intent(getActivity().getApplicationContext(),MenuActivity.class);
+                startActivity(intent);
             }
         });
 
