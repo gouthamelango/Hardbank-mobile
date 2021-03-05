@@ -446,6 +446,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 heartIcon.setImageResource(R.drawable.ic_baseline_favorite_border_black);
                             }
                         }
+                        if(list.size()==0){
+                            heartIcon.setImageResource(R.drawable.ic_baseline_favorite_border_black);
+                        }
                     }
                 }
             });
@@ -468,6 +471,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             else {
                                 addToCartText.setText("Add to cart");
                             }
+                        }
+                        if(list.size()==0){
+                            addToCartText.setText("Add to cart");
                         }
                     }
                 }

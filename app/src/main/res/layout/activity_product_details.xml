@@ -342,6 +342,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/addToFavBtn"
             android:background="@drawable/grey_border"
+            android:visibility="gone"
             android:padding="10dp"
             >
             <TextView
@@ -379,7 +380,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/addToCartBtn"
             android:layout_marginLeft="20dp"

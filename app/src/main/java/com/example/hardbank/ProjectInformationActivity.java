@@ -223,4 +223,36 @@ public class ProjectInformationActivity extends AppCompatActivity {
             });
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mAuth.getCurrentUser()!=null){
+            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        for (int i = 0; i < list.size(); i++) {
+                            DocumentSnapshot doc=list.get(i);
+                            if(doc.getId().equals(projectID)){
+                                addToCartBtn.setText("Remove from cart");
+                                break;
+                            }
+                            else {
+                                addToCartBtn.setText("Add to cart");
+                            }
+                        }
+                        if(list.size()==0){
+                            addToCartBtn.setText("Add to cart");
+                        }
+
+                    }
+                }
+            });
+        }
+
+    }
 }
