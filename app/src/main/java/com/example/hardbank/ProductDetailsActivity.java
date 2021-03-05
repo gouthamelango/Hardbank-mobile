@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +53,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     ImageView heartIcon;
 
+    RatingBar ratingBar;
+    EditText reviewEditText;
+    Float rating;
+    String review;
+    RelativeLayout reviewedLayout;
+    TextInputLayout reviewEditTextLayout;
+    TextView textViewYourReview;
+    Button postReviewBtn;
+    RelativeLayout viewReviewsBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +78,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
         menu = toolbar.getMenu();
+
+
+
+
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -115,6 +133,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDescription = findViewById(R.id.productDescription);
         productImage  =  findViewById(R.id.productImage);
 
+        reviewEditText =  findViewById(R.id.reviewEditText);
+        postReviewBtn =  findViewById(R.id.postReviewBtn);
+        reviewEditTextLayout = findViewById(R.id.reviewEditTextLayout);
+        reviewedLayout =  findViewById(R.id.reviewedLayout);
+        textViewYourReview =  findViewById(R.id.textViewYourReview);
+        ratingBar = findViewById(R.id.ratingBar);
+        viewReviewsBtn =  findViewById(R.id.viewReviewsBtn);
         //Intent
         Intent intent =  getIntent();
         if(intent.hasExtra("id")){
@@ -255,6 +280,64 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+
+            ratingBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    rating = ratingBar.getRating();
+                    //Toast.makeText(getApplicationContext(),String.valueOf(rating),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+            postReviewBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mAuth.getCurrentUser()!=null){
+                        review =  reviewEditText.getText().toString();
+
+                        Map<String, Object> reviewData = new HashMap<>();
+                        reviewData.put("id",mAuth.getCurrentUser().getUid());
+                        reviewData.put("rating",rating);
+                        reviewData.put("review",review);
+                        db.collection("products").document(id)
+                                .collection("reviews").document(mAuth.getCurrentUser().getUid())
+                                .set(reviewData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    reviewEditText.setVisibility(View.GONE);
+                                    reviewEditTextLayout.setVisibility(View.GONE);
+                                    postReviewBtn.setVisibility(View.GONE);
+                                    reviewedLayout.setVisibility(View.VISIBLE);
+                                    textViewYourReview.setText(review);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                        startActivity(customerLoginActivity);
+                        overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                    }
+                }
+            });
+
+            viewReviewsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent =  new Intent(getApplicationContext(),AllReviewsActivity.class);
+                    intent.putExtra("id",id);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -311,6 +394,34 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            db.collection("products").document(id).collection("reviews").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        for (int i = 0; i < list.size(); i++){
+                            DocumentSnapshot doc=list.get(i);
+                            if(doc.getId().equals(mAuth.getCurrentUser().getUid())){
+                                reviewEditText.setVisibility(View.GONE);
+                                reviewEditTextLayout.setVisibility(View.GONE);
+                                postReviewBtn.setVisibility(View.GONE);
+                                reviewedLayout.setVisibility(View.VISIBLE);
+                                textViewYourReview.setText(doc.getString("review"));
+                                ratingBar.setRating(Float.parseFloat(doc.get("rating").toString()));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

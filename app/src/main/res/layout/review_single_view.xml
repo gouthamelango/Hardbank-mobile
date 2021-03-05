@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/edittext_border"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/reviewedLayout">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/profilePic"
+            android:src="@drawable/dummypropic"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/profilePic"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:id="@+id/customerNameTextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="You"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:scaleX=".5"
+            android:id="@+id/ratingBar"
+            android:scaleY=".5"
+            android:layout_below="@+id/customerNameTextView"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:id="@+id/textViewYourReview"
+            android:layout_below="@+id/ratingBar"
+            android:gravity="fill_horizontal"
+            android:layout_marginLeft="65dp"
+            android:text="Lorem Ipsum is simply dumm."/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

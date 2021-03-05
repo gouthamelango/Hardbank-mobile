@@ -182,7 +182,7 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/edittext_border"
             android:padding="15dp"
-            android:visibility="gone"
+
             android:id="@+id/reviewsLayout">
 
             <TextView
@@ -190,16 +190,118 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:id="@+id/yourRatingText"
-                android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 android:text="Your Rating"/>
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/yourRatingText"
+                android:layout_below="@id/yourRatingText"
+                android:scaleX=".5"
+                android:id="@+id/ratingBar"
+                android:layout_centerHorizontal="true"
+                android:scaleY=".5"
                 android:layout_marginTop="5dp"
                 />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingBar"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:background="@drawable/borderblack"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/reviewedLayout">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/profilePic"
+                    android:src="@drawable/dummypropic"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/profilePic"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14sp"
+                    android:id="@+id/customerNameTextView"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="You"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/textViewYourReview"
+                    android:layout_below="@+id/profilePic"
+                    android:gravity="fill_horizontal"
+                    android:text="Lorem Ipsum is simply dumm."/>
+
+            </RelativeLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/reviewedLayout"
+                android:id="@+id/reviewEditTextLayout">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:drawablePadding="20dp"
+                    android:paddingLeft="15dp"
+                    android:hint="Write your review"
+                    android:background="@drawable/grey_border"
+                    android:id="@+id/reviewEditText"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:textAppearance="@style/Widget.AppCompat.Button.Small"
+                android:textSize="14sp"
+                android:background="@drawable/button_background"
+                android:textColor="#FFF"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/postReviewBtn"
+                android:layout_below="@+id/reviewEditTextLayout"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/underline"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/postReviewBtn"
+                android:id="@+id/viewReviewsBtn">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:id="@+id/categoryItemTextView"
+                    android:fontFamily="@font/roboto"
+                    android:text="View All Reviews"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
+            </RelativeLayout>
+
 
         </RelativeLayout>
 
