@@ -73,7 +73,7 @@
                 android:fontFamily="@font/roboto"
                 android:textSize="12sp"
                 android:layout_centerVertical="true"
-                android:id="@+id/quantity"
+                android:id="@+id/textViewQuantity"
                 android:textStyle="bold"
                 android:layout_marginLeft="3dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -85,13 +85,37 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/quantity"
+                android:layout_toRightOf="@id/textViewQuantity"
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                 />
 
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/selectQuantityBtn"
+            android:layout_below="@+id/productBrand"
+            android:text="*"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/multiplySymbol"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:fontFamily="@font/roboto"
+            android:textSize="12sp"
+            android:layout_toRightOf="@+id/multiplySymbol"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/productPrice"
+            android:layout_below="@id/productBrand"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +139,7 @@
             android:textStyle="bold"
             android:layout_marginLeft="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/productPrice"
+            android:id="@+id/estimatedPrice"
             android:layout_below="@+id/selectQuantityBtn"/>
 
     </RelativeLayout>
