@@ -342,7 +342,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
 
-    public void setUpRecyclerView(final String productId){
+    public void setUpRecyclerView(final String productId) {
         db.collection("products").document(productId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -359,16 +359,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        if(mAuth.getCurrentUser()!=null){
+        if (mAuth.getCurrentUser() != null) {
             db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("wishlist").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         for (int i = 0; i < list.size(); i++) {
-                            DocumentSnapshot doc=list.get(i);
-                            if(doc.getId().equals(productId)){
+                            DocumentSnapshot doc = list.get(i);
+                            if (doc.getId().equals(productId)) {
                                 //Toast.makeText(getApplicationContext(),"Already",Toast.LENGTH_SHORT).show();
                                 heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
                             }
@@ -380,14 +380,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         for (int i = 0; i < list.size(); i++) {
-                            DocumentSnapshot doc=list.get(i);
-                            if(doc.getId().equals(productId)){
+                            DocumentSnapshot doc = list.get(i);
+                            if (doc.getId().equals(productId)) {
                                 //Toast.makeText(getApplicationContext(),"Already",Toast.LENGTH_SHORT).show();
-                               // heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                // heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
                                 addToCartText.setText("Remove from cart");
                             }
                         }
@@ -398,12 +398,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
             db.collection("products").document(id).collection("reviews").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                        for (int i = 0; i < list.size(); i++){
-                            DocumentSnapshot doc=list.get(i);
-                            if(doc.getId().equals(mAuth.getCurrentUser().getUid())){
+                        for (int i = 0; i < list.size(); i++) {
+                            DocumentSnapshot doc = list.get(i);
+                            if (doc.getId().equals(mAuth.getCurrentUser().getUid())) {
                                 reviewEditText.setVisibility(View.GONE);
                                 reviewEditTextLayout.setVisibility(View.GONE);
                                 postReviewBtn.setVisibility(View.GONE);
@@ -423,5 +423,61 @@ public class ProductDetailsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mAuth.getCurrentUser()!=null){
+            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("wishlist").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        for (int i = 0; i < list.size(); i++) {
+                            DocumentSnapshot doc=list.get(i);
+                            if(doc.getId().equals(id)){
+                              // Toast.makeText(getApplicationContext(),"Already",Toast.LENGTH_SHORT).show();
+                                heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                break;
+                            }
+                            else {
+                                heartIcon.setImageResource(R.drawable.ic_baseline_favorite_border_black);
+                            }
+                        }
+                    }
+                }
+            });
+//
+//
+            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        for (int i = 0; i < list.size(); i++) {
+                            DocumentSnapshot doc=list.get(i);
+                            if(doc.getId().equals(id)){
+                                //Toast.makeText(getApplicationContext(),"Already",Toast.LENGTH_SHORT).show();
+                               // heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                addToCartText.setText("Remove from cart");
+                                break;
+                            }
+                            else {
+                                addToCartText.setText("Add to cart");
+                            }
+                        }
+                    }
+                }
+            });
+
+//
+//
+//
+//
+          //  Toast.makeText(getApplicationContext(),id,Toast.LENGTH_SHORT).show();
+        }
     }
 }
