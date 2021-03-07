@@ -333,9 +333,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
             viewReviewsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent =  new Intent(getApplicationContext(),AllReviewsActivity.class);
-                    intent.putExtra("id",id);
-                    startActivity(intent);
+                   if(mAuth.getCurrentUser()!=null){
+                       Intent intent =  new Intent(getApplicationContext(),AllReviewsActivity.class);
+                       intent.putExtra("id",id);
+                       startActivity(intent);
+                   }
+                   else {
+                       Intent customerLoginActivity = new Intent(getApplicationContext(),CustomerLoginActivity.class);
+                       startActivity(customerLoginActivity);
+                       overridePendingTransition(R.anim.bottom_up, R.anim.nothing_ani);
+                   }
                 }
             });
         }
