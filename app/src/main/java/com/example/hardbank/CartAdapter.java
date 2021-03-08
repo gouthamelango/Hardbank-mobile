@@ -74,7 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getRootView().getContext());
                         alertDialog.setTitle("Select Quantity");
-                        String[] items = {"1","2","3","4","5"};
+                        String[] items = {"1","2","3","4","5","6","7","8","9","10"};
                         int checkedItem = Integer.parseInt( documentSnapshot.getString("quantity"))-1;
                         alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                             @Override
@@ -105,6 +105,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                                         holder.textViewQuantity.setText("5");
                                         writeQuantity(5,position);
                                         break;
+                                    case 5:
+                                        holder.estimatedPrice.setText(modifyPrice(holder.price,6));
+                                        holder.textViewQuantity.setText("6");
+                                        writeQuantity(6,position);
+                                        break;
+                                    case 6:
+                                        holder.estimatedPrice.setText(modifyPrice(holder.price,7));
+                                        holder.textViewQuantity.setText("7");
+                                        writeQuantity(7,position);
+                                        break;
+                                    case 7:
+                                        holder.estimatedPrice.setText(modifyPrice(holder.price,8));
+                                        holder.textViewQuantity.setText("8");
+                                        writeQuantity(8,position);
+                                        break;
+                                    case 8:
+                                        holder.estimatedPrice.setText(modifyPrice(holder.price,9));
+                                        holder.textViewQuantity.setText("9");
+                                        writeQuantity(9,position);
+                                        break;
+                                    case 9:
+                                        holder.estimatedPrice.setText(modifyPrice(holder.price,10));
+                                        holder.textViewQuantity.setText("10");
+                                        writeQuantity(10,position);
+                                        break;
+
                                 }
                             }
                         });
