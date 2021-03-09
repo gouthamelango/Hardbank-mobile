@@ -167,7 +167,7 @@
                        <TextView
                            android:text="0"
                            android:layout_width="wrap_content"
-                           android:id="@+id/sellerEmailTextView"
+                           android:id="@+id/textViewCartTotal"
                            android:layout_gravity="right"
                            android:layout_height="wrap_content"
                            android:layout_column="2" />
@@ -191,7 +191,7 @@
                        <TextView
                            android:text="0"
                            android:layout_width="wrap_content"
-                           android:id="@+id/shopNameTextView"
+                           android:id="@+id/textViewDeliveryAmount"
                            android:layout_height="wrap_content"
                            android:layout_gravity="right"
                            android:layout_column="2" />
@@ -215,7 +215,7 @@
                        <TextView
                            android:text="0"
                            android:layout_width="wrap_content"
-                           android:id="@+id/shopAddressTextView"
+                           android:id="@+id/textViewTotalAmount"
                            android:layout_height="wrap_content"
                            android:layout_gravity="end"
                            android:textSize="14sp"
@@ -263,7 +263,7 @@
                 android:layout_toRightOf="@+id/rupeeText"
                 android:layout_marginLeft="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:id="@+id/productPrice"
+                android:id="@+id/textViewTotalPrice"
                 android:layout_below="@+id/selectQuantityBtn"/>
 
         </RelativeLayout>
@@ -276,6 +276,7 @@
             android:textSize="12sp"
             android:layout_alignParentRight="true"
             android:padding="15dp"
+            android:id="@+id/confirmOrderBtn"
             android:background="@drawable/button_background"/>
 
 

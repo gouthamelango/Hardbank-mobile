@@ -93,10 +93,17 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyView
 
 
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String id  = String.valueOf(position);
+                Toast.makeText(view.getContext(),id,Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-               // Toast.makeText(view.getContext(),"Cart",Toast.LENGTH_SHORT).show();
+             //  Toast.makeText(view.getContext(),"Cart",Toast.LENGTH_SHORT).show();
                 final String id  = list.get(position).getId();
 
                 FirebaseFirestore.getInstance().collection("users")
@@ -125,15 +132,20 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyView
                                         notifyItemRemoved(position);
                                         list.remove(position);
                                         //Toast.makeText(view.getContext(),"Hye",Toast.LENGTH_SHORT).show();
-                                        Map<String, Object> productData = new HashMap<>();
+                                        final Map<String, Object> productData = new HashMap<>();
                                         productData.put("id",id);
                                         productData.put("quantity","1");
-                                        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        FirebaseFirestore.getInstance().collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(view.getContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
-                                                //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
-
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                productData.put("price",documentSnapshot.get("productprice").toString());
+                                                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(view.getContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
+                                                        //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                                    }
+                                                });
                                             }
                                         });
 

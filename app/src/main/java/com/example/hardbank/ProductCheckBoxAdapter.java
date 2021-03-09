@@ -66,6 +66,8 @@ public class ProductCheckBoxAdapter  extends FirestoreRecyclerAdapter<Product,Pr
                     contentData.put("productid",model.getId());
                     contentData.put("image",model.getImage());
                     contentData.put("productname",model.getProductname());
+                    contentData.put("productprice",model.getProductprice());
+
                     FirebaseFirestore.getInstance().collection("sampleprojects").document(projectID)
                             .collection("components").document(model.getId()).set(contentData);
                 } else {

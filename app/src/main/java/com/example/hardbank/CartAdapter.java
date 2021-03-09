@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,10 +30,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     Context context;
     List<Product> list;
+    private MyInterface listener;
 
-    public CartAdapter(Context context,List<Product> list) {
+    public CartAdapter(Context context,List<Product> list, MyInterface listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -84,6 +88,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                                         holder.estimatedPrice.setText(modifyPrice(holder.price,1));
                                         holder.textViewQuantity.setText("1");
                                         writeQuantity(1,position);
+
                                         break;
                                     case 1:
                                         holder.estimatedPrice.setText(modifyPrice(holder.price,2));
@@ -168,6 +173,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                                         Toast.makeText(view.getContext(),"Product Removed",Toast.LENGTH_SHORT).show();
                                         notifyItemRemoved(position);
                                         list.remove(position);
+                                        listener.updatePrice();
                                     }
                                 });
                             }
@@ -184,7 +190,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     }
     public  void writeQuantity(int quantity, int position){
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .collection("cart").document(list.get(position).getId()).update("quantity",String.valueOf(quantity));
+                .collection("cart").document(list.get(position).getId()).update("quantity",String.valueOf(quantity)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.updatePrice();
+
+            }
+        });
 
     }
 

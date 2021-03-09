@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCartActivity extends AppCompatActivity {
+public class CustomerCartActivity extends AppCompatActivity implements MyInterface{
 
     RelativeLayout backNav;
     Button continueShopping;
@@ -43,6 +44,12 @@ public class CustomerCartActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+
+    int cartTotal= 0;
+    int delivery = 0;
+    int totalAmount = 0;
+
+    TextView textViewCartTotal, textViewDeliveryAmount,textViewTotalAmount,textViewTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,11 @@ public class CustomerCartActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        textViewCartTotal = findViewById(R.id.textViewCartTotal);
+        textViewDeliveryAmount =  findViewById(R.id.textViewDeliveryAmount);
+        textViewTotalAmount =  findViewById(R.id.textViewTotalAmount);
+        textViewTotalPrice =  findViewById(R.id.textViewTotalPrice);
 
         recyclerView =  findViewById(R.id.productsRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -130,7 +142,7 @@ public class CustomerCartActivity extends AppCompatActivity {
                                         Product product = new Product(productname, productprice,category,id, image,productbrand,
                                                 productdeliveryprice, productdescription, verified, reason);
                                         products.add(product);
-                                        adapter = new CartAdapter(context,products);
+                                        adapter = new CartAdapter(context,products,CustomerCartActivity.this);
                                         //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
                                         recyclerView.setAdapter(adapter);
                                     }
@@ -158,7 +170,7 @@ public class CustomerCartActivity extends AppCompatActivity {
                                    SampleProject sampleProject =  new SampleProject(image,projectid,title);
                                    projects.add(sampleProject);
                                    //Toast.makeText(getApplicationContext(),String.valueOf(projects.size()),Toast.LENGTH_SHORT).show();
-                                   adapterProject = new CartProjectAdapter(context,projects);
+                                   adapterProject = new CartProjectAdapter(context,projects,CustomerCartActivity.this);
                                    recyclerViewProject.setAdapter(adapterProject);
                                }
                            });
@@ -168,7 +180,97 @@ public class CustomerCartActivity extends AppCompatActivity {
                }
            });
        }
+        updatePrice();
+    }
 
+    public  void updatePrice(){
+        cartTotal = 0;
+        delivery = 0;
+        totalAmount = 0;
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        DocumentSnapshot doc=list.get(i);
+                        //Toast.makeText(getApplicationContext(),doc.getString("id"),Toast.LENGTH_SHORT).show();
+                        int tot =  Integer.parseInt(doc.get("price").toString()) *  Integer.parseInt(doc.get("quantity").toString());
+                        cartTotal +=  tot;
+                        //Toast.makeText(getApplicationContext(),String.valueOf(cartTotal),Toast.LENGTH_SHORT).show();
+                    }
+                    if(cartTotal>499){
+                        delivery = 0;
+                    }
+                    else if(cartTotal==0){
+                        delivery = 0;
+                    }
+                    else {
+                        delivery = 40;
+                    }
+                    totalAmount = delivery + cartTotal;
+                    textViewCartTotal.setText(String.valueOf(cartTotal));
+                    textViewTotalAmount.setText(String.valueOf(totalAmount));
+                    textViewTotalPrice.setText(String.valueOf(totalAmount));
+                    textViewDeliveryAmount.setText(String.valueOf(delivery));
+
+
+                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart")
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+                            if(task.isSuccessful()){
+                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                List<DocumentSnapshot> list1 = queryDocumentSnapshots.getDocuments();
+                                for (int i = 0; i < list1.size(); i++){
+                                    DocumentSnapshot doc=list1.get(i);
+                                    db.collection("sampleprojects").document(doc.getId()).collection("components")
+                                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+                                            if(task.isSuccessful()){
+                                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                                List<DocumentSnapshot> list2 = queryDocumentSnapshots.getDocuments();
+                                                for (int i = 0; i < list2.size(); i++){
+                                                    DocumentSnapshot doc=list2.get(i);
+
+                                                    cartTotal +=  Integer.parseInt(doc.get("productprice").toString());
+                                                }
+                                                // Toast.makeText(getApplicationContext(),String.valueOf(cartTotal),Toast.LENGTH_SHORT).show();
+                                                if(cartTotal>499){
+                                                    delivery = 0;
+                                                }
+                                                else if(cartTotal==0){
+                                                    delivery = 0;
+                                                }
+                                                else {
+                                                    delivery = 40;
+                                                }
+                                                totalAmount = delivery + cartTotal;
+                                                textViewCartTotal.setText(String.valueOf(cartTotal));
+                                                textViewTotalAmount.setText(String.valueOf(totalAmount));
+                                                textViewTotalPrice.setText(String.valueOf(totalAmount));
+                                                textViewDeliveryAmount.setText(String.valueOf(delivery));
+                                            }
+                                        }
+                                    });
+                                }
+
+
+                            }
+                        }
+                    });
+
+
+                }
+            }
+        });
     }
     @Override
     public void onBackPressed() {

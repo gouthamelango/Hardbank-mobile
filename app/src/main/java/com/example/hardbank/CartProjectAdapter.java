@@ -34,11 +34,13 @@ public class CartProjectAdapter extends RecyclerView.Adapter<CartProjectAdapter.
     List<SampleProject> list;
 
     CartComponentAdapter adapter;
+    private MyInterface listener;
 
 
-    public CartProjectAdapter(Context context,List<SampleProject> list) {
+    public CartProjectAdapter(Context context,List<SampleProject> list, MyInterface listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -120,6 +122,7 @@ public class CartProjectAdapter extends RecyclerView.Adapter<CartProjectAdapter.
                                         Toast.makeText(view.getContext(),"Project Removed",Toast.LENGTH_SHORT).show();
                                         notifyItemRemoved(position);
                                         list.remove(position);
+                                        listener.updatePrice();
                                     }
                                 });
                             }

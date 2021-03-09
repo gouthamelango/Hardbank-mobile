@@ -255,15 +255,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     }
                                 }
                                 if(flag ==0){
-                                    Map<String, Object> productData = new HashMap<>();
+                                    final Map<String, Object> productData = new HashMap<>();
                                     productData.put("id",id);
                                     productData.put("quantity","1");
-                                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    db.collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getApplicationContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
-                                            //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
-                                            addToCartText.setText("Remove from cart");
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            productData.put("price",documentSnapshot.get("productprice").toString());
+                                            db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
+                                                    //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                                    addToCartText.setText("Remove from cart");
+                                                }
+                                            });
                                         }
                                     });
                                 }
