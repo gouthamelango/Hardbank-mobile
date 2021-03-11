@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".ConfirmOrderActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/activityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activityBackNav"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/orderConfirmationText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/edittext_border"
+        android:text="Order Confirmation"
+        />
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/selectedAddressLayout"
+        android:layout_below="@+id/orderConfirmationText"
+        android:background="@drawable/edittext_border"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:id="@+id/textViewName"/>
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewAddress"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto"
+            android:layout_below="@id/textViewName"
+            android:text="No: 0, Sample Street"
+            android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/phoneLayout"
+            android:layout_below="@+id/textViewAddress">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewPhoneText"
+                android:textSize="14sp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/roboto"
+                android:text="Phone :" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8745691236"
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/textViewPhoneText"
+                android:id="@+id/textViewPhone"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline"
+            android:id="@+id/border"
+            android:layout_below="@id/phoneLayout"
+            android:layout_marginTop="3dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/border"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Address"
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"
+                android:id="@+id/changeAddressBtn"
+                android:textColor="#2E69FF"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selectedAddressLayout"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/orderDetailsTextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/edittext_border"
+        android:text="Order Details"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/orderDetailsLayout"
+        android:layout_below="@+id/orderDetailsTextView"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/edittext_border"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Details"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:fontFamily="@font/roboto"
+            android:id="@+id/orderDetailsText"
+            android:textSize="16sp"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_below="@+id/orderDetailsText"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dp"
+                >
+                <TextView
+                    android:text="Cart total (₹)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewCartTotal"
+                    android:layout_gravity="right"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                >
+                <TextView
+                    android:text="Delivery (₹)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewDeliveryAmount"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_column="2" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                >
+                <TextView
+                    android:text="Total Amount (₹)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="left"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewTotalAmount"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_column="2" />
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderDetailsLayout"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/paymentTextView"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/edittext_border"
+        android:text="Payment"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/payBtn"
+        android:text="Pay Now"
+        android:layout_below="@+id/paymentTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_background"
+        android:textColor="#FFF"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:padding="10dp"
+        android:textAppearance="@style/Widget.AppCompat.Button.Small"
+        android:textSize="16sp"
+        />
+
+</RelativeLayout>

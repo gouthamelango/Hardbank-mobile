@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,12 @@ import org.w3c.dom.Text;
 public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,AddressAdapter.MyViewHolder> {
     private OnDeleteClickListener listenerDelete;
     private  OnEditClickListener listenerEdit;
+    private  OnRadioClickListener listenerRadio;
+    String activity;
 
-    public AddressAdapter(@NonNull FirestoreRecyclerOptions<AddressModel> options) {
+    public AddressAdapter(@NonNull FirestoreRecyclerOptions<AddressModel> options, String activity) {
         super(options);
+        this.activity =  activity;
     }
 
     @Override
@@ -29,6 +33,9 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
         holder.textViewPhone.setText(model.getPhone());
         holder.textViewAddress.setText(model.getAddress());
 
+        if(activity.equals("book")){
+            holder.selectAddressBtn.setVisibility(View.GONE);
+        }
 //        holder.editBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -37,6 +44,7 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
 //                view.getContext().startActivity(intent);
 //            }
 //        });
+
     }
 
     @NonNull
@@ -54,12 +62,14 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
 
         TextView deleteBtn;
         TextView editBtn;
+        RadioButton selectAddressBtn;
 
         public MyViewHolder(View itemView){
             super(itemView);
             textViewName =  itemView.findViewById(R.id.textViewName);
             textViewPhone =  itemView.findViewById(R.id.textViewPhone);
             textViewAddress =  itemView.findViewById(R.id.textViewAddress);
+            selectAddressBtn =  itemView.findViewById(R.id.selectAddressBtn);
 
             deleteBtn =  itemView.findViewById(R.id.deleteBtn);
             editBtn =  itemView.findViewById(R.id.editBtn);
@@ -84,6 +94,16 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
                     }
                 }
             });
+
+            selectAddressBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position  = getAdapterPosition();
+                    if(position!= RecyclerView.NO_POSITION && listenerRadio != null){
+                        listenerRadio.onRadioClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
         }
     }
 
@@ -102,6 +122,13 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
     }
     public  void setOnEditClickListener(AddressAdapter.OnEditClickListener listener){
         this.listenerEdit = listener;
+    }
+
+    public  interface  OnRadioClickListener{
+        void onRadioClick(DocumentSnapshot documentSnapshot, int position);
+    }
+    public  void setOnRadioClickListener(AddressAdapter.OnRadioClickListener listener){
+        this.listenerRadio = listener;
     }
 
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,9 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
     int delivery = 0;
     int totalAmount = 0;
 
+
+    Button confirmOrderBtn;
+
     TextView textViewCartTotal, textViewDeliveryAmount,textViewTotalAmount,textViewTotalPrice;
 
     @Override
@@ -82,6 +86,9 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
         textViewDeliveryAmount =  findViewById(R.id.textViewDeliveryAmount);
         textViewTotalAmount =  findViewById(R.id.textViewTotalAmount);
         textViewTotalPrice =  findViewById(R.id.textViewTotalPrice);
+
+        confirmOrderBtn =  findViewById(R.id.confirmOrderBtn);
+
 
         recyclerView =  findViewById(R.id.productsRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -177,6 +184,33 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                        }
 
                    }
+               }
+           });
+
+           confirmOrderBtn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("addresses").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                       @Override
+                       public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                if(list.size()==0){
+                                    Intent intent =  new Intent(getApplicationContext(),AddressBookActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                  //  Toast.makeText(getApplicationContext(),"Hey",Toast.LENGTH_SHORT).show();
+                                    Intent intent =  new Intent(getApplicationContext(),ConfirmOrderActivity.class);
+                                    intent.putExtra("cart",cartTotal);
+                                    intent.putExtra("delivery",delivery);
+                                    intent.putExtra("total",totalAmount);
+                                    startActivity(intent);
+                                }
+                            }
+                       }
+                   });
                }
            });
        }

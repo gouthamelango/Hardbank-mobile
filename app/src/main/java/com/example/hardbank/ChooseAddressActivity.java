@@ -18,7 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class AddressBookActivity extends AppCompatActivity {
+public class ChooseAddressActivity extends AppCompatActivity {
 
     TextView addAddressText;
 
@@ -28,11 +28,10 @@ public class AddressBookActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_book);
+        setContentView(R.layout.activity_choose_address);
 
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
@@ -49,14 +48,14 @@ public class AddressBookActivity extends AppCompatActivity {
         recyclerView =  findViewById(R.id.addressRecyclerView);
 
         setUpRecyclerView();
-    }
 
+    }
     private void setUpRecyclerView() {
         Query query =  db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("addresses");
         FirestoreRecyclerOptions<AddressModel> options = new FirestoreRecyclerOptions.Builder<AddressModel>()
                 .setQuery(query, AddressModel.class)
                 .build();
-        adapter = new AddressAdapter(options,"book");
+        adapter = new AddressAdapter(options,"select");
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -67,7 +66,7 @@ public class AddressBookActivity extends AppCompatActivity {
             public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
 
                 final String id  = documentSnapshot.getId();
-                AlertDialog alertDialog = new AlertDialog.Builder(AddressBookActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(ChooseAddressActivity.this).create();
                 alertDialog.setTitle("Delete");
                 alertDialog.setMessage("Are you sure you want to Delete this Address?");
                 alertDialog.setCancelable(false);
@@ -93,10 +92,22 @@ public class AddressBookActivity extends AppCompatActivity {
             @Override
             public void onEditClick(DocumentSnapshot documentSnapshot, int position) {
                 final String id  = documentSnapshot.getId();
-               // Toast.makeText(getApplicationContext(),"Edit Clicked",Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(),"Edit Clicked",Toast.LENGTH_SHORT).show();
                 Intent intent =  new Intent(getApplicationContext(),AddAddressActivity.class);
                 intent.putExtra("editid",id);
                 startActivity(intent);
+            }
+        });
+
+        adapter.setOnRadioClickListener(new AddressAdapter.OnRadioClickListener() {
+            @Override
+            public void onRadioClick(DocumentSnapshot documentSnapshot, int position) {
+                final String id  = documentSnapshot.getId();
+                //Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("addressID", id);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
