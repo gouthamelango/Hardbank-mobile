@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +22,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
@@ -45,9 +51,20 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
     String TAG ="main";
-    final int UPI_PAYMENT = 1;
+    int GOOGLE_PAY_REQUEST_CODE = 123;
+
 
     Button payBtn;
+
+    String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
+
+    RadioGroup g1;
+
+    RadioButton r1,r2;
+
+    List<String> productsInCart =new ArrayList<>();
+
+    String deliveryAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +87,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
 
+
+        g1 = (RadioGroup)findViewById(R.id.paymentOptionsLayout);
+        r1 = (RadioButton)findViewById(R.id.radioButtonCashOnDelivery);
+        r2 = (RadioButton)findViewById(R.id.radioButtonGooglePay);
+
+
+
         Intent intent =  getIntent();
         if(intent.hasExtra("cart")){
+
+            productsInCart = getIntent().getStringArrayListExtra("productsInCart");
             cartTotal =  intent.getExtras().getInt("cart");
             delivery = intent.getExtras().getInt("delivery");
             totalAmount =  intent.getExtras().getInt("total");
@@ -90,6 +116,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                         textViewName.setText(doc.getString("name"));
                         textViewAddress.setText(doc.getString("address"));
                         textViewPhone.setText(doc.getString("phone"));
+
+                        deliveryAddress = doc.getString("name")+"\n"+doc.getString("address")+"\n"+doc.getString("phone");
                     }
                 }
             });
@@ -106,7 +134,31 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             payBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  //  payUsingUpi("HardBank", "9514560507@paytm", "Order", "1");
+                  //  payUsingUpi("KUMARESH R", "8951898448@okbizaxis", "Order", "1");
+                    if( g1.getCheckedRadioButtonId() == -1){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(ConfirmOrderActivity.this, "Please Choose the Options Available", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else {
+                        int selectedId =  g1.getCheckedRadioButtonId();
+                        switch (selectedId){
+                            case R.id.radioButtonCashOnDelivery:
+                                Toast.makeText(ConfirmOrderActivity.this, "Cash On Delivery", Toast.LENGTH_SHORT).show();
+                                confirmOrder("cash");
+                                break;
+                            case  R.id.radioButtonGooglePay:
+                                //Toast.makeText(ConfirmOrderActivity.this, "Google pay", Toast.LENGTH_SHORT).show();
+                                payUsingUpi("KUMARESH R", "8951898448@okbizaxis", "Order", "1");
+                                break;
+                        }
+
+                    }
+
                 }
             });
 
@@ -115,27 +167,45 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     void payUsingUpi(  String name,String upiId, String note, String amount) {
         //Log.e("main ", "name "+name +"--up--"+upiId+"--"+ note+"--"+amount);
-        Uri uri = Uri.parse("upi://pay").buildUpon()
-                .appendQueryParameter("pa", upiId)
-                .appendQueryParameter("pn", name)
-                //.appendQueryParameter("mc", "")
-                //.appendQueryParameter("tid", "02125412")
-                //.appendQueryParameter("tr", "25584584")
-                .appendQueryParameter("tn", note)
-                .appendQueryParameter("am", amount)
-                .appendQueryParameter("cu", "INR")
-                //.appendQueryParameter("refUrl", "blueapp")
-                .build();
-        Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
-        upiPayIntent.setData(uri);
-        // will always show a dialog to user to choose an app
-        Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
-        // check if intent resolves
-        if(null != chooser.resolveActivity(getPackageManager())) {
-            startActivityForResult(chooser, UPI_PAYMENT);
-        } else {
-            Toast.makeText(ConfirmOrderActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
-        }
+//        Uri uri = Uri.parse("upi://pay").buildUpon()
+//                .appendQueryParameter("pa", upiId)
+//                .appendQueryParameter("pn", name)
+//                .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
+//                //.appendQueryParameter("tid", "02125412")
+//                .appendQueryParameter("tr", "25584584")
+//                .appendQueryParameter("tn", note)
+//                .appendQueryParameter("am", amount)
+//                .appendQueryParameter("cu", "INR")
+//                //.appendQueryParameter("refUrl", "blueapp")
+//                .build();
+//        Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
+//        upiPayIntent.setData(uri);
+//        // will always show a dialog to user to choose an app
+//        Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
+//        // check if intent resolves
+//        if(null != chooser.resolveActivity(getPackageManager())) {
+//            startActivityForResult(chooser, UPI_PAYMENT);
+//        } else {
+//            Toast.makeText(ConfirmOrderActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
+//        }
+
+        Uri uri =
+                new Uri.Builder()
+                        .scheme("upi")
+                        .authority("pay")
+                        .appendQueryParameter("pa", upiId)
+                        .appendQueryParameter("pn", name)
+                       .appendQueryParameter("mc", "")
+                       .appendQueryParameter("tr", "25684584")
+                        .appendQueryParameter("tn", note)
+                        .appendQueryParameter("am", amount)
+                        .appendQueryParameter("cu", "INR")
+                       // .appendQueryParameter("url", "frenchbakers.in")
+                        .build();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        intent.setPackage(GOOGLE_PAY_PACKAGE_NAME);
+        startActivityForResult(intent,GOOGLE_PAY_REQUEST_CODE );
     }
 
 
@@ -150,28 +220,28 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(),data.getExtras().getString("addressID"),Toast.LENGTH_SHORT).show();
                 updateAddress(data.getExtras().getString("addressID"));
             }
-//            if(requestCode == UPI_PAYMENT){
-//                if ((RESULT_OK == resultCode) || (resultCode == 11)) {
-//                    if (data != null) {
-//                        String trxt = data.getStringExtra("response");
-//                        Log.e("UPI", "onActivityResult: " + trxt);
-//                        ArrayList<String> dataList = new ArrayList<>();
-//                        dataList.add(trxt);
-//                        upiPaymentDataOperation(dataList);
-//                    } else {
-//                        Log.e("UPI", "onActivityResult: " + "Return data is null");
-//                        ArrayList<String> dataList = new ArrayList<>();
-//                        dataList.add("nothing");
-//                        upiPaymentDataOperation(dataList);
-//                    }
-//                } else {
-//                    //when user simply back without payment
-//                    Log.e("UPI", "onActivityResult: " + "Return data is null");
-//                    ArrayList<String> dataList = new ArrayList<>();
-//                    dataList.add("nothing");
-//                    upiPaymentDataOperation(dataList);
-//                }
-//            }
+            if(requestCode == GOOGLE_PAY_REQUEST_CODE){
+                if ((RESULT_OK == resultCode) || (resultCode == 11)) {
+                    if (data != null) {
+                        String trxt = data.getStringExtra("response");
+                        Log.e("UPI", "onActivityResult: " + trxt);
+                        ArrayList<String> dataList = new ArrayList<>();
+                        dataList.add(trxt);
+                        upiPaymentDataOperation(dataList);
+                    } else {
+                        Log.e("UPI", "onActivityResult: " + "Return data is null");
+                        ArrayList<String> dataList = new ArrayList<>();
+                        dataList.add("nothing");
+                        upiPaymentDataOperation(dataList);
+                    }
+                } else {
+                    //when user simply back without payment
+                    Log.e("UPI", "onActivityResult: " + "Return data is null");
+                    ArrayList<String> dataList = new ArrayList<>();
+                    dataList.add("nothing");
+                    upiPaymentDataOperation(dataList);
+                }
+            }
 
         }
 
@@ -184,6 +254,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 textViewName.setText(documentSnapshot.getString("name"));
                 textViewAddress.setText(documentSnapshot.getString("address"));
                 textViewPhone.setText(documentSnapshot.getString("phone"));
+                deliveryAddress = documentSnapshot.getString("name")+"\n"+documentSnapshot.getString("address")+"\n"+documentSnapshot.getString("phone");
             }
         });
     }
@@ -241,5 +312,169 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    public  void confirmOrder(final String type){
+
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull final Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (int i = 0; i < list.size(); i++) {
+                        final String orderID =  UUID.randomUUID().toString();
+                        DocumentSnapshot doc=list.get(i);
+                      //  Toast.makeText(getApplicationContext(),"id"+doc.getId()+": "+doc.getString("quantity"),Toast.LENGTH_SHORT).show();
+                        final String quantity = doc.getString("quantity");
+                        final Map<String, Object> orderData = new HashMap<>();
+                        final String productID  = doc.getId();
+                        orderData.put("customerid",mAuth.getCurrentUser().getUid());
+                        orderData.put("productid",doc.getId());
+                        orderData.put("quantity",doc.getString("quantity"));
+                        orderData.put("orderid",orderID);
+                        orderData.put("deliveryaddress",deliveryAddress);
+                        orderData.put("status","Ordered");
+                        orderData.put("type",type);
+                        db.collection("products").document(doc.getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                    List<DocumentSnapshot> list1 = queryDocumentSnapshots.getDocuments();
+                                    DocumentSnapshot doc=list1.get(0);
+                                    //Toast.makeText(getApplicationContext(),doc.getId(),Toast.LENGTH_SHORT).show();
+
+                                    orderData.put("sellerid",doc.getId());
+                                    orderData.put("date", FieldValue.serverTimestamp());
+                                    final String sellerID = doc.getId();
+                                    db.collection("users").document(doc.getId()).collection("products")
+                                            .document(productID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            int  stock =  Integer.parseInt(documentSnapshot.getString("stock"));
+                                            String newStock =  String.valueOf(stock-Integer.parseInt(quantity));
+                                            db.collection("users").document(sellerID).collection("products")
+                                                    .document(productID).update("stock",newStock);
+                                        }
+                                    });
+
+                                    db.collection("orders").document(orderID).set(orderData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Map<String, Object> orderData1 = new HashMap<>();
+                                            orderData1.put("orderid",orderID);
+                                            db.collection("users").document(mAuth.getCurrentUser().getUid())
+                                                    .collection("orders").document(orderID).set(orderData1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    db.collection("users").document(mAuth.getCurrentUser().getUid())
+                                                        .collection("cart").document(productID).delete();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                    }
+
+
+                    db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart")
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                List<DocumentSnapshot> list1 = queryDocumentSnapshots.getDocuments();
+                                for (int i = 0; i < list1.size(); i++){
+                                    DocumentSnapshot doc=list1.get(i);
+                                    final String  projectID =  doc.getId();
+
+                                    db.collection("sampleprojects").document(doc.getId()).collection("components")
+                                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+
+                                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                                List<DocumentSnapshot> list2 = queryDocumentSnapshots.getDocuments();
+                                                for (int i = 0; i < list2.size(); i++){
+                                                    final String orderID =  UUID.randomUUID().toString();
+                                                    DocumentSnapshot doc=list2.get(i);
+                                                  //  Toast.makeText(getApplicationContext(),"id"+doc.getId(),Toast.LENGTH_SHORT).show();
+                                                    final String productID  = doc.getId();
+                                                    final Map<String, Object> orderData = new HashMap<>();
+                                                    orderData.put("customerid",mAuth.getCurrentUser().getUid());
+                                                    orderData.put("productid",doc.getId());
+                                                    orderData.put("quantity","1");
+                                                    orderData.put("orderid",orderID);
+                                                    orderData.put("deliveryaddress",deliveryAddress);
+                                                    orderData.put("status","Ordered");
+                                                    orderData.put("type",type);
+                                                    db.collection("products").document(doc.getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if(task.isSuccessful()){
+                                                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                                                List<DocumentSnapshot> list1 = queryDocumentSnapshots.getDocuments();
+                                                                DocumentSnapshot doc=list1.get(0);
+                                                                //Toast.makeText(getApplicationContext(),doc.getId(),Toast.LENGTH_SHORT).show();
+
+                                                                orderData.put("sellerid",doc.getId());
+                                                                orderData.put("date", FieldValue.serverTimestamp());
+
+                                                                final String sellerID = doc.getId();
+                                                                db.collection("users").document(doc.getId()).collection("products")
+                                                                        .document(productID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                        int  stock =  Integer.parseInt(documentSnapshot.getString("stock"));
+                                                                        String newStock =  String.valueOf(stock-Integer.parseInt("1"));
+                                                                        db.collection("users").document(sellerID).collection("products")
+                                                                                .document(productID).update("stock",newStock);
+                                                                    }
+                                                                });
+
+
+                                                                db.collection("orders").document(orderID).set(orderData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        Map<String, Object> orderData1 = new HashMap<>();
+                                                                        orderData1.put("orderid",orderID);
+                                                                        db.collection("users").document(mAuth.getCurrentUser().getUid())
+                                                                                .collection("orders").document(orderID).set(orderData1);
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    });
+
+                                                    if(i+1==list2.size()){
+                                                       // Toast.makeText(getApplicationContext(),"Last",Toast.LENGTH_SHORT).show();
+                                                        db.collection("users").document(mAuth.getCurrentUser().getUid())
+                                                                .collection("projectscart").document(projectID).delete();
+                                                    }
+                                                    //End
+
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+                                }
+                            }
+                        }
+                    });
+
+                    Intent intent =  new Intent(getApplicationContext(),OrderPlacedActivity.class);
+                    startActivity(intent);
+
+                }
+            }
+        });
     }
 }

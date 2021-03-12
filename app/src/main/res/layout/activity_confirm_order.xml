@@ -267,12 +267,38 @@
         android:text="Payment"
         />
 
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paymentTextView"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/paymentOptionsLayout"
+        android:background="@drawable/edittext_border"
+        >
+        <RadioButton
+            android:id="@+id/radioButtonCashOnDelivery"
+            android:layout_width="match_parent"
+            android:text="Cash On Delivery"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radioButtonGooglePay"
+            android:layout_width="match_parent"
+            android:text="Google Pay"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/payBtn"
-        android:text="Pay Now"
-        android:layout_below="@+id/paymentTextView"
+        android:text="Confirm Order"
+        android:layout_below="@+id/paymentOptionsLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_background"

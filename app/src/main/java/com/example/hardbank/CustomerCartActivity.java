@@ -55,6 +55,8 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
 
     TextView textViewCartTotal, textViewDeliveryAmount,textViewTotalAmount,textViewTotalPrice;
 
+    List<String> productsInCart =new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +208,7 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                                     intent.putExtra("cart",cartTotal);
                                     intent.putExtra("delivery",delivery);
                                     intent.putExtra("total",totalAmount);
+                                    intent.putStringArrayListExtra("productsInCart",(ArrayList<String>) productsInCart);
                                     startActivity(intent);
                                 }
                             }
@@ -221,6 +224,7 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
         cartTotal = 0;
         delivery = 0;
         totalAmount = 0;
+        productsInCart.clear();
         db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("cart")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -230,6 +234,7 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (int i = 0; i < list.size(); i++) {
                         DocumentSnapshot doc=list.get(i);
+                        productsInCart.add(doc.getId());
                         //Toast.makeText(getApplicationContext(),doc.getString("id"),Toast.LENGTH_SHORT).show();
                         int tot =  Integer.parseInt(doc.get("price").toString()) *  Integer.parseInt(doc.get("quantity").toString());
                         cartTotal +=  tot;
@@ -273,7 +278,7 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                                                 List<DocumentSnapshot> list2 = queryDocumentSnapshots.getDocuments();
                                                 for (int i = 0; i < list2.size(); i++){
                                                     DocumentSnapshot doc=list2.get(i);
-
+                                                    productsInCart.add(doc.getId());
                                                     cartTotal +=  Integer.parseInt(doc.get("productprice").toString());
                                                 }
                                                 // Toast.makeText(getApplicationContext(),String.valueOf(cartTotal),Toast.LENGTH_SHORT).show();
