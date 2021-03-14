@@ -110,7 +110,8 @@ public class ChooseAccountFragment extends Fragment {
         ordersBtnChooserFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent =  new Intent(getActivity().getApplicationContext(),MyOrderActivity.class);
+                startActivity(intent);
             }
         });
 
