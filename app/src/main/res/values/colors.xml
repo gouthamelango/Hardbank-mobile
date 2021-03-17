@@ -5,4 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="notificationColor">#7CA8A4A4</color>
     <color name="colorGreyShade">#D76CBBC7</color>
+    <color name="orange">#D76CBBC7</color>
+
 </resources>

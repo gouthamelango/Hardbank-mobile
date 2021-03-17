@@ -33,11 +33,11 @@ public class MyOrderActivity extends AppCompatActivity {
 
     }
     private void setUpRecyclerView() {
-        Query query =  db.collection("orders").whereEqualTo("customerid",mAuth.getCurrentUser().getUid());
+        Query query =  db.collection("orders").whereEqualTo("customerid",mAuth.getCurrentUser().getUid()).orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrderModel> options = new FirestoreRecyclerOptions.Builder<OrderModel>()
                 .setQuery(query, OrderModel.class)
                 .build();
-        adapter = new OrdersAdapter(options);
+        adapter = new OrdersAdapter(options,"myorders");
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

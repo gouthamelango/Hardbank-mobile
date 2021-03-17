@@ -3,10 +3,20 @@ package com.example.hardbank;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +33,15 @@ public class SellerOrdersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    TabLayout tabLayout;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    RecyclerView recyclerView;
+    OrdersAdapter adapter;
+
 
     public SellerOrdersFragment() {
         // Required empty public constructor
@@ -59,6 +78,86 @@ public class SellerOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seller_orders, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_orders, container, false);
+
+        //FireBase initialization
+        mAuth = FirebaseAuth.getInstance();
+        db =  FirebaseFirestore.getInstance();
+
+        tabLayout = (TabLayout)view.findViewById(R.id.main_tab_menu);
+        recyclerView =  view.findViewById(R.id.itemsRecyclerView);
+
+
+        loadAllOrders();
+        listener();
+
+        return view;
+    }
+
+    private void listener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                switch (pos){
+                    case 0:
+                       // Toast.makeText(getActivity().getApplicationContext(), "All", Toast.LENGTH_SHORT).show();
+                        loadAllOrders();
+                        break;
+                    case 1:
+                       // Toast.makeText(getActivity().getApplicationContext(), "Pending", Toast.LENGTH_SHORT).show();
+                        loadFilter("Ordered");
+                        break;
+                    case 2:
+                       // Toast.makeText(getActivity().getApplicationContext(), "Shipped", Toast.LENGTH_SHORT).show();
+                        loadFilter("Shipped");
+                        break;
+                    case 3:
+                      //  Toast.makeText(getActivity().getApplicationContext(), "Delivered", Toast.LENGTH_SHORT).show();
+                        loadFilter("Delivered");
+                        break;
+                    case 4:
+                        //Toast.makeText(getActivity().getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        loadFilter("Cancelled");
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    public void loadFilter(String type){
+        Query query =  db.collection("orders").whereEqualTo("sellerid",mAuth.getCurrentUser().getUid())
+                .whereEqualTo("status",type).orderBy("date",Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<OrderModel> options = new FirestoreRecyclerOptions.Builder<OrderModel>()
+                .setQuery(query, OrderModel.class)
+                .build();
+        adapter.updateOptions(options);
+
+    }
+
+    public void loadAllOrders(){
+
+        Query query =  db.collection("orders").whereEqualTo("sellerid",mAuth.getCurrentUser().getUid())
+                .orderBy("date",Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<OrderModel> options = new FirestoreRecyclerOptions.Builder<OrderModel>()
+                .setQuery(query, OrderModel.class)
+                .build();
+        adapter = new OrdersAdapter(options,"sellerorderstab");
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+
+        adapter.startListening();
     }
 }

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
@@ -189,14 +190,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 //            Toast.makeText(ConfirmOrderActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
 //        }
 
+        int digits = 8;
+        int n = nDigitRandomNo(digits);
+        String trRef =  String.valueOf(n);
         Uri uri =
                 new Uri.Builder()
                         .scheme("upi")
                         .authority("pay")
                         .appendQueryParameter("pa", upiId)
                         .appendQueryParameter("pn", name)
-                       .appendQueryParameter("mc", "")
-                       .appendQueryParameter("tr", "25684584")
+                       .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
+                       .appendQueryParameter("tr", trRef)
                         .appendQueryParameter("tn", note)
                         .appendQueryParameter("am", amount)
                         .appendQueryParameter("cu", "INR")
@@ -206,6 +210,16 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         intent.setData(uri);
         intent.setPackage(GOOGLE_PAY_PACKAGE_NAME);
         startActivityForResult(intent,GOOGLE_PAY_REQUEST_CODE );
+    }
+
+    private int nDigitRandomNo(int digits){
+        int max = (int) Math.pow(10,(digits)) - 1; //for digits =7, max will be 9999999
+        int min = (int) Math.pow(10, digits-1); //for digits = 7, min will be 1000000
+        int range = max-min; //This is 8999999
+        Random r = new Random();
+        int x = r.nextInt(range);// This will generate random integers in range 0 - 8999999
+        int nDigitRandomNo = x+min; //Our random rumber will be any random number x + min
+        return nDigitRandomNo;
     }
 
 
