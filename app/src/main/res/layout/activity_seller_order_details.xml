@@ -1,9 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFF1F3"
     tools:context=".SellerOrderDetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/edittext_border"
+        android:id="@+id/activityBackNav">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/arrow_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#A9A9A9"
+            android:text="@string/backText"
+            android:layout_toRightOf="@id/arrowBackSignUpImg"
+            android:layout_centerVertical="true"
+            android:id="@+id/backTextSignUp"/>
+
+\
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activityBackNav"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/addressesText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/edittext_border"
+        android:text="Order Details"
+        />
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/addressesText"
+       android:layout_marginTop="10dp"
+       android:layout_marginRight="15dp"
+       android:layout_marginLeft="15dp"
+       android:padding="10dp"
+       android:background="@drawable/edittext_border"
+       android:layout_marginBottom="10dp"
+       android:id="@+id/productImageLayout">
+
+       <ImageView
+           android:layout_height="100dp"
+           android:layout_width="100dp"
+           android:layout_marginTop="10dp"
+           android:src="@drawable/dummycomp1"
+           android:id="@+id/productImage"
+           android:scaleType="fitXY"
+           />
+
+       <TableLayout
+           android:layout_width="match_parent"
+           android:padding="10dp"
+           android:layout_toRightOf="@+id/productImage"
+           android:layout_height="wrap_content">
+           <TableRow
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               >
+               <TextView
+                   android:text="Product Name"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="14sp"
+                   android:layout_marginRight="25dp"
+                   android:textStyle="bold"
+                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                   android:layout_column="1" />
+               <!--                    android:textColor="#2E69FF"-->
+               <TextView
+                   android:text="Product"
+                   android:layout_width="wrap_content"
+                   android:id="@+id/textViewProductName"
+                   android:layout_height="wrap_content"
+                   android:layout_column="2" />
+           </TableRow>
+           <TableRow
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_marginTop="15dp"
+               >
+               <TextView
+                   android:text="Price"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="14sp"
+                   android:layout_marginRight="25dp"
+                   android:textStyle="bold"
+                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                   android:layout_column="1" />
+               <TextView
+                   android:text="Price"
+                   android:layout_width="wrap_content"
+                   android:id="@+id/textViewProductPrice"
+                   android:layout_height="wrap_content"
+                   android:layout_column="2" />
+           </TableRow>
+           <TableRow
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_marginTop="15dp"
+               >
+               <TextView
+                   android:text="Quantity"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="14sp"
+                   android:layout_marginRight="25dp"
+                   android:textStyle="bold"
+                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                   android:layout_column="1" />
+               <TextView
+                   android:text="Quantity"
+                   android:layout_width="wrap_content"
+                   android:id="@+id/textViewQuantity"
+                   android:layout_height="wrap_content"
+                   android:layout_column="2" />
+           </TableRow>
+
+       </TableLayout>
+   </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsLayout"
+        android:layout_below="@+id/productImageLayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_border">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                >
+                <TextView
+                    android:text="Order ID "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="exmaple@gmail.com"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewOrderId"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="15dp"
+                >
+                <TextView
+                    android:text="Ordered By"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="Customer Name"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewCustomerName"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="15dp"
+                >
+                <TextView
+                    android:text="Ordered Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="25dp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_column="1" />
+                <TextView
+                    android:text="Ordered Date"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewOrderedDate"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2" />
+            </TableRow>
+
+
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailsLayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_border"
+        >
+
+    </RelativeLayout>
+</RelativeLayout>

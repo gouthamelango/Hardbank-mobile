@@ -1,5 +1,6 @@
 package com.example.hardbank;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -61,6 +62,9 @@ public class OrdersAdapter extends FirestoreRecyclerAdapter<OrderModel,OrdersAda
                 @Override
                 public void onClick(View view) {
                     //Toast.makeText(view.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent =  new Intent(view.getContext(),SellerOrderDetailsActivity.class);
+                    intent.putExtra("orderid",model.getOrderid());
+                    view.getContext().startActivity(intent);
                 }
             });
         }
