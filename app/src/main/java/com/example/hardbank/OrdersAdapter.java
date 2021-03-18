@@ -57,6 +57,14 @@ public class OrdersAdapter extends FirestoreRecyclerAdapter<OrderModel,OrdersAda
             holder.orderStatus.setTextColor(Color.parseColor("#F57F3B"));
         }
 
+        if(model.getStatus().equals("Shipped")){
+            holder.orderStatus.setTextColor(Color.parseColor("#F57F3B"));
+        }
+
+        if(model.getStatus().equals("Delivered")){
+            holder.orderStatus.setTextColor(Color.parseColor("#2FB65B"));
+        }
+
         if(activity.equals("sellerorderstab")){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

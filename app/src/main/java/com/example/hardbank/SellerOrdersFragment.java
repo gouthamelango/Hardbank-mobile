@@ -136,13 +136,18 @@ public class SellerOrdersFragment extends Fragment {
     }
 
     public void loadFilter(String type){
+        adapter.stopListening();
         Query query =  db.collection("orders").whereEqualTo("sellerid",mAuth.getCurrentUser().getUid())
                 .whereEqualTo("status",type).orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrderModel> options = new FirestoreRecyclerOptions.Builder<OrderModel>()
                 .setQuery(query, OrderModel.class)
                 .build();
-        adapter.updateOptions(options);
+        adapter = new OrdersAdapter(options,"sellerorderstab");
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     public void loadAllOrders(){
@@ -158,6 +163,14 @@ public class SellerOrdersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setAdapter(adapter);
 
+        adapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.stopListening();
+        adapter.notifyDataSetChanged();
         adapter.startListening();
     }
 }

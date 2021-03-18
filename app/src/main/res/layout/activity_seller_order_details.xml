@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/backTextSignUp"/>
 
-\
+
 
     </RelativeLayout>
 
@@ -49,196 +49,359 @@
         android:text="Order Details"
         />
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@+id/addressesText"
-       android:layout_marginTop="10dp"
-       android:layout_marginRight="15dp"
-       android:layout_marginLeft="15dp"
-       android:padding="10dp"
-       android:background="@drawable/edittext_border"
-       android:layout_marginBottom="10dp"
-       android:id="@+id/productImageLayout">
 
-       <ImageView
-           android:layout_height="100dp"
-           android:layout_width="100dp"
-           android:layout_marginTop="10dp"
-           android:src="@drawable/dummycomp1"
-           android:id="@+id/productImage"
-           android:scaleType="fitXY"
-           />
-
-       <TableLayout
-           android:layout_width="match_parent"
-           android:padding="10dp"
-           android:layout_toRightOf="@+id/productImage"
-           android:layout_height="wrap_content">
-           <TableRow
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               >
-               <TextView
-                   android:text="Product Name"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="14sp"
-                   android:layout_marginRight="25dp"
-                   android:textStyle="bold"
-                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                   android:layout_column="1" />
-               <!--                    android:textColor="#2E69FF"-->
-               <TextView
-                   android:text="Product"
-                   android:layout_width="wrap_content"
-                   android:id="@+id/textViewProductName"
-                   android:layout_height="wrap_content"
-                   android:layout_column="2" />
-           </TableRow>
-           <TableRow
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_marginTop="15dp"
-               >
-               <TextView
-                   android:text="Price"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="14sp"
-                   android:layout_marginRight="25dp"
-                   android:textStyle="bold"
-                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                   android:layout_column="1" />
-               <TextView
-                   android:text="Price"
-                   android:layout_width="wrap_content"
-                   android:id="@+id/textViewProductPrice"
-                   android:layout_height="wrap_content"
-                   android:layout_column="2" />
-           </TableRow>
-           <TableRow
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_marginTop="15dp"
-               >
-               <TextView
-                   android:text="Quantity"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="14sp"
-                   android:layout_marginRight="25dp"
-                   android:textStyle="bold"
-                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                   android:layout_column="1" />
-               <TextView
-                   android:text="Quantity"
-                   android:layout_width="wrap_content"
-                   android:id="@+id/textViewQuantity"
-                   android:layout_height="wrap_content"
-                   android:layout_column="2" />
-           </TableRow>
-
-       </TableLayout>
-   </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/detailsLayout"
-        android:layout_below="@+id/productImageLayout"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        android:background="@drawable/edittext_border">
+        android:layout_below="@+id/addressesText">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:padding="10dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_border"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/productImageLayout">
+
+                <ImageView
+                    android:layout_height="100dp"
+                    android:layout_width="100dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/dummycomp1"
+                    android:id="@+id/productImage"
+                    android:scaleType="fitXY"
+                    />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_toRightOf="@+id/productImage"
+                    android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        >
+                        <TextView
+                            android:text="Product Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <!--                    android:textColor="#2E69FF"-->
+                        <TextView
+                            android:text="Product"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewProductName"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Price"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewProductPrice"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Quantity"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewQuantity"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Total Amount (₹)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Amount"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewTotalAmount"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+
+                </TableLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailsLayout"
+                android:layout_below="@+id/productImageLayout"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_border">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        >
+                        <TextView
+                            android:text="Order ID "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="exmaple@gmail.com"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewOrderId"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Ordered By"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Customer Name"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewCustomerName"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Ordered Date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Ordered Date"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewOrderedDate"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <!--                    android:textColor="#2E69FF"-->
+                        <TextView
+                            android:text="Progress"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewOrderProgress"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+
+
+
+                </TableLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailsLayout"
+                android:layout_marginTop="10dp"
+                android:id="@+id/deliveryDetailsLayout"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_border"
                 >
+
                 <TextView
-                    android:text="Order ID "
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:fontFamily="@font/roboto"
                     android:textSize="14sp"
-                    android:layout_marginRight="25dp"
                     android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_column="1" />
-                <TextView
-                    android:text="exmaple@gmail.com"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textViewOrderId"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2" />
-            </TableRow>
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="15dp"
+                    android:id="@+id/deliveryTextView"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:background="@drawable/edittext_border"
+                    android:text="Delivery Details"
+                    />
+
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_below="@+id/deliveryTextView"
+                    android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        >
+                        <TextView
+                            android:text="Delivery Address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <!--                    android:textColor="#2E69FF"-->
+                        <TextView
+                            android:text="Delivery Address"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewDeliveryAddress"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        >
+                        <TextView
+                            android:text="Mode of Payment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <!--                    android:textColor="#2E69FF"-->
+                        <TextView
+                            android:text="Payment"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewPaymentMode"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
+
+                </TableLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/deliveryDetailsLayout"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/billingDetails"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_border"
                 >
+
                 <TextView
-                    android:text="Ordered By"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:fontFamily="@font/roboto"
                     android:textSize="14sp"
-                    android:layout_marginRight="25dp"
                     android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_column="1" />
-                <TextView
-                    android:text="Customer Name"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textViewCustomerName"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2" />
-            </TableRow>
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="15dp"
-                >
-                <TextView
-                    android:text="Ordered Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_marginRight="25dp"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_column="1" />
-                <TextView
-                    android:text="Ordered Date"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textViewOrderedDate"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2" />
-            </TableRow>
+                    android:id="@+id/processOrderBtn"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:background="@drawable/edittext_border"
+                    android:text="Process Order"
+                    />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
 
 
 
-        </TableLayout>
+            </RelativeLayout>
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/detailsLayout"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        android:background="@drawable/edittext_border"
-        >
+    </ScrollView>
 
-    </RelativeLayout>
 </RelativeLayout>
