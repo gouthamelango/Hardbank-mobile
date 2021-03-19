@@ -76,6 +76,18 @@ public class OrdersAdapter extends FirestoreRecyclerAdapter<OrderModel,OrdersAda
                 }
             });
         }
+        if(activity.equals("myorders")){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Toast.makeText(view.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent =  new Intent(view.getContext(),TrackOrderActivity.class);
+                    intent.putExtra("orderid",model.getOrderid());
+                    view.getContext().startActivity(intent);
+
+                }
+            });
+        }
 
     }
 
