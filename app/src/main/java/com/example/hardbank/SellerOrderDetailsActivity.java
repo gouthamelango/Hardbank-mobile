@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
 
     String orderStatus;
 
+    RelativeLayout billingDetails;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         textViewTotalAmount  =  findViewById(R.id.textViewTotalAmount);
         textViewOrderProgress =  findViewById(R.id.textViewOrderProgress);
         processOrderBtn = findViewById(R.id.processOrderBtn);
+
+        billingDetails =  findViewById(R.id.billingDetails);
 
         //FireBase initialization
         mAuth = FirebaseAuth.getInstance();
@@ -87,6 +92,10 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
                     textViewOrderProgress.setText(documentSnapshot.getString("status"));
 
                     orderStatus =  documentSnapshot.getString("status");
+
+                    if(orderStatus.equals("Cancelled")){
+                        billingDetails.setVisibility(View.GONE);
+                    }
 
                     db.collection("products").document(documentSnapshot.getString("productid"))
                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
