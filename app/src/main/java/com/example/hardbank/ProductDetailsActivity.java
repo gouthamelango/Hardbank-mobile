@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     TextView productName, productBrand, productPrice, productDescription;
     TextView addToCartText;
     ImageView productImage;
+    TextView productStatus;
 
     RelativeLayout addToCart, addToFavorite;
 
@@ -140,11 +142,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
         textViewYourReview =  findViewById(R.id.textViewYourReview);
         ratingBar = findViewById(R.id.ratingBar);
         viewReviewsBtn =  findViewById(R.id.viewReviewsBtn);
+
+        productStatus = findViewById(R.id.productStatus);
+
+        addToCart =  findViewById(R.id.addToCartBtn);
+        addToCartText = findViewById(R.id.addToCartText);
+
         //Intent
         Intent intent =  getIntent();
         if(intent.hasExtra("id")){
             id = getIntent().getExtras().getString("id");
             setUpRecyclerView(id);
+
 
 
         //Review Btn
@@ -224,8 +233,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         //Actions: Add to Cart
-        addToCart =  findViewById(R.id.addToCartBtn);
-        addToCartText = findViewById(R.id.addToCartText);
+
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -441,6 +449,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+        db.collection("products").document(id).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    final DocumentSnapshot doc=list.get(0);
+                    String sellerID =  doc.getString("id");
+                    db.collection("users").document(sellerID).collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
+                                productStatus.setText("Out of Stock");
+                                productStatus.setTextColor(Color.parseColor("#DE3C3C"));
+                                addToCartText.setText("Out of Stock");
+                                addToCart.setClickable(false);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
         if(mAuth.getCurrentUser()!=null){
             db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("wishlist").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -491,6 +525,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     }
                 }
             });
+
+
 
 //
 //

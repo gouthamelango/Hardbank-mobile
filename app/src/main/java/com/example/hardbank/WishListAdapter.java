@@ -3,6 +3,7 @@ package com.example.hardbank;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,34 +124,64 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.MyView
                                 }
                             }
                             if(flag==0){
-                                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .collection("wishlist").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                //end
+                                FirebaseFirestore.getInstance().collection("products")
+                                        .document(id).collection("sellers")
+                                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        //Toast.makeText(view.getContext(),"Product Deleted",Toast.LENGTH_SHORT).show();
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                            List<DocumentSnapshot> list1 = queryDocumentSnapshots.getDocuments();
+                                            final DocumentSnapshot doc=list1.get(0);
+                                            String sellerID =  doc.getString("id");
+                                            FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
+                                                        Toast.makeText(view.getContext(),"Out of Stock",Toast.LENGTH_SHORT).show();
 
-                                        notifyItemRemoved(position);
-                                        list.remove(position);
-                                        //Toast.makeText(view.getContext(),"Hye",Toast.LENGTH_SHORT).show();
-                                        final Map<String, Object> productData = new HashMap<>();
-                                        productData.put("id",id);
-                                        productData.put("quantity","1");
-                                        FirebaseFirestore.getInstance().collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                productData.put("price",documentSnapshot.get("productprice").toString());
-                                                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(view.getContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
-                                                        //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                                        //start
+
+                                                        //end
                                                     }
-                                                });
-                                            }
-                                        });
+                                                    else {
+                                                        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                                .collection("wishlist").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                //Toast.makeText(view.getContext(),"Product Deleted",Toast.LENGTH_SHORT).show();
 
+                                                                notifyItemRemoved(position);
+                                                                list.remove(position);
+                                                                //Toast.makeText(view.getContext(),"Hye",Toast.LENGTH_SHORT).show();
+                                                                final Map<String, Object> productData = new HashMap<>();
+                                                                productData.put("id",id);
+                                                                productData.put("quantity","1");
+                                                                FirebaseFirestore.getInstance().collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                        productData.put("price",documentSnapshot.get("productprice").toString());
+                                                                        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("cart").document(id).set(productData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Toast.makeText(view.getContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
+                                                                                //heartIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
                                     }
                                 });
+
                             }
                         }
                     }
