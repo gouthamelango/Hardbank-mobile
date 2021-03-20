@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerCartActivity extends AppCompatActivity implements MyInterface{
 
@@ -133,29 +136,113 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
 
                         else {
                             for (int i = 0; i < list.size(); i++) {
-                                DocumentSnapshot doc=list.get(i);
-                                db.collection("products").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                final DocumentSnapshot doc=list.get(i);
+//                                db.collection("products").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                                    @Override
+//                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                        String productname = documentSnapshot.getString("productname");
+//                                        int productprice = documentSnapshot.getLong("productprice").intValue();
+//                                        //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+//                                        String category = documentSnapshot.getString("category");
+//                                        String id = documentSnapshot.getString("id");
+//                                        String image = documentSnapshot.getString("image");
+//                                        String productbrand = documentSnapshot.getString("productbrand");
+//                                        String productdeliveryprice = documentSnapshot.getString("productdeliveryprice");
+//                                        String productdescription = documentSnapshot.getString("productdescription");
+//                                        String  reason = documentSnapshot.getString("reason");
+//                                        String verified = documentSnapshot.getString("verified");
+//                                        Product product = new Product(productname, productprice,category,id, image,productbrand,
+//                                                productdeliveryprice, productdescription, verified, reason);
+//                                        products.add(product);
+//                                        adapter = new CartAdapter(context,products,CustomerCartActivity.this);
+//                                        //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+//                                        recyclerView.setAdapter(adapter);
+//                                    }
+//                                });
+                                final String productID =  doc.getId();
+
+                                db.collection("products").document(productID).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        String productname = documentSnapshot.getString("productname");
-                                        int productprice = documentSnapshot.getLong("productprice").intValue();
-                                        //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
-                                        String category = documentSnapshot.getString("category");
-                                        String id = documentSnapshot.getString("id");
-                                        String image = documentSnapshot.getString("image");
-                                        String productbrand = documentSnapshot.getString("productbrand");
-                                        String productdeliveryprice = documentSnapshot.getString("productdeliveryprice");
-                                        String productdescription = documentSnapshot.getString("productdescription");
-                                        String  reason = documentSnapshot.getString("reason");
-                                        String verified = documentSnapshot.getString("verified");
-                                        Product product = new Product(productname, productprice,category,id, image,productbrand,
-                                                productdeliveryprice, productdescription, verified, reason);
-                                        products.add(product);
-                                        adapter = new CartAdapter(context,products,CustomerCartActivity.this);
-                                        //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
-                                        recyclerView.setAdapter(adapter);
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                            List<DocumentSnapshot> list7 = queryDocumentSnapshots.getDocuments();
+                                            final DocumentSnapshot doc2=list7.get(0);
+                                            String sellerID =  doc2.getString("id");
+                                            db.collection("users").document(sellerID).collection("products").document(productID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
+                                                        updatePrice();
+
+                                                        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                                .collection("cart").document(productID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                //Toast.makeText(view.getContext(),"Product Deleted",Toast.LENGTH_SHORT).show();
+
+                                                                //Toast.makeText(view.getContext(),"Hye",Toast.LENGTH_SHORT).show();
+
+
+                                                                db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("wishlist").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                        if(task.isSuccessful()){
+                                                                            QuerySnapshot queryDocumentSnapshots = task.getResult();
+                                                                            List<DocumentSnapshot> list9 = queryDocumentSnapshots.getDocuments();
+                                                                            int cl = 0;
+                                                                            for (int i = 0;i<list9.size();i++){
+                                                                                DocumentSnapshot doc9=list9.get(i);
+                                                                                if(doc9.getId().equals(productID)){
+                                                                                    cl = 1;
+                                                                                    break;
+                                                                                }
+
+                                                                            }
+                                                                            if(cl==0){
+                                                                                final Map<String, Object> productData = new HashMap<>();
+                                                                                productData.put("id",productID);
+                                                                                db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("wishlist").document(productID).set(productData);
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        });
+                                                    }
+                                                    else {
+                                                        db.collection("products").document(productID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                String productname = documentSnapshot.getString("productname");
+                                                                int productprice = documentSnapshot.getLong("productprice").intValue();
+                                                                //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                                                String category = documentSnapshot.getString("category");
+                                                                String id = documentSnapshot.getString("id");
+                                                                String image = documentSnapshot.getString("image");
+                                                                String productbrand = documentSnapshot.getString("productbrand");
+                                                                String productdeliveryprice = documentSnapshot.getString("productdeliveryprice");
+                                                                String productdescription = documentSnapshot.getString("productdescription");
+                                                                String  reason = documentSnapshot.getString("reason");
+                                                                String verified = documentSnapshot.getString("verified");
+                                                                Product product = new Product(productname, productprice,category,id, image,productbrand,
+                                                                        productdeliveryprice, productdescription, verified, reason);
+                                                                products.add(product);
+                                                                adapter = new CartAdapter(context,products,CustomerCartActivity.this);
+                                                                //Toast.makeText(getApplicationContext(),productname,Toast.LENGTH_SHORT).show();
+                                                                recyclerView.setAdapter(adapter);
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
                                     }
                                 });
+
+
                             }
                         }
                     }
