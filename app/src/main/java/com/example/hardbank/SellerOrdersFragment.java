@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -42,6 +43,7 @@ public class SellerOrdersFragment extends Fragment {
     RecyclerView recyclerView;
     OrdersAdapter adapter;
 
+    TextView titleText;
 
     public SellerOrdersFragment() {
         // Required empty public constructor
@@ -84,6 +86,8 @@ public class SellerOrdersFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
 
+        titleText =  view.findViewById(R.id.titleText);
+
         tabLayout = (TabLayout)view.findViewById(R.id.main_tab_menu);
         recyclerView =  view.findViewById(R.id.itemsRecyclerView);
 
@@ -106,18 +110,22 @@ public class SellerOrdersFragment extends Fragment {
                         break;
                     case 1:
                        // Toast.makeText(getActivity().getApplicationContext(), "Pending", Toast.LENGTH_SHORT).show();
+                        titleText.setText("Pending");
                         loadFilter("Ordered");
                         break;
                     case 2:
                        // Toast.makeText(getActivity().getApplicationContext(), "Shipped", Toast.LENGTH_SHORT).show();
+                        titleText.setText("Shipped");
                         loadFilter("Shipped");
                         break;
                     case 3:
                       //  Toast.makeText(getActivity().getApplicationContext(), "Delivered", Toast.LENGTH_SHORT).show();
+                        titleText.setText("Delivered");
                         loadFilter("Delivered");
                         break;
                     case 4:
                         //Toast.makeText(getActivity().getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        titleText.setText("Cancelled");
                         loadFilter("Cancelled");
                         break;
                 }
@@ -136,6 +144,7 @@ public class SellerOrdersFragment extends Fragment {
     }
 
     public void loadFilter(String type){
+
         adapter.stopListening();
         Query query =  db.collection("orders").whereEqualTo("sellerid",mAuth.getCurrentUser().getUid())
                 .whereEqualTo("status",type).orderBy("date",Query.Direction.DESCENDING);
@@ -152,6 +161,7 @@ public class SellerOrdersFragment extends Fragment {
 
     public void loadAllOrders(){
 
+        titleText.setText("All Orders");
         Query query =  db.collection("orders").whereEqualTo("sellerid",mAuth.getCurrentUser().getUid())
                 .orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrderModel> options = new FirestoreRecyclerOptions.Builder<OrderModel>()

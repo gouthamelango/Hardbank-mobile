@@ -13,11 +13,12 @@ public class OrderModel {
     String sellerid;
     String status;
     String type;
+    String qr;
 
     public OrderModel() {
     }
 
-    public OrderModel(String customerid, Timestamp date, String deliveryaddress, String orderid, String productid, String quantity, String sellerid, String status, String type) {
+    public OrderModel(String customerid, Timestamp date, String deliveryaddress, String orderid, String productid,String qr, String quantity, String sellerid, String status, String type) {
         this.customerid = customerid;
         this.date = date;
         this.deliveryaddress = deliveryaddress;
@@ -27,6 +28,7 @@ public class OrderModel {
         this.sellerid = sellerid;
         this.status = status;
         this.type = type;
+        this.qr =  qr;
     }
 
     public String getCustomerid() {
@@ -35,6 +37,10 @@ public class OrderModel {
 
     public Timestamp getDate() {
         return date;
+    }
+
+    public String getQr() {
+        return qr;
     }
 
     public String getDeliveryaddress() {

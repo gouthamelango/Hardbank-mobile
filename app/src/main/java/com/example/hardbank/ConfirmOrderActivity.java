@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -17,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +28,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +78,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     String deliveryAddress;
 
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +107,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         g1 = (RadioGroup)findViewById(R.id.paymentOptionsLayout);
         r1 = (RadioButton)findViewById(R.id.radioButtonCashOnDelivery);
         r2 = (RadioButton)findViewById(R.id.radioButtonGooglePay);
+
+        // get the Firebase  storage reference
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
 
 
@@ -339,6 +358,56 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (int i = 0; i < list.size(); i++) {
                         final String orderID =  UUID.randomUUID().toString();
+
+                        try {
+                            Bitmap bitmap = encodeAsBitmap(orderID);
+
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] data = baos.toByteArray();
+
+                            final StorageReference ur_firebase_reference  = storageReference.child("images/QR/").child( UUID.randomUUID().toString()+ ".jpg");
+                            UploadTask image_path = ur_firebase_reference.putBytes(data);
+
+
+                            Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    if (!task.isSuccessful()) {
+                                        throw task.getException();
+                                    }
+                                    // Continue with the task to get the download URL
+                                    return ur_firebase_reference.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        Uri downloadUri = task.getResult();
+                                        System.out.println("Upload " + downloadUri);
+                                        // Toast.makeText(getApplicationContext(), "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                                        if (downloadUri != null) {
+
+                                            String photoStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
+                                            //Toast.makeText(getApplicationContext(),photoStringLink,Toast.LENGTH_LONG).show();
+
+                                           // changeDoc(photoStringLink);
+                                            db.collection("orders").document(orderID).update("qr",photoStringLink);
+                                        }
+
+                                    } else {
+                                        // Handle failures
+                                        // ...
+                                    }
+                                }
+                            });
+
+
+
+                        } catch (WriterException e) {
+                            e.printStackTrace();
+                        }
+
                         DocumentSnapshot doc=list.get(i);
                       //  Toast.makeText(getApplicationContext(),"id"+doc.getId()+": "+doc.getString("quantity"),Toast.LENGTH_SHORT).show();
                         final String quantity = doc.getString("quantity");
@@ -417,6 +486,58 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                                 List<DocumentSnapshot> list2 = queryDocumentSnapshots.getDocuments();
                                                 for (int i = 0; i < list2.size(); i++){
                                                     final String orderID =  UUID.randomUUID().toString();
+
+                                                    //Start
+                                                    try {
+                                                        Bitmap bitmap = encodeAsBitmap(orderID);
+
+                                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                                        byte[] data = baos.toByteArray();
+
+                                                        final StorageReference ur_firebase_reference  = storageReference.child("images/QR/").child( UUID.randomUUID().toString()+ ".jpg");
+                                                        UploadTask image_path = ur_firebase_reference.putBytes(data);
+
+
+                                                        Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                                            @Override
+                                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                                if (!task.isSuccessful()) {
+                                                                    throw task.getException();
+                                                                }
+                                                                // Continue with the task to get the download URL
+                                                                return ur_firebase_reference.getDownloadUrl();
+                                                            }
+                                                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Uri> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    Uri downloadUri = task.getResult();
+                                                                    System.out.println("Upload " + downloadUri);
+                                                                    // Toast.makeText(getApplicationContext(), "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                                                                    if (downloadUri != null) {
+
+                                                                        String photoStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
+                                                                        //Toast.makeText(getApplicationContext(),photoStringLink,Toast.LENGTH_LONG).show();
+
+                                                                        // changeDoc(photoStringLink);
+                                                                        db.collection("orders").document(orderID).update("qr",photoStringLink);
+                                                                    }
+
+                                                                } else {
+                                                                    // Handle failures
+                                                                    // ...
+                                                                }
+                                                            }
+                                                        });
+
+
+
+                                                    } catch (WriterException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    //end
+
                                                     DocumentSnapshot doc=list2.get(i);
                                                   //  Toast.makeText(getApplicationContext(),"id"+doc.getId(),Toast.LENGTH_SHORT).show();
                                                     final String productID  = doc.getId();
@@ -490,5 +611,32 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public Bitmap encodeAsBitmap(String str) throws WriterException {
+        BitMatrix result;
+        Bitmap bitmap=null;
+        int WIDTH = 400;
+        try
+        {
+            result = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
+
+            int w = result.getWidth();
+            int h = result.getHeight();
+            int[] pixels = new int[w * h];
+            for (int y = 0; y < h; y++) {
+                int offset = y * w;
+                for (int x = 0; x < w; x++) {
+                    pixels[offset + x] = result.get(x, y) ? Color.BLACK: Color.WHITE;
+                }
+            }
+            bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, WIDTH, 0, 0, w, h);
+        } catch (Exception iae) {
+            iae.printStackTrace();
+            return null;
+        }
+        return bitmap;
     }
 }

@@ -29,7 +29,7 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
     ImageView productImage;
     TextView textViewProductName, textViewProductPrice,textViewQuantity,textViewOrderId,textViewCustomerName,textViewOrderedDate ;
     TextView textViewDeliveryAddress, textViewPaymentMode,textViewTotalAmount,textViewOrderProgress;
-
+    ImageView qrImage;
     TextView processOrderBtn;
 
     String orderID;
@@ -63,6 +63,8 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
 
         billingDetails =  findViewById(R.id.billingDetails);
 
+        qrImage = findViewById(R.id.qrImage);
+
         //FireBase initialization
         mAuth = FirebaseAuth.getInstance();
         db =  FirebaseFirestore.getInstance();
@@ -92,6 +94,9 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
                     textViewOrderProgress.setText(documentSnapshot.getString("status"));
 
                     orderStatus =  documentSnapshot.getString("status");
+
+                    Glide.with(getApplicationContext()).load(documentSnapshot.getString("qr"))
+                            .into(qrImage);
 
                     if(orderStatus.equals("Cancelled")){
                         billingDetails.setVisibility(View.GONE);

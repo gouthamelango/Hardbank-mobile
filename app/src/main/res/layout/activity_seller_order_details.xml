@@ -357,6 +357,30 @@
                             android:layout_column="2" />
                     </TableRow>
 
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="2"
+                        >
+                        <TextView
+                            android:text="Delivery QR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <!--                    android:textColor="#2E69FF"-->
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:id="@+id/qrImage"
+                            android:layout_height="150dp"
+                            android:layout_weight="1"
+                            android:layout_column="2" />
+                    </TableRow>
+
                 </TableLayout>
 
 
