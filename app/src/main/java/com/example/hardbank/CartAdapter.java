@@ -3,6 +3,7 @@ package com.example.hardbank;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -85,55 +87,71 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,1));
-                                        holder.textViewQuantity.setText("1");
-                                        writeQuantity(1,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,1));
+//                                        holder.textViewQuantity.setText("1");
+//                                        writeQuantity(1,position);
+                                        stockValidation(1,position,holder);
 
                                         break;
                                     case 1:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,2));
-                                        holder.textViewQuantity.setText("2");
-                                        writeQuantity(2,position);
+//                                        if(){
+//
+//                                        }else {
+//                                            holder.estimatedPrice.setText(modifyPrice(holder.price,2));
+//                                            holder.textViewQuantity.setText("2");
+//                                            writeQuantity(2,position);
+//                                        }
+                                        stockValidation(2,position,holder);
+
                                         break;
                                     case 2:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,3));
-                                        holder.textViewQuantity.setText("3");
-                                        writeQuantity(3,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,3));
+//                                        holder.textViewQuantity.setText("3");
+//                                        writeQuantity(3,position);
+                                        stockValidation(3,position,holder);
                                         break;
                                     case 3:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,4));
-                                        holder.textViewQuantity.setText("4");
-                                        writeQuantity(4,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,4));
+//                                        holder.textViewQuantity.setText("4");
+//                                        writeQuantity(4,position);
+                                        stockValidation(4,position,holder);
                                         break;
                                     case 4:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,5));
-                                        holder.textViewQuantity.setText("5");
-                                        writeQuantity(5,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,5));
+//                                        holder.textViewQuantity.setText("5");
+//                                        writeQuantity(5,position);
+                                        stockValidation(5,position,holder);
                                         break;
                                     case 5:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,6));
-                                        holder.textViewQuantity.setText("6");
-                                        writeQuantity(6,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,6));
+//                                        holder.textViewQuantity.setText("6");
+//                                        writeQuantity(6,position);
+                                        stockValidation(6,position,holder);
                                         break;
                                     case 6:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,7));
-                                        holder.textViewQuantity.setText("7");
-                                        writeQuantity(7,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,7));
+//                                        holder.textViewQuantity.setText("7");
+//                                        writeQuantity(7,position);
+                                        stockValidation(7,position,holder);
                                         break;
                                     case 7:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,8));
-                                        holder.textViewQuantity.setText("8");
-                                        writeQuantity(8,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,8));
+//                                        holder.textViewQuantity.setText("8");
+//                                        writeQuantity(8,position);
+//
+                                        stockValidation(8,position,holder);
                                         break;
                                     case 8:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,9));
-                                        holder.textViewQuantity.setText("9");
-                                        writeQuantity(9,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,9));
+//                                        holder.textViewQuantity.setText("9");
+//                                        writeQuantity(9,position);
+                                        stockValidation(9,position,holder);
                                         break;
                                     case 9:
-                                        holder.estimatedPrice.setText(modifyPrice(holder.price,10));
-                                        holder.textViewQuantity.setText("10");
-                                        writeQuantity(10,position);
+//                                        holder.estimatedPrice.setText(modifyPrice(holder.price,10));
+//                                        holder.textViewQuantity.setText("10");
+//                                        writeQuantity(10,position);
+                                        stockValidation(10,position,holder);
                                         break;
 
                                 }
@@ -200,7 +218,36 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     }
 
+    public void stockValidation(final int q, final int position, final MyViewHolder holder ){
+        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
+                    final DocumentSnapshot doc=list4.get(0);
+                    String sellerID =  doc.getString("id");
+                    //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
 
+                    FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
+                                Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                holder.estimatedPrice.setText(modifyPrice(holder.price,q));
+                                holder.textViewQuantity.setText(String.valueOf(q));
+                                writeQuantity(q,position);
+                            }
+                            // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+    }
 
     @Override
     public int getItemCount() {
