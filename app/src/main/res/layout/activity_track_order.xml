@@ -30,7 +30,15 @@
             android:layout_centerVertical="true"
             android:id="@+id/backTextSignUp"/>
 
-
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_height="20dp"
+            android:id="@+id/scanBtn"
+            android:visibility="gone"
+            android:src="@drawable/qr"/>
 
     </RelativeLayout>
 
