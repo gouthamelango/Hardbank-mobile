@@ -327,20 +327,23 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                         cartTotal +=  tot;
                         //Toast.makeText(getApplicationContext(),String.valueOf(cartTotal),Toast.LENGTH_SHORT).show();
                     }
-                    if(cartTotal>499){
-                        delivery = 0;
-                    }
-                    else if(cartTotal==0){
-                        delivery = 0;
-                    }
-                    else {
-                        delivery = 40;
-                    }
+//                    if(cartTotal>499){
+//                        delivery = 0;
+//                    }
+//                    else if(cartTotal==0){
+//                        delivery = 0;
+//                    }
+//                    else {
+//                        delivery = 40;
+//                    }
+                    delivery = 0;
                     totalAmount = delivery + cartTotal;
                     textViewCartTotal.setText(String.valueOf(cartTotal));
                     textViewTotalAmount.setText(String.valueOf(totalAmount));
                     textViewTotalPrice.setText(String.valueOf(totalAmount));
-                    textViewDeliveryAmount.setText(String.valueOf(delivery));
+                 //   textViewDeliveryAmount.setText(String.valueOf(delivery));
+
+                    textViewDeliveryAmount.setText("Free Delivery");
 
 
                     db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("projectscart")
@@ -369,20 +372,23 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                                                     cartTotal +=  Integer.parseInt(doc.get("productprice").toString());
                                                 }
                                                 // Toast.makeText(getApplicationContext(),String.valueOf(cartTotal),Toast.LENGTH_SHORT).show();
-                                                if(cartTotal>499){
-                                                    delivery = 0;
-                                                }
-                                                else if(cartTotal==0){
-                                                    delivery = 0;
-                                                }
-                                                else {
-                                                    delivery = 40;
-                                                }
+//                                                if(cartTotal>499){
+//                                                    delivery = 0;
+//                                                }
+//                                                else if(cartTotal==0){
+//                                                    delivery = 0;
+//                                                }
+//                                                else {
+//                                                    delivery = 40;
+//                                                }
+                                                delivery = 0;
                                                 totalAmount = delivery + cartTotal;
                                                 textViewCartTotal.setText(String.valueOf(cartTotal));
                                                 textViewTotalAmount.setText(String.valueOf(totalAmount));
                                                 textViewTotalPrice.setText(String.valueOf(totalAmount));
-                                                textViewDeliveryAmount.setText(String.valueOf(delivery));
+                                                ///textViewDeliveryAmount.setText(String.valueOf(delivery));
+
+                                                textViewDeliveryAmount.setText("Free Delivery");
                                             }
                                         }
                                     });

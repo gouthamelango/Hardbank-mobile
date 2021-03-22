@@ -194,6 +194,7 @@
                            android:id="@+id/textViewDeliveryAmount"
                            android:layout_height="wrap_content"
                            android:layout_gravity="right"
+                           android:textColor="#2FB65B"
                            android:layout_column="2" />
                    </TableRow>
                    <TableRow
