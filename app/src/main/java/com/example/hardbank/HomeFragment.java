@@ -10,9 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -76,6 +80,8 @@ public class HomeFragment extends Fragment {
 
     RelativeLayout motorBtn, displayBtn, batteryBtn, toolsBtn, connectorBtn;
 
+    EditText searchEditText;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -112,6 +118,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        searchEditText =  view.findViewById(R.id.searchEditText);
         //Home ToolBar
         toolbar =  view.findViewById(R.id.toolBar);
         toolbar.inflateMenu(R.menu.toolbar_menu);
@@ -241,10 +249,37 @@ public class HomeFragment extends Fragment {
 
         context  = getActivity().getApplicationContext();
 
+
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    performSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         setUpRecyclerView();
         setUpRecyclerViewForTools();
         setUpRecyclerViewForCables();
         return view;
+    }
+
+    public  void performSearch(){
+
+        String searchText = searchEditText.getText().toString().trim();
+        if(!searchText.isEmpty()){
+            searchEditText.clearFocus();
+           // Toast.makeText(getActivity().getApplicationContext(),searchText,Toast.LENGTH_SHORT).show();
+            InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
+            Intent intent = new Intent(getActivity().getApplicationContext(),ProductListingActivity.class);
+            intent.putExtra("product",searchText);
+            startActivity(intent);
+        }
+
     }
 
     private void setUpRecyclerView(){

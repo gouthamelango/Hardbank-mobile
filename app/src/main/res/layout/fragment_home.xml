@@ -13,11 +13,36 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchBarLayout"
         layout="@layout/toolbar_and_search" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/colorGreyShade"
+        android:layout_below="@id/searchBarLayout"
+        android:id="@+id/searchBarLayout2">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:imeOptions="actionSearch"
+            android:inputType="textCapWords"
+            android:background="@drawable/edittext_border"
+            android:hint="@string/hintSearchText"
+            android:padding="10dp"
+            android:id="@+id/searchEditText"
+            android:drawablePadding="10dp"
+            android:textSize="14sp"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
+            />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchBarLayout">
+        android:layout_below="@+id/searchBarLayout2"
+        >
 
         <!-- Parent for all views-->
         <RelativeLayout
