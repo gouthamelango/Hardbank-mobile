@@ -60,6 +60,8 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
 
     List<String> productsInCart =new ArrayList<>();
 
+    int msgFlag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +176,10 @@ public class CustomerCartActivity extends AppCompatActivity implements MyInterfa
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                     if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
                                                         updatePrice();
-
+                                                        if(msgFlag ==0){
+                                                            Toast.makeText(getApplicationContext(),"Some items that were in cart are out of stock and moved to wish list",Toast.LENGTH_SHORT).show();
+                                                            msgFlag =1;
+                                                        }
                                                         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                                 .collection("cart").document(productID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override

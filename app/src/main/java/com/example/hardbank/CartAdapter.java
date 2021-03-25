@@ -33,7 +33,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     Context context;
     List<Product> list;
     private MyInterface listener;
-
+    int flag =0;
+    int f = 0;
     public CartAdapter(Context context,List<Product> list, MyInterface listener) {
         this.context = context;
         this.list = list;
@@ -206,43 +207,93 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
         return  String.valueOf(price*quantity);
     }
-    public  void writeQuantity(int quantity, int position){
+    public  void writeQuantity(final int quantity, final int position){
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .collection("cart").document(list.get(position).getId()).update("quantity",String.valueOf(quantity)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 listener.updatePrice();
-
+//                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                        .collection("cart").document(list.get(position).getId()).update("seller",seller);
             }
         });
 
     }
 
     public void stockValidation(final int q, final int position, final MyViewHolder holder ){
+
+        //start
+//        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()){
+//                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+//                    List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
+//                    final DocumentSnapshot doc=list4.get(0);
+//                    String sellerID =  doc.getString("id");
+//                    //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+//
+//                    FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                            if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
+//                                Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+//                            }
+//                            else {
+//                                holder.estimatedPrice.setText(modifyPrice(holder.price,q));
+//                                holder.textViewQuantity.setText(String.valueOf(q));
+//                                writeQuantity(q,position);
+//                            }
+//                            // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//            }
+//        });
+
+        //end
+
+
         FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
+                    flag = 0;
                     QuerySnapshot queryDocumentSnapshots = task.getResult();
-                    List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
-                    final DocumentSnapshot doc=list4.get(0);
-                    String sellerID =  doc.getString("id");
-                    //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+                    final List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
+                    for (int i =0;i<list4.size();i++){
+                        final DocumentSnapshot doc=list4.get(i);
+                        final String sellerID =  doc.getString("id");
+                        //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+                        f = 0;
+                        FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
+                                    //Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+                                    flag++;
+                                    if(flag==list4.size()){
+                                        Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    f = 1;
+                                    holder.estimatedPrice.setText(modifyPrice(holder.price,q));
+                                    holder.textViewQuantity.setText(String.valueOf(q));
+                                    writeQuantity(q,position);
+                                  //  Toast.makeText(holder.textViewQuantity.getContext(),"1",Toast.LENGTH_SHORT).show();
 
-                    FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
-                                Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+
+                                    return;
+                                }
+                                // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                                holder.estimatedPrice.setText(modifyPrice(holder.price,q));
-                                holder.textViewQuantity.setText(String.valueOf(q));
-                                writeQuantity(q,position);
-                            }
-                            // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
+                        });
+                        if(f!=0){
+                            break;
                         }
-                    });
+                    }
+
                 }
             }
         });

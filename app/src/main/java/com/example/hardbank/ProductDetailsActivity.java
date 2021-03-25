@@ -55,6 +55,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     ImageView heartIcon;
 
+    int flag = 0;
+
     RatingBar ratingBar;
     EditText reviewEditText;
     Float rating;
@@ -456,20 +458,43 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     QuerySnapshot queryDocumentSnapshots = task.getResult();
-                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                    final DocumentSnapshot doc=list.get(0);
-                    String sellerID =  doc.getString("id");
-                    db.collection("users").document(sellerID).collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
-                                productStatus.setText("Out of Stock");
-                                productStatus.setTextColor(Color.parseColor("#DE3C3C"));
-                                addToCartText.setText("Out of Stock");
-                                addToCart.setClickable(false);
+                    final List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+//                    final DocumentSnapshot doc=list.get(0);
+//                    String sellerID =  doc.getString("id");
+//                    db.collection("users").document(sellerID).collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                            if(Integer.parseInt(documentSnapshot.getString("stock")) == 0){
+//                                productStatus.setText("Out of Stock");
+//                                productStatus.setTextColor(Color.parseColor("#DE3C3C"));
+//                                addToCartText.setText("Out of Stock");
+//                                addToCart.setClickable(false);
+//                            }
+//                        }
+//                    });
+
+                 flag = 0;
+                    for(int i=0;i<list.size();i++){
+                        DocumentSnapshot doc=list.get(i);
+                        String sellerID =  doc.getString("id");
+
+                        db.collection("users").document(sellerID).collection("products").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if(Integer.parseInt(documentSnapshot.getString("stock")) <= 0){
+                                    flag++;
+                                   // Toast.makeText(getApplicationContext(),"No: Flag: "+flag,Toast.LENGTH_SHORT).show();
+                                    if(flag==list.size()){
+                                        productStatus.setText("Out of Stock");
+                                        productStatus.setTextColor(Color.parseColor("#DE3C3C"));
+                                        addToCartText.setText("Out of Stock");
+                                        addToCart.setClickable(false);
+                                    }
+                                }
                             }
-                        }
-                    });
+                        });
+
+                    }
                 }
             }
         });
