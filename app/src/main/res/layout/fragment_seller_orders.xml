@@ -15,6 +15,7 @@
         android:layout_marginBottom="5dp"
         android:id="@+id/main_tab_menu"
         app:tabIndicatorColor="@color/colorPrimary"
+        app:tabMode="scrollable"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         >
 
@@ -49,6 +50,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/tabMenuCancelled"
             android:text="Cancelled" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabMenuReturned"
+            android:text="Returned" />
     </com.google.android.material.tabs.TabLayout>
 
     <RelativeLayout

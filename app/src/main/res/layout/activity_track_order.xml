@@ -607,6 +607,66 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/process3Layout"
+                        android:visibility="gone"
+                        android:id="@+id/process5Layout">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:id="@+id/process5BarLayout">
+
+                            <RelativeLayout
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:id="@+id/process5Circle"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bank_circle"/>
+
+                            <RelativeLayout
+                                android:layout_width="3dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="75dp"
+                                android:background="#DEDEDE"
+                                android:layout_above="@+id/process5Circle"
+                                />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:id="@+id/process5Image"
+                            android:padding="5dp"
+                            android:background="@drawable/bank_circle"
+                            android:layout_toRightOf="@id/process5BarLayout"
+                            android:layout_marginLeft="10dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/tick_white"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:layout_toRightOf="@+id/process5Image"
+                            android:layout_marginLeft="30dp"
+                            android:layout_centerVertical="true"
+                            android:text="Order Returned"/>
+
+                    </RelativeLayout>
+
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -626,6 +686,21 @@
                 android:textAppearance="@style/Widget.AppCompat.Button.Small"
                 android:textSize="14sp"
                 android:id="@+id/cancelBtn"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="gone"
+                android:layout_marginBottom="15dp"
+                android:layout_below="@+id/cancelBtn"
+                android:text="Return Order"
+                android:background="@drawable/button_background"
+                android:textColor="#FFF"
+                android:textAppearance="@style/Widget.AppCompat.Button.Small"
+                android:textSize="14sp"
+                android:id="@+id/returnBtn"/>
 
 
         </RelativeLayout>

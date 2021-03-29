@@ -33,7 +33,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     RelativeLayout process2Circle, process2Bar, process2Image;
     RelativeLayout process3Circle, process3Bar, process3Image;
 
-    RelativeLayout process1Layout,process2Layout,process3Layout,process4Layout;
+    RelativeLayout process1Layout,process2Layout,process3Layout,process4Layout,process5Layout;
 
     RelativeLayout estimatedDeliveryLayout;
 
@@ -44,7 +44,7 @@ public class TrackOrderActivity extends AppCompatActivity {
 
     String orderStatus;
 
-    Button cancelBtn;
+    Button cancelBtn,returnBtn;
 
     ImageView scanBtn;
 
@@ -86,9 +86,10 @@ public class TrackOrderActivity extends AppCompatActivity {
         process2Layout =  findViewById(R.id.process2Layout);
         process3Layout =  findViewById(R.id.process3Layout);
         process4Layout =  findViewById(R.id.process4Layout);
-
+        process5Layout =  findViewById(R.id.process5Layout);
 
         cancelBtn =  findViewById(R.id.cancelBtn);
+        returnBtn =  findViewById(R.id.returnBtn);
 
 
         scanBtn = findViewById(R.id.scanBtn);
@@ -144,6 +145,14 @@ public class TrackOrderActivity extends AppCompatActivity {
                         process2Layout.setVisibility(View.GONE);
                         process3Layout.setVisibility(View.GONE);
                         process4Layout.setVisibility(View.VISIBLE);
+                    }
+                    else  if(orderStatus.equals("Delivered")){
+                        returnBtn.setVisibility(View.VISIBLE);
+                    }
+                    else if(orderStatus.equals("Returned")){
+                        process2Layout.setVisibility(View.GONE);
+                        process3Layout.setVisibility(View.GONE);
+                        process5Layout.setVisibility(View.VISIBLE);
                     }
 
                     db.collection("products").document(documentSnapshot.getString("productid"))
@@ -212,6 +221,38 @@ public class TrackOrderActivity extends AppCompatActivity {
                     integrator.setBeepEnabled(false);
                     integrator.setBarcodeImageEnabled(false);
                     integrator.initiateScan();
+                }
+            });
+
+            returnBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(TrackOrderActivity.this).create();
+                    alertDialog.setTitle("Return Order");
+                    alertDialog.setMessage("Are you sure you want to Return the order?");
+                    alertDialog.setCancelable(false);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    db.collection("orders").document(orderID).update("status","Returned")
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    onBackPressed();
+                                                }
+                                            });
+                                }
+                            });
+
+                    alertDialog.show();
                 }
             });
 

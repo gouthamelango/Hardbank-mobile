@@ -39,7 +39,7 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
 
     String orderStatus;
 
-    RelativeLayout billingDetails;
+    RelativeLayout billingDetails, cancelRequest;
 
 
     @Override
@@ -62,6 +62,7 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         processOrderBtn = findViewById(R.id.processOrderBtn);
 
         billingDetails =  findViewById(R.id.billingDetails);
+        cancelRequest =  findViewById(R.id.cancelRequest);
 
         qrImage = findViewById(R.id.qrImage);
 
@@ -100,6 +101,10 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
 
                     if(orderStatus.equals("Cancelled")){
                         billingDetails.setVisibility(View.GONE);
+                    }
+                    if(orderStatus.equals("Returned")){
+                        billingDetails.setVisibility(View.GONE);
+                        cancelRequest.setVisibility(View.VISIBLE);
                     }
 
                     db.collection("products").document(documentSnapshot.getString("productid"))
@@ -157,6 +162,35 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
                         alertDialog.show();
                     }
 
+                }
+            });
+
+            cancelRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(SellerOrderDetailsActivity.this).create();
+                    alertDialog.setTitle("Cancel Return Request");
+                    alertDialog.setMessage("Are you sure you want to cancel return Request?");
+                    alertDialog.setCancelable(false);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(getApplicationContext(), "Shipped", Toast.LENGTH_SHORT).show();
+                                    db.collection("orders").document(orderID).update("status","Delivered").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            onBackPressed();
+                                        }
+                                    });
+                                }
+                            });
+                    alertDialog.show();
                 }
             });
         }

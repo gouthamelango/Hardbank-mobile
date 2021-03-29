@@ -128,6 +128,11 @@ public class SellerOrdersFragment extends Fragment {
                         titleText.setText("Cancelled");
                         loadFilter("Cancelled");
                         break;
+                    case 5:
+                        //Toast.makeText(getActivity().getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        titleText.setText("Returned");
+                        loadFilter("Returned");
+                        break;
                 }
             }
 
