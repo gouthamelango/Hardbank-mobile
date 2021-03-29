@@ -173,7 +173,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                 break;
                             case  R.id.radioButtonGooglePay:
                                 //Toast.makeText(ConfirmOrderActivity.this, "Google pay", Toast.LENGTH_SHORT).show();
-                                payUsingUpi("KUMARESH R", "8951898448@okbizaxis", "Order", "1");
+                                payUsingUpi("KUMARESH R", "8951898448@okbizaxis", "Order", String.valueOf(totalAmount));
                                 break;
                         }
 

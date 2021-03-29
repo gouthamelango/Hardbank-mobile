@@ -207,11 +207,11 @@ public class ProductListingActivity extends AppCompatActivity {
 
                                                         if (Integer.parseInt(documentSnapshot.getString("stock")) > 0) {
                                                             flag++;
-                                                            Toast.makeText(getApplicationContext(),"Flag: "+String.valueOf(sup),Toast.LENGTH_SHORT).show();
+                                                       //     Toast.makeText(getApplicationContext(),"Flag: "+String.valueOf(sup),Toast.LENGTH_SHORT).show();
 
                                                             if (sup) {
 
-                                                                sup = false;
+                                                              //  sup = false;
 
                                                                 //Toast.makeText(getActivity().getApplicationContext(),doc.getString("productname"),Toast.LENGTH_SHORT).show();
                                                                 String productname = doc.getString("productname");
