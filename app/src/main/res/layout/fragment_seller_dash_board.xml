@@ -85,7 +85,8 @@
     </HorizontalScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
         android:padding="15dp"
         android:background="@drawable/edittext_border"
         android:layout_marginLeft="22dp"
@@ -102,21 +103,16 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:fontFamily="@font/roboto"
-                android:text="New Orders"/>
+                android:text="Orders"/>
         </RelativeLayout>
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_below="@+id/newOrdersLabelLayout"
-            android:layout_height="300dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-
-            </RelativeLayout>
-
-        </ScrollView>
+            android:id="@+id/newOrdersRecyclerView"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 

@@ -49,6 +49,7 @@ public class OrdersAdapter extends FirestoreRecyclerAdapter<OrderModel,OrdersAda
         });
         holder.orderStatus.setText(model.getStatus());
 
+        //Toast.makeText(holder.productImage.getContext(),"Hey",Toast.LENGTH_SHORT).show();
 
         Date date = model.getDate().toDate();
         holder.orderedDate.setText(date.toString());
