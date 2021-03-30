@@ -223,80 +223,83 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public void stockValidation(final int q, final int position, final MyViewHolder holder ){
 
         //start
+        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot queryDocumentSnapshots = task.getResult();
+                    List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
+                    final DocumentSnapshot doc=list4.get(0);
+                    String sellerID =  doc.getString("id");
+                    //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+
+                    FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
+                                Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                holder.estimatedPrice.setText(modifyPrice(holder.price,q));
+                                holder.textViewQuantity.setText(String.valueOf(q));
+                                writeQuantity(q,position);
+                            }
+                            // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        //end
+
+        //start
+
 //        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //            @Override
 //            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 //                if(task.isSuccessful()){
+//                    flag = 0;
 //                    QuerySnapshot queryDocumentSnapshots = task.getResult();
-//                    List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
-//                    final DocumentSnapshot doc=list4.get(0);
-//                    String sellerID =  doc.getString("id");
-//                    //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+//                    final List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
+//                    for (int i =0;i<list4.size();i++){
+//                        final DocumentSnapshot doc=list4.get(i);
+//                        final String sellerID =  doc.getString("id");
+//                        //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
+//                        f = 0;
+//                        FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                            @Override
+//                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
+//                                    //Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+//                                    flag++;
+//                                    if(flag==list4.size()){
+//                                        Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                                else {
+//                                    f = 1;
+//                                    holder.estimatedPrice.setText(modifyPrice(holder.price,q));
+//                                    holder.textViewQuantity.setText(String.valueOf(q));
+//                                    writeQuantity(q,position);
+//                                  //  Toast.makeText(holder.textViewQuantity.getContext(),"1",Toast.LENGTH_SHORT).show();
 //
-//                    FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                            if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
-//                                Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
+//
+//                                    return;
+//                                }
+//                                // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
 //                            }
-//                            else {
-//                                holder.estimatedPrice.setText(modifyPrice(holder.price,q));
-//                                holder.textViewQuantity.setText(String.valueOf(q));
-//                                writeQuantity(q,position);
-//                            }
-//                            // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
+//                        });
+//                        if(f!=0){
+//                            break;
 //                        }
-//                    });
+//                    }
+//
 //                }
 //            }
 //        });
 
         //end
-
-
-        FirebaseFirestore.getInstance().collection("products").document(list.get(position).getId()).collection("sellers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    flag = 0;
-                    QuerySnapshot queryDocumentSnapshots = task.getResult();
-                    final List<DocumentSnapshot> list4 = queryDocumentSnapshots.getDocuments();
-                    for (int i =0;i<list4.size();i++){
-                        final DocumentSnapshot doc=list4.get(i);
-                        final String sellerID =  doc.getString("id");
-                        //  Toast.makeText(holder.textViewQuantity.getContext(),sellerID,Toast.LENGTH_SHORT).show();
-                        f = 0;
-                        FirebaseFirestore.getInstance().collection("users").document(sellerID).collection("products").document(list.get(position).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if(Integer.parseInt(documentSnapshot.getString("stock")) < q){
-                                    //Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
-                                    flag++;
-                                    if(flag==list4.size()){
-                                        Toast.makeText(holder.textViewQuantity.getContext(),"Not in stock",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                                else {
-                                    f = 1;
-                                    holder.estimatedPrice.setText(modifyPrice(holder.price,q));
-                                    holder.textViewQuantity.setText(String.valueOf(q));
-                                    writeQuantity(q,position);
-                                  //  Toast.makeText(holder.textViewQuantity.getContext(),"1",Toast.LENGTH_SHORT).show();
-
-
-                                    return;
-                                }
-                                // Toast.makeText(holder.textViewQuantity.getContext(),documentSnapshot.getString("stock"),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        if(f!=0){
-                            break;
-                        }
-                    }
-
-                }
-            }
-        });
 
     }
 

@@ -288,7 +288,7 @@
         <RadioButton
             android:id="@+id/radioButtonGooglePay"
             android:layout_width="match_parent"
-            android:text="Google Pay"
+            android:text="UPI"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content" />
     </RadioGroup>

@@ -173,6 +173,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                 break;
                             case  R.id.radioButtonGooglePay:
                                 //Toast.makeText(ConfirmOrderActivity.this, "Google pay", Toast.LENGTH_SHORT).show();
+                                //
                                 payUsingUpi("KUMARESH R", "8951898448@okbizaxis", "Order", String.valueOf(totalAmount));
                                 break;
                         }
@@ -187,48 +188,48 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     void payUsingUpi(  String name,String upiId, String note, String amount) {
         //Log.e("main ", "name "+name +"--up--"+upiId+"--"+ note+"--"+amount);
-//        Uri uri = Uri.parse("upi://pay").buildUpon()
-//                .appendQueryParameter("pa", upiId)
-//                .appendQueryParameter("pn", name)
-//                .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
-//                //.appendQueryParameter("tid", "02125412")
-//                .appendQueryParameter("tr", "25584584")
-//                .appendQueryParameter("tn", note)
-//                .appendQueryParameter("am", amount)
-//                .appendQueryParameter("cu", "INR")
-//                //.appendQueryParameter("refUrl", "blueapp")
-//                .build();
-//        Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
-//        upiPayIntent.setData(uri);
-//        // will always show a dialog to user to choose an app
-//        Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
-//        // check if intent resolves
-//        if(null != chooser.resolveActivity(getPackageManager())) {
-//            startActivityForResult(chooser, UPI_PAYMENT);
-//        } else {
-//            Toast.makeText(ConfirmOrderActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
-//        }
+        Uri uri = Uri.parse("upi://pay").buildUpon()
+                .appendQueryParameter("pa", upiId)
+                .appendQueryParameter("pn", name)
+                .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
+                //.appendQueryParameter("tid", "02125412")
+                .appendQueryParameter("tr", "25584584")
+                .appendQueryParameter("tn", note)
+                .appendQueryParameter("am", amount)
+                .appendQueryParameter("cu", "INR")
+                //.appendQueryParameter("refUrl", "blueapp")
+                .build();
+        Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
+        upiPayIntent.setData(uri);
+        // will always show a dialog to user to choose an app
+        Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
+        // check if intent resolves
+        if(null != chooser.resolveActivity(getPackageManager())) {
+            startActivityForResult(chooser, GOOGLE_PAY_REQUEST_CODE);
+        } else {
+            Toast.makeText(ConfirmOrderActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
+        }
 
-        int digits = 8;
-        int n = nDigitRandomNo(digits);
-        String trRef =  String.valueOf(n);
-        Uri uri =
-                new Uri.Builder()
-                        .scheme("upi")
-                        .authority("pay")
-                        .appendQueryParameter("pa", upiId)
-                        .appendQueryParameter("pn", name)
-                       .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
-                       .appendQueryParameter("tr", trRef)
-                        .appendQueryParameter("tn", note)
-                        .appendQueryParameter("am", amount)
-                        .appendQueryParameter("cu", "INR")
-                       // .appendQueryParameter("url", "frenchbakers.in")
-                        .build();
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
-        intent.setPackage(GOOGLE_PAY_PACKAGE_NAME);
-        startActivityForResult(intent,GOOGLE_PAY_REQUEST_CODE );
+//        int digits = 8;
+//        int n = nDigitRandomNo(digits);
+//        String trRef =  String.valueOf(n);
+//        Uri uri =
+//                new Uri.Builder()
+//                        .scheme("upi")
+//                        .authority("pay")
+//                        .appendQueryParameter("pa", upiId)
+//                        .appendQueryParameter("pn", name)
+//                       .appendQueryParameter("mc", "BCR2DN6T2OP3NEZG")
+//                       .appendQueryParameter("tr", trRef)
+//                        .appendQueryParameter("tn", note)
+//                        .appendQueryParameter("am", amount)
+//                        .appendQueryParameter("cu", "INR")
+//                       // .appendQueryParameter("url", "frenchbakers.in")
+//                        .build();
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setData(uri);
+//        intent.setPackage(GOOGLE_PAY_PACKAGE_NAME);
+//        startActivityForResult(intent,GOOGLE_PAY_REQUEST_CODE );
     }
 
     private int nDigitRandomNo(int digits){
