@@ -312,6 +312,30 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2" />
                     </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/rowDelivery"
+                        >
+                        <TextView
+                            android:text="Delivered Date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginRight="25dp"
+                            android:textStyle="bold"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_column="1" />
+                        <TextView
+                            android:text="Delivered Date"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textViewDeliveredDate"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2" />
+                    </TableRow>
                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -543,7 +567,9 @@
                             android:layout_toRightOf="@+id/process3Image"
                             android:layout_marginLeft="30dp"
                             android:layout_centerVertical="true"
+                            android:id="@+id/deliveredText"
                             android:text="Delivered"/>
+
 
                     </RelativeLayout>
 

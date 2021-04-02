@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     ImageView productImage;
     TextView textViewProductName, textViewProductPrice,textViewQuantity,textViewOrderedDate ;
     TextView textViewDeliveryAddress, textViewPaymentMode,textViewTotalAmount,textViewOrderProgress;
+    TextView textViewDeliveredDate;
 
     RelativeLayout process2Circle, process2Bar, process2Image;
     RelativeLayout process3Circle, process3Bar, process3Image;
@@ -54,6 +56,8 @@ public class TrackOrderActivity extends AppCompatActivity {
 
     String sellerID;
     String productID;
+
+    TableRow rowDelivery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,10 @@ public class TrackOrderActivity extends AppCompatActivity {
 
         scanBtn = findViewById(R.id.scanBtn);
 
+
+        rowDelivery = findViewById(R.id.rowDelivery);
+        textViewDeliveredDate =  findViewById(R.id.textViewDeliveredDate);
+
         Intent intent =  getIntent();
         if(intent.hasExtra("orderid")){
 
@@ -111,16 +119,12 @@ public class TrackOrderActivity extends AppCompatActivity {
                     Date date = documentSnapshot.getTimestamp("date").toDate();
                     textViewOrderedDate.setText(date.toString());
 
-                   Date now  =  Timestamp.now().toDate();
-//
-//                    long day =  24 * 60 * 60 * 1000;
-//
-//                    long ord =   documentSnapshot.getTimestamp("date").getSeconds();
-//
-//                    long val = ord + day;
 
-                    String pattern = "dd-MMM-yyyy HH:mm:ss";
-                    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+
+//                    Toast.makeText(getApplicationContext(),String.valueOf(now),Toast.LENGTH_SHORT).show();
+//                    System.out.println(String.valueOf(now));
+//                    Toast.makeText(getApplicationContext(),String.valueOf(ord),Toast.LENGTH_SHORT).show();
+//                    System.out.println(String.valueOf(ord));
 
 
 
@@ -168,8 +172,25 @@ public class TrackOrderActivity extends AppCompatActivity {
                         process4Layout.setVisibility(View.VISIBLE);
                     }
                     else  if(orderStatus.equals("Delivered")){
-                        returnBtn.setVisibility(View.VISIBLE);
+
+                        long now  =  Timestamp.now().getSeconds()*1000;
+
+                        long day =  24 * 60 * 60 * 1000;
+
+                        long deliveredDate =   documentSnapshot.getTimestamp("deliverydate").getSeconds()*1000;
+                        long val =  deliveredDate +day;
+
+                        Date dd = documentSnapshot.getTimestamp("deliverydate").toDate();
+                        textViewDeliveredDate.setText(dd.toString());
+                        rowDelivery.setVisibility(View.VISIBLE);
+
+
+                        if(now<val){
+                           // Toast.makeText(getApplicationContext(),"Yes",Toast.LENGTH_SHORT).show();
+                            returnBtn.setVisibility(View.VISIBLE);
+                        }
                     }
+
                     else if(orderStatus.equals("Returned")){
                         process2Layout.setVisibility(View.GONE);
                         process3Layout.setVisibility(View.GONE);
