@@ -16,12 +16,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TrackOrderActivity extends AppCompatActivity {
@@ -47,6 +51,9 @@ public class TrackOrderActivity extends AppCompatActivity {
     Button cancelBtn,returnBtn;
 
     ImageView scanBtn;
+
+    String sellerID;
+    String productID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +111,20 @@ public class TrackOrderActivity extends AppCompatActivity {
                     Date date = documentSnapshot.getTimestamp("date").toDate();
                     textViewOrderedDate.setText(date.toString());
 
+                   Date now  =  Timestamp.now().toDate();
+//
+//                    long day =  24 * 60 * 60 * 1000;
+//
+//                    long ord =   documentSnapshot.getTimestamp("date").getSeconds();
+//
+//                    long val = ord + day;
+
+                    String pattern = "dd-MMM-yyyy HH:mm:ss";
+                    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+
+
+
+
                     textViewQuantity.setText(documentSnapshot.getString("quantity"));
 
                     final int  quantity = Integer.parseInt(documentSnapshot.getString("quantity"));
@@ -155,6 +176,9 @@ public class TrackOrderActivity extends AppCompatActivity {
                         process5Layout.setVisibility(View.VISIBLE);
                     }
 
+                    productID  = documentSnapshot.getString("productid");
+                    sellerID =  documentSnapshot.getString("sellerid");
+
                     db.collection("products").document(documentSnapshot.getString("productid"))
                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -200,9 +224,21 @@ public class TrackOrderActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
+                                                    db.collection("users").document(sellerID).collection("products")
+                                                            .document(productID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                int stock =  Integer.parseInt(documentSnapshot.getString("stock"));
+                                                                stock = stock+1;
+                                                            db.collection("users").document(sellerID).collection("products")
+                                                                    .document(productID).update("stock",String.valueOf(stock));
+                                                        }
+                                                    });
                                                     onBackPressed();
                                                 }
                                             });
+
+
                                 }
                             });
 
@@ -272,9 +308,11 @@ public class TrackOrderActivity extends AppCompatActivity {
                 //tv_qr_readTxt.setText(result.getContents());
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 if(result.getContents().equals(orderID)){
+
                   db.collection("orders").document(orderID).update("status","Delivered").addOnSuccessListener(new OnSuccessListener<Void>() {
                       @Override
                       public void onSuccess(Void aVoid) {
+                          db.collection("orders").document(orderID).update("deliverydate",FieldValue.serverTimestamp());
                           Toast.makeText(getApplicationContext(), "Your Order Has been Delivered", Toast.LENGTH_LONG).show();
                           Intent intent = getIntent();
                           intent.putExtra("orderid",orderID);
